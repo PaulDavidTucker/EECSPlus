@@ -5,7 +5,7 @@
   "main": "index.html",
   "scripts": {
     "dev": "npm install -g live-server",
-    "start": "live-server --port=8000 --host=localhost"
+    "start": "live-server --port=8000 --host=localhost --open=src/index.html"
   },
   "repository": {
     "type": "git",
