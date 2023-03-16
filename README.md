@@ -30,3 +30,5 @@ npm start
 ```
 
 > This simply runs the contents of node_modules. If you use this, the localhost port your server is running on will refresh, and you'll also need to restart it to see any changes you've made to the code in `src`.
+
+Running on port 8000 by default, but any number lower than 1024 requires admin privs on windows, unsure about linux installs
