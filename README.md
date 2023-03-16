@@ -23,7 +23,7 @@ npm run dev
 > This is a full web server. Any time you make changes within the `src` directory, it will rebuild and refresh your browser.
 
 
-**3. Start local production server with [serve](https://github.com/tapio/live-server):**
+**3. Start local production server with [server](https://github.com/tapio/live-server):**
 
 ```sh
 npm start
