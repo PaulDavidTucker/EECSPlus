@@ -1,3 +1,5 @@
+/*This stylesheet basically allows modification of colourscheme, should be implemented sitewide*/
+
 .gradient-custom-2 {
     /* fallback for old browsers */
     background: #fccb90;
@@ -5,7 +7,7 @@
     
     background: -webkit-linear-gradient(to right, #ee7724, #d8363a, #dd3675, #b44593);
     
-    /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    /* All other up to date browsers i think, some exceptions in Opera GX */
     background: linear-gradient(to right, #ee7724, #d8363a, #dd3675, #b44593);
     }
     
@@ -16,7 +18,6 @@
 }
 @media (min-width: 769px) {
     .gradient-custom-2 {
-    border-top-right-radius: .3rem;
-    border-bottom-right-radius: .3rem;
+    border-radius: .3rem;
     }
 }
