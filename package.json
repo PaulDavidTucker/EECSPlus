@@ -5,7 +5,7 @@
   "main": "index.html",
   "scripts": {
     "test": "npm test",
-    "run": "npm run"
+    "dev": "cross-env NODE_ENV=development webpack-dev-server --inline --hot --progress"
   },
   "repository": {
     "type": "git",
