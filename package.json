@@ -1,0 +1,25 @@
+{
+  "name": "eecsplus",
+  "version": "1.0.0",
+  "description": "Software engineering prject for group 26",
+  "main": "index.js",
+  "scripts": {
+    "test": "npm test",
+    "run": "npm run"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/PaulDavidTucker/EECSPlus.git"
+  },
+  "keywords": [
+    "HTML",
+    "CSS",
+    "JavaScript"
+  ],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/PaulDavidTucker/EECSPlus/issues"
+  },
+  "homepage": "https://github.com/PaulDavidTucker/EECSPlus#readme"
+}
