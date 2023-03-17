@@ -5,7 +5,13 @@ node_Modules is added to gitignore - Whenever you start working on the live serv
 
 NPM is used as a package mangager to run a live development server. All changes made are live.
 
-**1. Install the dependencies :**
+**1. Clone into repository using URL**
+
+```sh
+https://github.com/PaulDavidTucker/EECSPlus.git
+```
+
+**2. Install the dependencies :**
 
 ```sh
 npm install
@@ -14,7 +20,7 @@ npm install
 ## Development Workflow
 
 
-**2. Start a live-reload development server :**
+**3. Start a live-reload development server :**
 
 ```sh
 npm run dev
@@ -23,7 +29,7 @@ npm run dev
 > This is a full web server. Any time you make changes within the `src` directory, it will rebuild and refresh your browser.
 
 
-**3. Start local production server with [server](https://github.com/tapio/live-server):**
+**4. Start local production server with [server](https://github.com/tapio/live-server):**
 
 ```sh
 npm start
