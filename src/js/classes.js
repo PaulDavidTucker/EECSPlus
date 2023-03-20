@@ -1,3 +1,17 @@
+//Enums 
+const Status = {
+    Running: Symbol("Running"),
+    Suspended: Symbol("Suspended"),
+    Unavailable: Symbol("Unavailable")
+}
+
+const IssueType = {
+    EE: Symbol("EE"),
+    ITL: Symbol("ITL"),
+    ITS: Symbol("ITS")
+}
+
+
 class User {
     Username;
     Password;
@@ -109,5 +123,69 @@ class Faculty extends User{
 
     getUserType(){           
         return "Faculty";
+    }
+}
+
+class EECSServiceStatus{
+    CurrentEECSStatus;
+    EECSServices;
+
+    constructor() {
+        this.CurrentEECSStatus = Status;
+        //Dictionary of services and their status
+        this.EECSServices = {};
+    }
+    
+    UpdateServiceStatus(ServiceName, NewStatus){
+        //Updates the status of a service
+    }
+
+    DisplayEECSServiceStatus(){
+        //Displays the status of all services. 
+    }
+
+    getStatus(){
+        return this.CurrentEECSStatus;
+    }
+}
+
+class Issue{
+    #IssueID;
+    #IssueType;
+    #UserID;
+    #IssueDescription;
+    #TimeCreated;
+
+    constructor(IssueDescription) {
+        //Will be changed to autoincremented ID from DB
+        this.IssueID = 0;
+        this.IssueType = IssueType;
+        this.IssueDescription = IssueDescription;
+        this.TimeCreated = new Date();
+    }
+}
+
+
+class IssueRegistry{
+    IssuesList;
+
+    constructor() {
+        this.ListOfIssues = [];
+    }
+
+    AddIssue(Issue){
+        //Adds an issue to the list of issues
+    }
+
+    RemoveIssue(IssueID){
+        //Removes an issue from the list of issues
+    }
+
+    GetIssue(IssueID){
+        //Returns an issue object
+    }
+
+    GetListOfIssues(){
+        //Returns the list of issues
     }
 }
