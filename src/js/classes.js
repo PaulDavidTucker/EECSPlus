@@ -190,3 +190,53 @@ class IssueRegistry{
         //Returns the list of issues
     }
 }
+
+class EC{
+    ECID;
+    UserID;
+    DateCreated;
+    DeadlineForAssignment;
+    RequestedExtension;
+    Module;
+    isSelfCertified;
+    //Im confused about this one, do we have both studentID and userID?
+
+    constructor(RequestedExtension, Module, isSelfCertified) {
+        //Will be changed to autoincremented ID from DB
+        this.ECID = 0;
+        this.UserID = 0;
+        this.DateCreated = new Date();
+        this.DeadlineForAssignment = new Date();
+        this.RequestedExtension = new Date();
+        this.Module = Module;
+        this.isSelfCertified = isSelfCertified;
+    }
+}
+
+class ECRegistry{
+    ECList;
+
+    constructor() {
+        this.ECList = [];
+    }
+
+    AddEC(EC){
+        //Adds an EC to the list of ECs
+    }
+
+    RemoveEC(ECID){
+        //Removes an EC from the list of ECs
+    }
+
+    GetEC(ECID){
+        //Returns an EC object
+    }
+
+    GetAllECs(){
+        //Returns a list of EC's
+    }
+
+    getInstances(){
+        return this.ECList;
+    }
+}

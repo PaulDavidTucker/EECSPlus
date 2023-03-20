@@ -1,9 +1,5 @@
-//Issues with creating Objects from Classes.js here
+LoginButton = document.getElementById("LoginButton")
 
-const back = new Issue("Back");
-
-const front = new Issue("Front");
-
-front.
-
-
+LoginButton.addEventListener("click", function() {
+    window.location.href = "./pages/LandingPage.html"
+})
