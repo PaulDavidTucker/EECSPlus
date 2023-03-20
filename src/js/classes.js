@@ -150,15 +150,16 @@ class EECSServiceStatus{
 }
 
 class Issue{
-    #IssueID;
-    #IssueType;
-    #UserID;
-    #IssueDescription;
-    #TimeCreated;
+    IssueID;
+    IssueType;
+    UserID;
+    IssueDescription;
+    TimeCreated;
 
     constructor(IssueDescription) {
         //Will be changed to autoincremented ID from DB
         this.IssueID = 0;
+        this.UserID = 0;
         this.IssueType = IssueType;
         this.IssueDescription = IssueDescription;
         this.TimeCreated = new Date();
