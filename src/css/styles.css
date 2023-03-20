@@ -21,3 +21,13 @@
     border-radius: .3rem;
     }
 }
+
+.gradient-button-custom {
+
+    /* for old browsers */
+    background: #fccb90;
+
+    background: -webkit-linear-gradient(to right, #1c185f, #3636d8, #3657dd, #4571b4);
+    background: linear-gradient(to right, #1c185f, #3636d8, #3657dd, #4571b4);
+    
+}
