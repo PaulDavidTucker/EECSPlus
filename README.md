@@ -1,7 +1,6 @@
 # EECSPlus
 Prototype project for group 26. Software engineering project.
 
-Amira is really cool
 
 node_Modules is added to gitignore - Whenever you start working on the live server for this project, do npm install to update all packages
 
