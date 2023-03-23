@@ -12,7 +12,7 @@ const IssueType = {
 }
 
 
-class User {
+export class User {
     Username;
     Password;
     UserID;
@@ -50,7 +50,7 @@ class User {
     }
 }
 
-class Student extends User {
+export class Student extends User {
 
     ECList;
 
@@ -77,7 +77,7 @@ class Student extends User {
     }
 }
 
-class Admin extends User {
+export class Admin extends User {
 
     constructor(Username, Password) {
         super(Username, Password);        
@@ -116,7 +116,7 @@ class Admin extends User {
     }
 }
 
-class Faculty extends User{
+export class Faculty extends User{
     constructor(Username, Password) {
         super(Username, Password);        
     }
@@ -126,7 +126,7 @@ class Faculty extends User{
     }
 }
 
-class EECSServiceStatus{
+export class EECSServiceStatus{
     CurrentEECSStatus;
     EECSServices;
 
@@ -149,7 +149,7 @@ class EECSServiceStatus{
     }
 }
 
-class Issue{
+export class Issue{
     IssueID;
     IssueType;
     UserID;
@@ -167,7 +167,7 @@ class Issue{
 }
 
 
-class IssueRegistry{
+export class IssueRegistry{
     IssuesList;
 
     constructor() {
@@ -191,7 +191,7 @@ class IssueRegistry{
     }
 }
 
-class EC{
+export class EC{
     ECID;
     UserID;
     DateCreated;
@@ -213,7 +213,7 @@ class EC{
     }
 }
 
-class ECRegistry{
+export class ECRegistry{
     ECList;
 
     constructor() {
