@@ -1,10 +1,17 @@
 import *  as classes from "./classes.js"
 
 const LoginButton = document.getElementById("LoginButton")
+const AdminLogin = document.getElementById("AdminLogin")
 
 LoginButton.addEventListener("click", function() {
     window.location.href = "./pages/LandingPage.html"
 })
+
+AdminLogin.addEventListener("click", function() {
+    window.location.href = "./pages/adminLanding.html"
+})
+
+
 
 
 
