@@ -4,7 +4,7 @@
   "description": "Software engineering prject for group 26",
   "main": "index.html",
   "scripts": {
-    "dev": "npm install -g live-server",
+    "dev": "npm install -g live-server && npm i bootstrap-icons",
     "start": "live-server --port=8000 --host=localhost --open=src/index.html"
   },
   "repository": {
@@ -24,5 +24,8 @@
   "bugs": {
     "url": "https://github.com/PaulDavidTucker/EECSPlus/issues"
   },
-  "homepage": "https://github.com/PaulDavidTucker/EECSPlus#readme"
+  "homepage": "https://github.com/PaulDavidTucker/EECSPlus#readme",
+  "dependencies": {
+    "bootstrap-icons": "^1.10.3"
+  }
 }
