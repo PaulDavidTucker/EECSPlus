@@ -15,6 +15,7 @@ AdminLogin.addEventListener("click", function() {
 
 
 
+
 const test = new classes.Student("test", "test");
 
 console.log(test.GetListOfIssues());
