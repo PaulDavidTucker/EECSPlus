@@ -1,5 +1,9 @@
 /*This stylesheet basically allows modification of colourscheme, should be implemented sitewide*/
 
+body{
+    transition: 0.2s linear;
+}
+
 .gradient-custom-2 {
     /* fallback for old browsers */
     background: #fccb90;
