@@ -6,6 +6,22 @@ const jumbotron = document.getElementById("jumbotron")
 const LogoutButton = document.getElementById("LogoutButton")
 const storedTheme = localStorage.getItem('theme')
 
+
+function EnableDarkMode() {
+  isDarkMode = true;
+  doc.setAttribute("data-bs-theme", "dark");
+  navbar.setAttribute("class", "navbar navbar-expand-lg navbar-dark bg-dark");
+  jumbotron.setAttribute("style", "background:rgb(53, 53, 53) !important");
+  LogoutButton.setAttribute("class", "btn btn-outline-light");
+}
+
+function EnableLightMode(theme) {
+  doc.setAttribute("data-bs-theme", theme);
+  navbar.setAttribute("class", "navbar navbar-expand-lg navbar-light gradient-custom-navbar");
+  jumbotron.setAttribute("style", "");
+  LogoutButton.setAttribute("class", "btn btn-outline-dark");
+}
+
 const getPreferredTheme = () => {
   if (storedTheme) {
     return storedTheme
@@ -16,18 +32,17 @@ const getPreferredTheme = () => {
 
 const setTheme = function (theme) {
   if (theme === 'auto' && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-    doc.setAttribute("data-bs-theme", "dark");
-    navbar.setAttribute("class", "navbar navbar-expand-lg navbar-dark bg-dark");
-    jumbotron.setAttribute("style", "background:rgb(53, 53, 53) !important");
-    LogoutButton.setAttribute("class", "btn btn-outline-light");
-    isDarkMode = true;
+    EnableLightMode(theme);
+    console.log("Light Mode disabled by default");
+    isDarkMode = false;
   } else {
-    doc.setAttribute("data-bs-theme", theme);
-    navbar.setAttribute("class", "navbar navbar-expand-lg navbar-light gradient-custom-navbar");
-    jumbotron.setAttribute("style", "");
-    LogoutButton.setAttribute("class", "btn btn-outline-dark");
+    EnableDarkMode();
+    console.log("Dark Mode Enabled by default");
+    isDarkMode = true;
   }
 }
+
+
 
 setTheme(getPreferredTheme())
 
@@ -38,12 +53,14 @@ checkbox.addEventListener('change', ()=>{
         navbar.setAttribute("class", "navbar navbar-expand-lg navbar-dark bg-dark");
         jumbotron.setAttribute("style", "background:rgb(53, 53, 53) !important");
         LogoutButton.setAttribute("class", "btn btn-outline-light");
+        console.log("Dark Mode Enabled");
     } else {
         isDarkMode = false;
         doc.setAttribute("data-bs-theme", "light");
         navbar.setAttribute("class", "navbar navbar-expand-lg navbar-light gradient-custom-navbar");
         jumbotron.setAttribute("style", "");
         LogoutButton.setAttribute("class", "btn btn-outline-dark");
+        console.log("Dark Mode Disabled");
     } 
     })
 
