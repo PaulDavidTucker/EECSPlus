@@ -38,6 +38,7 @@ const setTheme = function (theme) {
   } else {
     EnableDarkMode();
     console.log("Dark Mode Enabled by default");
+    checkbox.setAttribute("checked", "true");
     isDarkMode = true;
   }
 }
@@ -54,6 +55,7 @@ checkbox.addEventListener('change', ()=>{
         jumbotron.setAttribute("style", "background:rgb(53, 53, 53) !important");
         LogoutButton.setAttribute("class", "btn btn-outline-light");
         console.log("Dark Mode Enabled");
+        checkbox.setAttribute("checked", "true");
     } else {
         isDarkMode = false;
         doc.setAttribute("data-bs-theme", "light");
@@ -61,6 +63,7 @@ checkbox.addEventListener('change', ()=>{
         jumbotron.setAttribute("style", "");
         LogoutButton.setAttribute("class", "btn btn-outline-dark");
         console.log("Dark Mode Disabled");
+        checkbox.setAttribute("checked", "false");
     } 
     })
 
