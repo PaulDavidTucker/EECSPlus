@@ -2,40 +2,57 @@
 Prototype project for group 26. Software engineering project.
 
 
-node_Modules is added to gitignore - Whenever you start working on the live server for this project, do npm install to update all packages
 
-NPM is used as a package mangager to run a live development server. All changes made are live.
+**1. Install XAAMP:**
+https://www.apachefriends.org/
 
-**1. Clone into repository using URL**
 
+**2. Install PHPMYADMIN:**
+
+https://www.phpmyadmin.net/
+
+extract zip into  Directory/xampp
+
+add the  folloing into the file config.inc.php in   Direcotry/xampp/phpMyAdmin/config.inc.php
+
+$i++;
+$cfg['Servers'][$i]['host'] = 'eecs-plus.cyvzc0wdkfgr.eu-north-1.rds.amazonaws.com:3306'; //provide hostname and port if other than default
+$cfg['Servers'][$i]['user'] = 'admin';   //user name for your remote server
+$cfg['Servers'][$i]['password'] = 'password123';  //password
+$cfg['Servers'][$i]['auth_type'] = 'config';       // keep it as config
+
+
+**3. Clone into repository using URL**
+
+
+clone into the folder  into  Directory/xampp/htdocs
 ```sh
 https://github.com/PaulDavidTucker/EECSPlus.git
 ```
 
-**2. Install the dependencies :**
-
-```sh
-npm install
-```
-
-## Development Workflow
 
 
-**3. Start a live-reload development server :**
+**4. Launch XAAMP:**
 
-```sh
-npm run dev
-```
-
-> This is a full web server. Any time you make changes within the `src` directory, it will rebuild and refresh your browser.
+Start Appache and MySQl
 
 
-**4. Start local production server with [server](https://github.com/tapio/live-server):**
+**5. Launch website:**
 
-```sh
-npm start
-```
+in your web browser type in http://localhost/EECSPlus/src/index.php  Which will take you to the login page here are the logins 
 
-> This simply runs the contents of node_modules. If you use this, the localhost port your server is running on will refresh, and you'll also need to restart it to see any changes you've made to the code in `src`.
+admin_user :123456
 
-Running on port 8000 by default, but any number lower than 1024 requires admin privs on windows, unsure about linux installs
+student_user : password123
+
+
+faculty_user: secret_password
+ 
+
+ 
+**6. Launch website:**
+
+To Edit the Sql Tables press Admin next to MySQL and select the sever to be  eecs-plus.cyvzc0wdkfgr.eu-north-1.rds.amazonaws.com:3306  (admin)
+ 
+ or try http://localhost/phpmyadmin/index.php?route=/
+

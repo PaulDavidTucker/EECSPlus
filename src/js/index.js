@@ -4,11 +4,11 @@ const LoginButton = document.getElementById("LoginButton")
 const AdminLogin = document.getElementById("AdminLogin")
 
 LoginButton.addEventListener("click", function() {
-    window.location.href = "./pages/LandingPage.html"
+    window.location.href = "./pages/LandingPage.php"
 })
 
 AdminLogin.addEventListener("click", function() {
-    window.location.href = "./pages/adminLanding.html"
+    window.location.href = "./pages/adminLanding.php"
 })
 
 
