@@ -16,11 +16,10 @@ extract zip into  Directory/xampp
 add the  folloing into the file config.inc.php in   Direcotry/xampp/phpMyAdmin/config.inc.php
 
 $i++;
-$cfg['Servers'][$i]['host'] = 'eecs-plus.cyvzc0wdkfgr.eu-north-1.rds.amazonaws.com:3306'; //provide hostname and port if other than default
-$cfg['Servers'][$i]['user'] = 'admin';   //user name for your remote server
-$cfg['Servers'][$i]['password'] = 'password123';  //password
-$cfg['Servers'][$i]['auth_type'] = 'config';       // keep it as config
-
+$cfg['Servers'][$i]['host'] = 'eecs-plus.cyvzc0wdkfgr.eu-north-1.rds.amazonaws.com:3306'; 
+$cfg['Servers'][$i]['user'] = 'admin';   
+$cfg['Servers'][$i]['password'] = 'password123';  
+$cfg['Servers'][$i]['auth_type'] = 'config';      
 
 **3. Clone into repository using URL**
 
