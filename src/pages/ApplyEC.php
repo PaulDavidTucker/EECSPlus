@@ -14,6 +14,42 @@ elseif ($_SESSION['user_type'] == 'Admin'){
   header('Location: ../pages/adminLanding.php');
   exit();
 }
+
+if (isset($_POST['moduleName']) && isset($_POST['description']) && isset($_POST['datepicker']) && isset($_POST['type'])) {
+  $module = $_POST['moduleName'];
+  $description = $_POST['description'];
+  $extentiondeadline = $_POST['datepicker'];
+  $isselfcertified = $_POST['type'];
+
+  submitEC($module, $description, $extentiondeadline, $isselfcertified);
+}else {
+  echo "Error: Please fill in all fields";
+}
+
+function submitEC($module, $description, $extentiondeadline, $isselfcertified){
+  $conn = new mysqli("eecs-plus.cyvzc0wdkfgr.eu-north-1.rds.amazonaws.com:3306","admin","password123","eecs");
+  if ($conn->connect_error) {
+      die("Connection failed: " . $conn->connect_error);
+  }
+
+  //Vars needed to add EC to database
+  $USERID = $_SESSION['user_id'];
+  $date = date('Y/M/D h:i:s', time());
+  $status = "Pending";
+
+  echo "Inserted values ", $USERID, $module, $description, $date, $extentiondeadline, $isselfcertified, $status;
+  //Insert EC into database
+  $sql = "INSERT INTO ECs (UserID,ModuleName,description,DateCreated,RequestedExtentionDeadline,isSelfCertified, Status) VALUES ('$USERID','$module', '$description', '$date' ,'$extentiondeadline', '$isselfcertified', '$status')";
+
+  if ($conn->query($sql) === TRUE) {
+    echo "New record created successfully";
+  } else {
+    echo "Error: " . $sql . "<br>" . $conn->error;
+  }
+
+
+  $conn->close();
+}
   
 
 
@@ -92,13 +128,13 @@ elseif ($_SESSION['user_type'] == 'Admin'){
 
 
     <div class="jumbotron" id="jumbotron">
-        <!-- aplication form fill out  moudle name , description ,  ExtentionDeadline , dropdown menu for if it sefl Sertfied or not-->
+        <!-- aplication form fill out  module name , description ,  ExtentionDeadline , dropdown menu for if it self certfied or not-->
         <form action="" method="post" target="_self">
 
       
                         <div class="form-outline mb-4">
                           <input type="text" class="form-control"
-                            placeholder="moudle name" name="moudleName" />
+                            placeholder="module name" name="moduleName" />
                         </div>
                         <div class="form-outline mb-4">
                             <textarea class="form-control" id="exampleFormControlTextarea1" rows="10"
@@ -108,7 +144,7 @@ elseif ($_SESSION['user_type'] == 'Admin'){
                         <div class="form-outline mb-4">
 
                             <div class="input-group date" data-provide="datepicker">
-                                <input type="text" class="form-control" id="datepicker" name="datepicker" placeholder="MM/DD/YYYY">
+                                <input type="text" class="form-control" id="datepicker" name="datepicker" placeholder="Requested Extension Date - MM/DD/YYYY">
                                 <div class="input-group-addon">
                                     <span class="glyphicon glyphicon-th"></span>
                                 </div>
@@ -116,15 +152,14 @@ elseif ($_SESSION['user_type'] == 'Admin'){
                         </div>
 
                         <div  class="form-outline mb-4" >
-                        <select name="cars" id="cars" class = "form-select form-select-sm mb-3">
-                            <option value="volvo">Self Certified</option>
-                            <option value="saab">Manual</option>
-
+                        <select name="type" id="type" class = "form-select form-select-sm mb-3">
+                            <option value="Self Certified">Self Certified</option>
+                            <option value="Manual">Manual</option>
                         </select>
                         </div>
       
                         <div class="text-center pt-1 mb-5 pb-1">
-                          <button class="btn btn-primary btn-block fa-lg gradient-custom-2 mb-3" id="LoginButton" type="submit">submit</button>
+                          <button class="btn btn-primary btn-block fa-lg gradient-custom-2 mb-3" id="LoginButton" type="submit">Submit</button>
     
                         </div>
       

@@ -40,6 +40,7 @@ function login($username, $password) {
 
   if ($result->num_rows == 1) {
       $row = $result->fetch_assoc();
+      // Set session variables, UserID is the ID collected from the database
       $_SESSION['user_id'] = $row['id'];
       $_SESSION['user_type'] = $row['userType'];
       $_SESSION['username'] = $username;
@@ -95,7 +96,7 @@ function login($username, $password) {
       
                         <div class="form-outline mb-4">
                           <input type="text" class="form-control"
-                            placeholder="Phone number or email address" name="username" />
+                            placeholder="Username or Email address" name="username" />
                           <label class="form-label">Username</label>
                         </div>
       
