@@ -1,3 +1,28 @@
+
+<?php
+
+session_start();
+
+
+$username = $_SESSION['username'];
+
+if (!isset($_SESSION['user_id']  ) ) {
+  header('Location: ../index.php');
+  exit();
+}
+elseif ($_SESSION['user_type'] == 'Admin'){
+  header('Location: ../pages/adminLanding.php');
+  exit();
+}
+  
+
+
+
+?>
+
+
+
+
 <!DOCTYPE html>
 <html lang="en" id="html">
 <head>
@@ -5,8 +30,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>EECSPlus</title>
-    <link rel="icon" type="image" href="/src/assets/QMUL Logo.png">
-    <link rel="stylesheet" href="/src/css/styles.css">
+    <link rel="icon" type="image" href="../assets/QMUL Logo.png">
+    <link rel="stylesheet" href="../css/styles.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-aFq/bzH65dt+w6FI2ooMVUpc+21e0SRygnTpmBvdBgSdnuTN7QbdgL+OapgHtvPp" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/js/bootstrap.bundle.min.js" integrity="sha384-qKXV1j0HvMUeCBQ+QVp7JcfGl760yU08IQ+GpUo5hlbpg51QRiuqHAJz8+BrxE/N" crossorigin="anonymous"></script>
@@ -15,13 +40,13 @@
 
     <!--NavBar for top of page-->
     <nav class="navbar navbar-expand-lg navbar-light gradient-custom-navbar" id="nav">
-        <a class="navbar-brand ml-1" href="/src/index.html">
-            <img src="/src/assets/QMUL Logo.png" alt="Logo not found" width="30" height="30" class="d-inline-block align-text-top">
+        <a class="navbar-brand ml-1" href="../index.php">
+            <img src="../assets/QMUL Logo.png" alt="Logo not found" width="30" height="30" class="d-inline-block align-text-top">
             EECSPlus 
         </a>
-        <a class="ml-auto mr-1" href="/src/index.html">
+        <a class="ml-auto mr-1" href="../logout.php">
           <button type="button" id="LogoutButton" class="btn btn-outline-dark ">
-            <img src="/src/assets/icons/person.svg" alt="Logout">
+            <img src="../assets/icons/person.svg" alt="Logout">
             Logout
         </button>
         </a>
@@ -43,15 +68,15 @@
                     Dropdown
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                      <a class="dropdown-item" href="#">Action</a>
-                      <a class="dropdown-item" href="#">Action</a>
+                      <a class="dropdown-item" href="#">View your ECs</a>
+                      <a class="dropdown-item" href="#">View your issues</a>
                       <div class="dropdown-divider"></div>
-                      <a class="dropdown-item" href="#">Action</a>
+                      <a class="dropdown-item" href="#">View all issues</a>
                     </div>
                 </li>
                 <li class="nav-item ml-1 mt-2">
                   <div class="form-switch">
-                    <input class="form-check-input" type="checkbox" role="switch" id="darkModeCheckBox">
+                    <input class="form-check-input" type="checkbox" role="switch" id="darkModeCheckBox"  checked="true"  >
                     <label class="form-check-label" for="darkModeCheckBox">Dark Mode</label>
                   </div>
                 </li>
@@ -65,29 +90,35 @@
         
     </nav>
 
-    <!--Jumbotron for main page
-    STYLE ATTRIBUTE LEFT EMPTY TO ALLOW JS TO DYNAMICALLY UPDATE COLOURS WHEN DARKMODE IS ENABLED-->
+
     <div class="jumbotron" id="jumbotron">
-        <h1 class="display-4">Welcome, USERNAMEHERE</h1>
+        <h1 class="display-4">Welcome, <?php echo $username; ?></h1>
         <p class="lead">Welcome to EECS Plus! Here you can report issues with services, browse the status of products or simply view the site.</p>
+            <!--Jumbotron for main page
+    STYLE ATTRIBUTE LEFT EMPTY TO ALLOW JS TO DYNAMICALLY UPDATE COLOURS WHEN DARKMODE IS ENABLED
         <hr class="my-4">
         <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Saepe sint perspiciatis doloremque accusamus adipisci. Officiis, eaque in ea sapiente, consectetur repellat consequatur assumenda deleniti commodi cupiditate, quasi explicabo quis eligendi?</p>
         <p class="lead">
           <a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a>
         </p>
+        
+    -->
     </div>
+
 
     <div class="container">
         <!-- Row of columns, can add more if needed. Use JS to make columns appear or disapear when logged in -->
         <div class="row">
           <div class="col-md-4">
-            <h2>Heading</h2>
-            <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-            <p><a class="btn btn-secondary" href="#" role="button">View details &raquo;</a></p>
+            <h2>Apply for ECs</h2>
+            <p>
+
+            </p>
+            <p><a class="btn btn-secondary" href="ApplyEC.php" role="button">click &raquo;</a></p>
           </div>
           <div class="col-md-4">
-            <h2>Heading</h2>
-            <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
+            <h2>Report Issue</h2>
+            <p> </p>
             <p><a class="btn btn-secondary" href="#" role="button">View details &raquo;</a></p>
           </div>
           <div class="col-md-4">
@@ -102,7 +133,7 @@
       </div> <!-- container end -->
 
     
-    <script src="/src/js/LPutils.js" type="module"></script>
+    <script src="../js/LPutils.js" type="module"></script>
     <!--Scripts for button functionality-->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
