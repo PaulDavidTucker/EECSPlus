@@ -3,7 +3,19 @@
 
 session_start();
 
+//enumerations
+enum IsSelfCertified { 
+  const true = "true";
+  const false = "false";
+ };
 
+enum Status { 
+  const Pending = "Pending";
+  const Approved = "Approved";
+  const Rejected = "Rejected";
+ };
+
+//check if user is logged in
 $username = $_SESSION['username'];
 
 if (!isset($_SESSION['user_id']  ) ) {
@@ -18,12 +30,16 @@ elseif ($_SESSION['user_type'] == 'Admin'){
 if (isset($_POST['moduleName']) && isset($_POST['description']) && isset($_POST['datepicker']) && isset($_POST['type'])) {
   $module = $_POST['moduleName'];
   $description = $_POST['description'];
-  $extentiondeadline = $_POST['datepicker'];
-  $isselfcertified = $_POST['type'];
+  $formattedDate = date('Y-m-d', strtotime($_POST['datepicker']));
+  $extentiondeadline = $formattedDate;
+  if ($_POST['type'] == "Self Certified") {
+    $isselfcertified = IsSelfCertified::true;
+  } else {
+    $isselfcertified = IsSelfCertified::false;
+  }
+  
 
   submitEC($module, $description, $extentiondeadline, $isselfcertified);
-}else {
-  echo "Error: Please fill in all fields";
 }
 
 function submitEC($module, $description, $extentiondeadline, $isselfcertified){
@@ -34,12 +50,11 @@ function submitEC($module, $description, $extentiondeadline, $isselfcertified){
 
   //Vars needed to add EC to database
   $USERID = $_SESSION['user_id'];
-  $date = date('Y/M/D h:i:s', time());
-  $status = "Pending";
+  $status = Status::Pending;
 
-  echo "Inserted values ", $USERID, $module, $description, $date, $extentiondeadline, $isselfcertified, $status;
+  echo "Inserted values ",$USERID, " ",$module," ",$description, " ",$extentiondeadline," ",$isselfcertified," ", Status::Pending;
   //Insert EC into database
-  $sql = "INSERT INTO ECs (UserID,ModuleName,description,DateCreated,RequestedExtentionDeadline,isSelfCertified, Status) VALUES ('$USERID','$module', '$description', '$date' ,'$extentiondeadline', '$isselfcertified', '$status')";
+  $sql = "INSERT INTO ECs (UserID,ModuleName,description,RequestedExtentionDeadline,isSelfCertified,Status) VALUES ('$USERID','$module', '$description','$extentiondeadline', '$isselfcertified', '$status')";
 
   if ($conn->query($sql) === TRUE) {
     echo "New record created successfully";
