@@ -1,11 +1,12 @@
 {
   "name": "eecsplus",
   "version": "1.0.0",
-  "description": "Software engineering prject for group 26",
-  "main": "index.html",
+  "description": "Software engineering project for group 26",
+  "main": "index.js",
   "scripts": {
     "dev": "npm install -g live-server && npm i bootstrap-icons",
-    "start": "live-server --port=8000 --host=localhost --open=src/index.html"
+    "start": "node index.js",
+    "test": "eslint ."
   },
   "repository": {
     "type": "git",
@@ -16,7 +17,7 @@
     "CSS",
     "JavaScript"
   ],
-  "author": "",
+  "author": "Group 26",
   "license": "ISC",
   "devDependencies": {
     "live-server": "^1.2.1"
@@ -26,6 +27,10 @@
   },
   "homepage": "https://github.com/PaulDavidTucker/EECSPlus#readme",
   "dependencies": {
-    "bootstrap-icons": "^1.10.3"
+    "bootstrap-icons": "^1.10.4",
+    "ejs": "^3.1.9",
+    "express": "^4.18.2",
+    "express-session": "^1.17.3",
+    "mysql": "^2.18.1"
   }
 }

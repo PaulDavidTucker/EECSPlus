@@ -1,4 +1,4 @@
-# EECSPlus
+# EECSPlus using Node.js server instead of php  right now you can login and submit an EC  
 Prototype project for group 26. Software engineering project.
 
 
@@ -34,8 +34,67 @@ npm run dev
 
 ```sh
 npm start
+
 ```
 
-> This simply runs the contents of node_modules. If you use this, the localhost port your server is running on will refresh, and you'll also need to restart it to see any changes you've made to the code in `src`.
+**5. Launch node Server**
+
+in your browswer paste  in   http://localhost:8000
+
+logins:
+
+admin_user :123456
+
+student_user : password123
+
+
+faculty_user: secret_password
+ 
+
 
 Running on port 8000 by default, but any number lower than 1024 requires admin privs on windows, unsure about linux installs
+
+
+
+
+
+# Insturction for the mysql server
+
+
+
+
+**1. Install XAAMP:**
+https://www.apachefriends.org/
+
+
+**2. Install PHPMYADMIN:**
+
+https://www.phpmyadmin.net/
+
+extract zip into  Directory/xampp
+
+add the  folloing into the file config.inc.php in   Direcotry/xampp/phpMyAdmin/config.inc.php
+
+$i++;
+$cfg['Servers'][$i]['host'] = 'eecs-plus.cyvzc0wdkfgr.eu-north-1.rds.amazonaws.com:3306'; 
+$cfg['Servers'][$i]['user'] = 'admin';   
+$cfg['Servers'][$i]['password'] = 'password123';  
+$cfg['Servers'][$i]['auth_type'] = 'config';      
+
+
+
+
+
+**4. Launch XAAMP:**
+
+Start Appache and MySQl
+
+
+ 
+
+ 
+**5. Launch phpmydmin:**
+
+To Edit the Sql Tables press Admin next to MySQL and select the sever to be  eecs-plus.cyvzc0wdkfgr.eu-north-1.rds.amazonaws.com:3306  (admin)
+ 
+ or try http://localhost/phpmyadmin/index.php?route=/
