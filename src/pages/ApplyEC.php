@@ -52,7 +52,8 @@ function submitEC($module, $description, $extentiondeadline, $isselfcertified){
   $USERID = $_SESSION['user_id'];
   $status = Status::Pending;
 
-  echo "Inserted values ",$USERID, " ",$module," ",$description, " ",$extentiondeadline," ",$isselfcertified," ", Status::Pending;
+  //Uncomment to see what was inserted for debugging
+  //echo "Inserted values ",$USERID, " ",$module," ",$description, " ",$extentiondeadline," ",$isselfcertified," ", Status::Pending;
   //Insert EC into database
   $sql = "INSERT INTO ECs (UserID,ModuleName,description,RequestedExtentionDeadline,isSelfCertified,Status) VALUES ('$USERID','$module', '$description','$extentiondeadline', '$isselfcertified', '$status')";
 
@@ -143,6 +144,7 @@ function submitEC($module, $description, $extentiondeadline, $isselfcertified){
 
 
     <div class="jumbotron" id="jumbotron">
+      <h1 class="text-center mb-4">Apply for ECs</h1>
         <!-- aplication form fill out  module name , description ,  ExtentionDeadline , dropdown menu for if it self certfied or not-->
         <form action="" method="post" target="_self">
 
