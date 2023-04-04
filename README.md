@@ -2,9 +2,9 @@
 Prototype project for group 26. Software engineering project.
 
 
-node_Modules is added to gitignore - Whenever you start working on the live server for this project, do npm install to update all packages
+node_Modules is added to gitignore - do npm install to update all packages
 
-NPM is used as a package mangager to run a live development server. All changes made are live.
+
 
 **1. Clone into repository using URL**
 
@@ -18,26 +18,15 @@ git clone -b BackendUsingNodeServer  https://github.com/PaulDavidTucker/EECSPlus
 npm install
 ```
 
-## Development Workflow
 
-
-**3. Start a live-reload development server :**
-
-```sh
-npm run dev
-```
-
-> This is a full web server. Any time you make changes within the `src` directory, it will rebuild and refresh your browser.
-
-
-**4. Start local production server with [server](https://github.com/tapio/live-server):**
+**3. Start local production server :**
 
 ```sh
 npm start
 
 ```
 
-**5. Launch node Server**
+**4. Launch node Server**
 
 in your browswer paste  in   http://localhost:8000
 
