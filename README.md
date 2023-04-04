@@ -9,7 +9,7 @@ NPM is used as a package mangager to run a live development server. All changes 
 **1. Clone into repository using URL**
 
 ```sh
-https://github.com/PaulDavidTucker/EECSPlus.git
+git clone -b BackendUsingNodeServer  https://github.com/PaulDavidTucker/EECSPlus.git
 ```
 
 **2. Install the dependencies :**
