@@ -35,9 +35,11 @@ function login($username, $password) {
       die("Connection failed: " . $conn->connect_error);
   }
 
+  // Get username and password from database
   $sql = "SELECT * FROM user WHERE userName = '$username' AND password = '$password'";
   $result = $conn->query($sql);
 
+  //If we have a result, set session variables and redirect to landing page
   if ($result->num_rows == 1) {
       $row = $result->fetch_assoc();
       // Set session variables, UserID is the ID collected from the database
