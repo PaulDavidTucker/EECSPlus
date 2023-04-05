@@ -119,7 +119,7 @@ elseif ($_SESSION['user_type'] == 'Admin'){
           <div class="col-md-4">
             <h2>Report Issue</h2>
             <p> </p>
-            <p><a class="btn btn-secondary" href="#" role="button">View details &raquo;</a></p>
+            <p><a class="btn btn-secondary" href="ReportIssues.php" role="button">click &raquo;</a></p>
           </div>
           <div class="col-md-4">
             <h2>Heading</h2>
