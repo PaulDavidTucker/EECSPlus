@@ -97,24 +97,120 @@ elseif ($_SESSION['user_type'] != 'Admin'){
                             </li>
                         </ul>
                         <hr>
-                        <div class="dropdown pb-4">
-                            <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
-                                <img src="../assets/QMUL Logo.png" alt="hugenerd" width="30" height="30" class="rounded-circle">
-                                <span class="d-none d-sm-inline mx-1"><?php echo $username; ?></span>
-                            </a>
-                            <ul class="dropdown-menu dropdown-menu-dark text-small shadow">
-                                <li><a class="dropdown-item" href="#">Settings</a></li>
-                                <li><a class="dropdown-item" href="#">Profile</a></li>
-                                <li>
-                                    <hr class="dropdown-divider">
-                                </li>
-                                <li><a class="dropdown-item" href="../logout.php">Sign out</a></li>
-                            </ul>
-                        </div>
                     </div>
                 </div>
                 <div class="col py-3">
-                    Content area...
+                            <!-- Page Content -->
+        <div id="page-content-wrapper">
+            <nav class="navbar navbar-expand-lg navbar-light bg-transparent py-4 px-4">
+                <div class="d-flex align-items-center">
+                    <i class="fas fa-align-left primary-text fs-4 me-3" id="menu-toggle"></i>
+                    <h2 class="fs-2 m-0">Dashboard</h2>
+                </div>
+
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle second-text fw-bold" href="#" id="navbarDropdown"
+                                role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="fas fa-user me-2"></i>User
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <li><a class="dropdown-item" href="#">Profile</a></li>
+                                <li><a class="dropdown-item" href="#">Settings</a></li>
+                                <li><a class="dropdown-item" href="#">Logout</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+
+            <div class="container-fluid px-4">
+                <div class="row g-3 my-2">
+                    <div class="col-md-3">
+                        <div class="p-3 bg-white shadow-sm d-flex justify-content-around align-items-center rounded">
+                            <div>
+                                <h3 class="fs-2">70</h3>
+                                <p class="fs-5">Completed ECs</p>
+                            </div>
+                            <i class="fas fa-gift fs-1 primary-text border rounded-full secondary-bg p-3"></i>
+                        </div>
+                    </div>
+
+                    <div class="col-md-3">
+                        <div class="p-3 bg-white shadow-sm d-flex justify-content-around align-items-center rounded">
+                            <div>
+                                <h3 class="fs-2">35</h3>
+                                <p class="fs-5">Pending EC</p>
+                            </div>
+                            <i
+                                class="fas fa-hand-holding-usd fs-1 primary-text border rounded-full secondary-bg p-3"></i>
+                        </div>
+                    </div>
+
+                    <div class="col-md-3">
+                        <div class="p-3 bg-white shadow-sm d-flex justify-content-around align-items-center rounded">
+                            <div>
+                                <h3 class="fs-2">4 </h3>
+                                <p class="fs-5">Issues Submitted</p>
+                            </div>
+                            <i class="fas fa-truck fs-1 primary-text border rounded-full secondary-bg p-3"></i>
+                        </div>
+                    </div>
+
+
+                <div class="row my-5">
+                    <h3 class="fs-4 mb-3">Recently Viewed EC</h3>
+                    <div class="col">
+                        <table class="table bg-white rounded shadow-sm  table-hover">
+                            <thead>
+                                <tr>
+                                    <th scope="col" width="50">#</th>
+                                    <th scope="col">Name</th>
+                                    <th scope="col">Student Id</th>
+                                    <th scope="col">Complete</th>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <th scope="row">1</th>
+                                    <td>Abishana Ravindran</td>
+                                    <td>21038475</td>
+                                    <td>Pending</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">2</th>
+                                    <td>Person 2</td>
+                                    <td>34124</td>
+                                    <td>Complete</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">3</th>
+                                    <td>Person 3</td>
+                                    <td>65756</td>
+                                    <td>Complete</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">4</th>
+                                    <td>Person 4</td>
+                                    <td>234345</td>
+                                    <td>Pending</td>
+                                </tr>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
                 </div>
             </div>
         </div>
