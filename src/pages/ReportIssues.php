@@ -13,8 +13,7 @@ enum issueType{
 
 enum status { 
     const Pending = "Pending";
-    const Approved = "Approved";
-    const Rejected = "Rejected";
+    const Approved = "Resolved";
 };
 
 //check if user is logged in
