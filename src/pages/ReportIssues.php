@@ -1,5 +1,7 @@
 <?php
 
+use Status as GlobalStatus;
+
 session_start();
 
 //enumarations
@@ -30,13 +32,13 @@ elseif ($_SESSION['user_type'] == 'Admin'){
 if(isset($_POST['description'])&& isset($_POST['type'])){
     $description = $_POST['description'];
     if($_POST['type'] == "EE"){
-        $issueType = "EE";
+        $issueType = issueType::EE;
     }
     elseif($_POST['type'] == "ITL"){
-        $issueType = "ITL";
+        $issueType = issueType::ITL;
     }
     else{
-        $issueType = "ITS";
+        $issueType = issueType::ITS;
     }
 
     reportIssue($description,$issueType);
