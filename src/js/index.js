@@ -1,25 +1,28 @@
-import *  as classes from "./classes.js"
+const table = document.getElementById("ecTable");
 
-const LoginButton = document.getElementById("LoginButton")
-const AdminLogin = document.getElementById("AdminLogin")
+const rows = table.getElementsByTagName("tr");
 
-LoginButton.addEventListener("click", function() {
-    window.location.href = "./pages/LandingPage.php"
-})
-
-AdminLogin.addEventListener("click", function() {
-    window.location.href = "./pages/adminLanding.php"
-})
-
-
-
-
-
-
-const test = new classes.Student("test", "test");
-
-console.log(test.GetListOfIssues());
-
+for (let i = 0; i < rows.length; i++) {
+    rows[i].addEventListener("click", function () {
+        const currentRow = table.rows[i];
+        const rowArray = currentRow.getElementsByTagName("td");
+        for (let index = 0; index < rowArray.length; index++) {
+            const element = rowArray[index];
+            //outputs current selected element, START TO MANIPULATE HERE
+            console.log(element.innerHTML);
+            
+        }
+        if (currentRow.getAttribute("id") == "selected") {
+            console.log("already selected");
+            currentRow.removeAttribute("class");
+            currentRow.removeAttribute("id");
+        } else {
+            currentRow.setAttribute("class", "bg-dark-subtle");
+            currentRow.setAttribute("id", "selected");
+        }
+        
+    });
+}
 //https://docs.djangoproject.com/en/4.1/intro/overview/
 //https://cakephp.org/
 //https://cljdoc.org/d/cljs-ajax/cljs-ajax/0.8.4/doc/readme
