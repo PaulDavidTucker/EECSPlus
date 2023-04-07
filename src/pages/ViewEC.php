@@ -108,7 +108,7 @@ elseif ($_SESSION['user_type'] == 'Admin'){
 </body>
 
 <?php 
-session_start();
+
 
 $username = $_SESSION['username'];
 
@@ -123,8 +123,13 @@ elseif ($_SESSION['user_type'] == 'Admin'){
 
 $conn = mysqli_connect("eecs-plus.cyvzc0wdkfgr.eu-north-1.rds.amazonaws.com:3306","admin","password123","eecs");
 
+if (!$conn) {
+  die("Connection failed: " . mysqli_connect_error());
+}
+
+$ID = $_SESSION['user_id'];
 //Retrieve data from the database
-$query = "SELECT * FROM ECs";
+$query = "SELECT * FROM ECs WHERE userID = '$ID'";
 $result = mysqli_query($conn, $query);
 
   //Display the data in a table
