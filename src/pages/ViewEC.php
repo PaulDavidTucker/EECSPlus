@@ -27,26 +27,7 @@ elseif ($_SESSION['user_type'] == 'Admin'){
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-aFq/bzH65dt+w6FI2ooMVUpc+21e0SRygnTpmBvdBgSdnuTN7QbdgL+OapgHtvPp" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/js/bootstrap.bundle.min.js" integrity="sha384-qKXV1j0HvMUeCBQ+QVp7JcfGl760yU08IQ+GpUo5hlbpg51QRiuqHAJz8+BrxE/N" crossorigin="anonymous"></script>
 </head>
-<style>
-  table {
-    border-collapse: collapse;
-    width: 80%;
-    margin: 0 auto;
-    margin-top: 100px;
-  }
-  th {
-    background-color: grey;
-    color: black;
-    text-align: left;
-    padding: 12px;
-  }
-  td {
-    border: 1px solid #ddd;
-    padding: 8px;
-    background-color: white;
-    color: black;
-  }
-</style>
+
 <body>
 
     <!--NavBar for top of page-->
@@ -96,6 +77,8 @@ elseif ($_SESSION['user_type'] == 'Admin'){
     </nav>
 
     
+
+    
     <script src="../js/LPutils.js" type="module"></script>
     <!--Scripts for button functionality-->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
@@ -133,8 +116,8 @@ $query = "SELECT * FROM ECs WHERE userID = '$ID'";
 $result = mysqli_query($conn, $query);
 
   //Display the data in a table
-  echo "<table>";
-  echo "<tr><th>Module Name</th><th>Extension Deadline</th><th>Self Certified</th><th>Status</th></tr>";
+  echo "<table class=",'table table-hover',">";
+  echo "<tr><th scope=",'col',">Module Name</th><th scope=",'col',">Extension Deadline</th><th scope=",'col',">Self Certified</th><th scope=",'col',">Status</th></tr>";
   while ($row = mysqli_fetch_assoc($result)) {
     echo "<tr>";
     echo "<td>" . $row["ModuleName"] . "</td>";
@@ -146,7 +129,6 @@ $result = mysqli_query($conn, $query);
   echo "</table>";
 
 mysqli_close($conn);
-   
 
 ?>
 
