@@ -86,6 +86,7 @@ elseif ($_SESSION['user_type'] == 'Admin'){
     
 
     
+    <script src="../js/index.js" type="module"></script>
     <script src="../js/LPutils.js" type="module"></script>
     <!--Scripts for button functionality-->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
@@ -95,49 +96,92 @@ elseif ($_SESSION['user_type'] == 'Admin'){
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
 
+
+    <div class="container-fluid text-center">
+      <h1>View your ECs</h1>
+    </div>
+
+    <div class="container mb-2">
+      <?php 
+
+
+      $username = $_SESSION['username'];
+
+      if (!isset($_SESSION['user_id']  ) ) {
+        header('Location: ../index.php');
+        exit();
+      }
+      elseif ($_SESSION['user_type'] == 'Admin'){
+        header('Location: ../pages/adminLanding.php');
+        exit();
+      }
+
+      $conn = mysqli_connect("eecs-plus.cyvzc0wdkfgr.eu-north-1.rds.amazonaws.com:3306","admin","password123","eecs");
+
+      if (!$conn) {
+        die("Connection failed: " . mysqli_connect_error());
+      }
+
+      $ID = $_SESSION['user_id'];
+      //Retrieve data from the database
+      $query = "SELECT * FROM ECs WHERE userID = '$ID'";
+      $result = mysqli_query($conn, $query);
+
+        //Display the data in a table
+        echo "<table id='ecTable' class='table table-hover'>";
+        echo "<tr><th scope=",'col',">Module Name</th><th scope=",'col',">Extension Deadline</th><th scope=",'col',">Self Certified</th><th scope=",'col',">Status</th></tr>";
+        while ($row = mysqli_fetch_assoc($result)) {
+          echo "<tr class='clickableRow'>";
+          echo "<td>" . $row["ModuleName"] . "</td>";
+          echo "<td>" . $row["RequestedExtentionDeadline"] . "</td>";
+          echo "<td>" . ($row["isSelfCertified"] == 'true' ? 'Yes' : 'No') . "</td>";
+          echo "<td>" . $row["Status"] . "</td>";
+          echo "</tr>";
+        }
+        echo "</table>";
+
+      mysqli_close($conn);
+
+
+      ?>
+
+      
+    </div>
+    
+    <div id="OptionsBar" class="container">
+      <div class="row">
+        <div class="col">
+          <form action="../scripts/withdrawEC.php" method="post" target="_self">
+            <button type="submit" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+              Modify
+            </button>
+          </form>
+          
+        </div>
+        <div class="col">
+          <form action="" method="post">
+              <button type="submit" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+                Withdraw
+              </button>
+            </form>
+        </div>
+        <div class="col">
+        <form action="" method="post">
+            <button type="submit" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+              More Details
+            </button>
+          </form>
+        </div>
+      </div>
+      
+      
+      
+    </div>
+
+
 </body>
 
-<?php 
 
-
-$username = $_SESSION['username'];
-
-if (!isset($_SESSION['user_id']  ) ) {
-  header('Location: ../index.php');
-  exit();
-}
-elseif ($_SESSION['user_type'] == 'Admin'){
-  header('Location: ../pages/adminLanding.php');
-  exit();
-}
-
-$conn = mysqli_connect("eecs-plus.cyvzc0wdkfgr.eu-north-1.rds.amazonaws.com:3306","admin","password123","eecs");
-
-if (!$conn) {
-  die("Connection failed: " . mysqli_connect_error());
-}
-
-$ID = $_SESSION['user_id'];
-//Retrieve data from the database
-$query = "SELECT * FROM ECs WHERE userID = '$ID'";
-$result = mysqli_query($conn, $query);
-
-  //Display the data in a table
-  echo "<table class='table table-hover'>";
-  echo "<tr><th scope=",'col',">Module Name</th><th scope=",'col',">Extension Deadline</th><th scope=",'col',">Self Certified</th><th scope=",'col',">Status</th></tr>";
-  while ($row = mysqli_fetch_assoc($result)) {
-    echo "<tr>";
-    echo "<td>" . $row["ModuleName"] . "</td>";
-    echo "<td>" . $row["RequestedExtentionDeadline"] . "</td>";
-    echo "<td>" . ($row["isSelfCertified"] == 'true' ? 'Yes' : 'No') . "</td>";
-    echo "<td>" . $row["Status"] . "</td>";
-    echo "</tr>";
-  }
-  echo "</table>";
-
-mysqli_close($conn);
-
-?>
 
 <footer class="container">
     <p></p>
