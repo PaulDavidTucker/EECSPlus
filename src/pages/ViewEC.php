@@ -151,7 +151,7 @@ elseif ($_SESSION['user_type'] == 'Admin'){
     <div id="OptionsBar" class="container">
       <div class="row">
         <div class="col">
-          <form action="../scripts/withdrawEC.php" method="post" target="_self">
+          <form action="../pages/scripts/withdrawEC.php" method="post" target="_self">
             <button type="submit" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
               Modify
             </button>

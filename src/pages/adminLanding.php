@@ -14,6 +14,32 @@ elseif ($_SESSION['user_type'] != 'Admin'){
     exit();
   }
    
+  $conn = mysqli_connect("eecs-plus.cyvzc0wdkfgr.eu-north-1.rds.amazonaws.com:3306","admin","password123","eecs");
+
+  if (!$conn) {
+    die("Connection failed: " . mysqli_connect_error());
+  }
+
+  $query = "SELECT COUNT(*) FROM ECs where Status ='Pending'";
+$result = $conn -> query($query);
+$row = $result -> fetch_assoc();
+
+$numECs =  $row['COUNT(*)'];
+
+$query = "SELECT COUNT(*) FROM ECs where Status ='Approved' || Status ='Not Approved'";
+$result = $conn -> query($query);
+$sec = $result -> fetch_assoc();
+
+
+$numPendingEC =  $sec['COUNT(*)'];
+
+$query = "SELECT COUNT(*) FROM issues";
+$result = $conn -> query($query);
+$thrd = $result -> fetch_assoc();
+
+$numissuesSubmitted = $thrd['COUNT(*)'];
+
+$conn -> close();
 
 ?>
 
@@ -134,33 +160,33 @@ elseif ($_SESSION['user_type'] != 'Admin'){
             <div class="container-fluid px-4">
                 <div class="row g-3 my-2">
                     <div class="col-md-3">
-                        <div class="p-3 bg-white shadow-sm d-flex justify-content-around align-items-center rounded">
+                        <div class="p-3 bg-white border shadow-sm d-flex justify-content-around align-items-center rounded">
                             <div>
-                                <h3 class="fs-2">70</h3>
-                                <p class="fs-5">Completed ECs</p>
+                                <h3 class="fs-2"><?php echo $numECs?></h3>
+                                <p class="fs-5">Total ECs</p>
                             </div>
-                            <i class="fas fa-gift fs-1 primary-text border rounded-full secondary-bg p-3"></i>
+                            <i class="bi bi-hand-thumbs-up p-1"></i>
                         </div>
                     </div>
 
                     <div class="col-md-3">
-                        <div class="p-3 bg-white shadow-sm d-flex justify-content-around align-items-center rounded">
+                        <div class="p-3 bg-white border shadow-sm d-flex justify-content-around align-items-center rounded">
                             <div>
-                                <h3 class="fs-2">35</h3>
+                                <h3 class="fs-2"><?php echo $numPendingEC?></h3>
                                 <p class="fs-5">Pending EC</p>
                             </div>
                             <i
-                                class="fas fa-hand-holding-usd fs-1 primary-text border rounded-full secondary-bg p-3"></i>
+                                class="bi bi-alarm p-1"></i>
                         </div>
                     </div>
 
                     <div class="col-md-3">
-                        <div class="p-3 bg-white shadow-sm d-flex justify-content-around align-items-center rounded">
+                        <div class="p-3 bg-white border shadow-sm d-flex justify-content-around align-items-center rounded">
                             <div>
-                                <h3 class="fs-2">4 </h3>
+                                <h3 class="fs-2"><?php echo $numissuesSubmitted?> </h3>
                                 <p class="fs-5">Issues Submitted</p>
                             </div>
-                            <i class="fas fa-truck fs-1 primary-text border rounded-full secondary-bg p-3"></i>
+                            <i class="bi bi-ticket-detailed p-1"></i>
                         </div>
                     </div>
 
