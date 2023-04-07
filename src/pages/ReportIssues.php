@@ -23,10 +23,7 @@ if (!isset($_SESSION['user_id']  ) ) {
   header('Location: ../index.php');
   exit();
 }
-elseif ($_SESSION['user_type'] == 'Admin'){
-  header('Location: ../pages/ReportIssues.php');
-  exit();
-}
+
 
 if(isset($_POST['description'])&& isset($_POST['type'])){
     $description = $_POST['description'];
@@ -58,6 +55,10 @@ function reportIssue($description,$issueType){
 
     if ($conn->query($sql) === TRUE) {
         echo "New record created successfully";
+        if ($_SESSION['user_type'] == 'Admin'){
+            header('Location: ../pages/adminLanding.php');
+            exit();
+          }
       } else {
         echo "Error: " . $sql . "<br>" . $conn->error;
       }

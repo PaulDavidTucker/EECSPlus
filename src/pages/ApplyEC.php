@@ -22,10 +22,12 @@ if (!isset($_SESSION['user_id']  ) ) {
   header('Location: ../index.php');
   exit();
 }
+/*
 elseif ($_SESSION['user_type'] == 'Admin'){
   header('Location: ../pages/adminLanding.php');
   exit();
 }
+*/
 
 if (isset($_POST['moduleName']) && isset($_POST['description']) && isset($_POST['datepicker']) && isset($_POST['type'])) {
   $module = $_POST['moduleName'];
@@ -59,6 +61,10 @@ function submitEC($module, $description, $extentiondeadline, $isselfcertified){
 
   if ($conn->query($sql) === TRUE) {
     echo "New record created successfully";
+    if ($_SESSION['user_type'] == 'Admin'){
+      header('Location: ../pages/adminLanding.php');
+      exit();
+    }
   } else {
     echo "Error: " . $sql . "<br>" . $conn->error;
   }
