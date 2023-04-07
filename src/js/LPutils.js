@@ -11,14 +11,24 @@ function EnableDarkMode() {
   isDarkMode = true;
   doc.setAttribute("data-bs-theme", "dark");
   navbar.setAttribute("class", "navbar navbar-expand-lg navbar-dark bg-dark");
-  jumbotron.setAttribute("style", "background:rgb(53, 53, 53) !important");
+  try {
+    jumbotron.setAttribute("style", "background:rgb(53, 53, 53) !important");
+  } catch (error) {
+    console.log("Jumbotron not found");
+  }
+  
   LogoutButton.setAttribute("class", "btn btn-outline-light");
 }
 
 function EnableLightMode(theme) {
   doc.setAttribute("data-bs-theme", theme);
   navbar.setAttribute("class", "navbar navbar-expand-lg navbar-light gradient-custom-navbar");
-  jumbotron.setAttribute("style", "");
+  try {
+    jumbotron.setAttribute("style", "");
+  } catch (error) {
+    console.log("Jumbotron not found");
+  }
+  
   LogoutButton.setAttribute("class", "btn btn-outline-dark");
 }
 
@@ -52,7 +62,12 @@ checkbox.addEventListener('change', ()=>{
         isDarkMode = true;
         doc.setAttribute("data-bs-theme", "dark");
         navbar.setAttribute("class", "navbar navbar-expand-lg navbar-dark bg-dark");
-        jumbotron.setAttribute("style", "background:rgb(53, 53, 53) !important");
+        try {
+          jumbotron.setAttribute("style", "background:rgb(53, 53, 53) !important");
+        } catch (error) {
+          console.log("Jumbotron not found");
+        }
+        
         LogoutButton.setAttribute("class", "btn btn-outline-light");
         console.log("Dark Mode Enabled");
         checkbox.setAttribute("checked", "true");
@@ -60,7 +75,11 @@ checkbox.addEventListener('change', ()=>{
         isDarkMode = false;
         doc.setAttribute("data-bs-theme", "light");
         navbar.setAttribute("class", "navbar navbar-expand-lg navbar-light gradient-custom-navbar");
-        jumbotron.setAttribute("style", "");
+        try {
+          jumbotron.setAttribute("style", "");
+        } catch (error) { 
+          console.log("Jumbotron not found");
+        }
         LogoutButton.setAttribute("class", "btn btn-outline-dark");
         console.log("Dark Mode Disabled");
         checkbox.setAttribute("checked", "false");

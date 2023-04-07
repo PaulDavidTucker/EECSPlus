@@ -11,6 +11,7 @@ elseif ($_SESSION['user_type'] == 'Admin'){
   header('Location: ../pages/adminLanding.php');
   exit();
 }
+
 ?>
 
 
@@ -66,6 +67,12 @@ elseif ($_SESSION['user_type'] == 'Admin'){
                       <a class="dropdown-item" href="#">View all issues</a>
                     </div>
                 </li>
+                <li class="nav-item ml-1 mt-2">
+                  <div class="form-switch">
+                    <input class="form-check-input" type="checkbox" role="switch" id="darkModeCheckBox"  checked="true"  >
+                    <label class="form-check-label" for="darkModeCheckBox">Dark Mode</label>
+                  </div>
+                </li>
                 </ul>
                 <form class="form-inline my-2 my-lg-0 ml-1 mr-1">
                 <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
@@ -116,7 +123,7 @@ $query = "SELECT * FROM ECs WHERE userID = '$ID'";
 $result = mysqli_query($conn, $query);
 
   //Display the data in a table
-  echo "<table class=",'table table-hover',">";
+  echo "<table class='table table-hover'>";
   echo "<tr><th scope=",'col',">Module Name</th><th scope=",'col',">Extension Deadline</th><th scope=",'col',">Self Certified</th><th scope=",'col',">Status</th></tr>";
   while ($row = mysqli_fetch_assoc($result)) {
     echo "<tr>";
