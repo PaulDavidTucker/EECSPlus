@@ -127,6 +127,9 @@ elseif ($_SESSION['user_type'] == 'Admin'){
       $query = "SELECT * FROM ECs WHERE userID = '$ID'";
       $result = mysqli_query($conn, $query);
 
+      if ($result -> num_rows == 0) {
+        echo "<h3>You have no ECs!</h3>";
+      }else {
         //Display the data in a table
         echo "<table id='ecTable' class='table table-hover'>";
         echo "<tr><th scope=",'col',">Module Name</th><th scope=",'col',">Extension Deadline</th><th scope=",'col',">Self Certified</th><th scope=",'col',">Status</th></tr>";
@@ -139,6 +142,9 @@ elseif ($_SESSION['user_type'] == 'Admin'){
           echo "</tr>";
         }
         echo "</table>";
+      }
+
+        
 
       mysqli_close($conn);
 
