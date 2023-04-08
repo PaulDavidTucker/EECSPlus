@@ -11,6 +11,8 @@ function EnableDarkMode() {
   isDarkMode = true;
   doc.setAttribute("data-bs-theme", "dark");
   navbar.setAttribute("class", "navbar navbar-expand-lg navbar-dark bg-dark");
+
+  //Add any bootstrap elements that are < v5, and need to be changed to dark mode. The style attribute is used to override the default bootstrap theme.
   try {
     jumbotron.setAttribute("style", "background:rgb(53, 53, 53) !important");
   } catch (error) {
@@ -62,6 +64,8 @@ checkbox.addEventListener('change', ()=>{
         isDarkMode = true;
         doc.setAttribute("data-bs-theme", "dark");
         navbar.setAttribute("class", "navbar navbar-expand-lg navbar-dark bg-dark");
+        //Add any bootstrap elements that are < v5, and need to be changed to dark mode. The style attribute is used to override the default bootstrap theme.
+        //These are the only elements that need to be changed to dark mode, as the rest of the bootstrap elements are changed by the data-bs-theme attribute.
         try {
           jumbotron.setAttribute("style", "background:rgb(53, 53, 53) !important");
         } catch (error) {
