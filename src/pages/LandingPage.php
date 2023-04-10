@@ -68,7 +68,13 @@ elseif ($_SESSION['user_type'] == 'Admin'){
                     Dropdown
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                      <?php
+                        if($_SESSION['user_type']=='Student'){
+                      ?>
                       <a class="dropdown-item" href="#">View your ECs</a>
+                      <?php
+                        }
+                      ?>
                       <a class="dropdown-item" href="#">View your issues</a>
                       <div class="dropdown-divider"></div>
                       <a class="dropdown-item" href="#">View all issues</a>
@@ -109,6 +115,9 @@ elseif ($_SESSION['user_type'] == 'Admin'){
     <div class="container">
         <!-- Row of columns, can add more if needed. Use JS to make columns appear or disapear when logged in -->
         <div class="row">
+        <?php
+          if($_SESSION['user_type']=='Student'){
+        ?>            
           <div class="col-md-4">
             <h2>Apply for ECs</h2>
             <p></p>
@@ -119,6 +128,9 @@ elseif ($_SESSION['user_type'] == 'Admin'){
             <p></p>
             <p><a class="btn btn-secondary" href="ViewEC.php" role="button">View details &raquo;</a></p>
           </div>
+        <?php
+          }  
+        ?>
           <div class="col-md-4">
             <h2>Report Issue</h2>
             <p> </p>
