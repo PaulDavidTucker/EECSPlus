@@ -98,23 +98,11 @@ elseif ($_SESSION['user_type'] == 'Admin'){
 
 
     <div class="container-fluid text-center">
-      <h1>View your ECs</h1>
+      <h1>EECS Services</h1>
     </div>
 
     <div class="container mb-2">
-      <?php 
-
-
-      $username = $_SESSION['username'];
-
-      if (!isset($_SESSION['user_id']  ) ) {
-        header('Location: ../index.php');
-        exit();
-      }
-      elseif ($_SESSION['user_type'] == 'Admin'){
-        header('Location: ../pages/adminLanding.php');
-        exit();
-      }
+      <?php   
 
       $conn = mysqli_connect("eecs-plus.cyvzc0wdkfgr.eu-north-1.rds.amazonaws.com:3306","admin","password123","eecs");
 
@@ -122,69 +110,62 @@ elseif ($_SESSION['user_type'] == 'Admin'){
         die("Connection failed: " . mysqli_connect_error());
       }
 
-      $ID = $_SESSION['user_id'];
       //Retrieve data from the database
-      $query = "SELECT * FROM ECs WHERE userID = '$ID'";
+      $query = "SELECT * FROM EECS_Services";
       $result = mysqli_query($conn, $query);
 
-      if ($result -> num_rows == 0) {
-        echo "<h3>You have no ECs!</h3>";
-      }else {
         //Display the data in a table
         echo "<table id='ecTable' class='table table-hover'>";
-        echo "<tr><th scope=",'col',">Module Name</th><th scope=",'col',">Extension Deadline</th><th scope=",'col',">Self Certified</th><th scope=",'col',">Status</th></tr>";
+        echo "<tr><th scope=",'col',">Service</th><th scope=",'col',">Status</th><th scope=",'col',">Description</th></tr>";
         while ($row = mysqli_fetch_assoc($result)) {
           echo "<tr class='clickableRow'>";
-          echo "<td>" . $row["ModuleName"] . "</td>";
-          echo "<td>" . $row["RequestedExtentionDeadline"] . "</td>";
-          echo "<td>" . ($row["isSelfCertified"] == 'true' ? 'Yes' : 'No') . "</td>";
+          echo "<td>" . $row["Service"] . "</td>";
           echo "<td>" . $row["Status"] . "</td>";
+          echo "<td>" . $row["Description"] . "</td>";
           echo "</tr>";
         }
         echo "</table>";
-      }
-
-        
-
+      
       mysqli_close($conn);
 
-
-      ?>
-
-      
+      ?>      
     </div>
-    
+
+    <?php
+        if($_SESSION['user_type']=='Admin'){
+    ?>
     <div id="OptionsBar" class="container">
       <div class="row">
         <div class="col">
-          <form action="../pages/scripts/withdrawEC.php" method="post" target="_self">
+          <form action="" method="" target="">
             <button type="submit" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-              Modify
+              Add
             </button>
           </form>
           
         </div>
         <div class="col">
-          <form action="" method="post">
+          <form action="" method="">
               <button type="submit" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-                Withdraw
+                Update
               </button>
             </form>
         </div>
         <div class="col">
-        <form action="" method="post">
+        <form action="" method="">
             <button type="submit" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-              More Details
+              Remove
             </button>
           </form>
         </div>
+        
       </div>
-      
-      
-      
     </div>
 
-
+    <?php
+        }
+    ?>
+    
 </body>
 
 

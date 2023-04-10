@@ -61,7 +61,7 @@ elseif ($_SESSION['user_type'] == 'Admin'){
                     <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item ml-1">
-                    <a class="nav-link" href="#">Link</a>
+                    <a class="nav-link" href="EECSServices.php">EECS Services</a>
                 </li>
                 <li class="nav-item dropdown ml-1">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
