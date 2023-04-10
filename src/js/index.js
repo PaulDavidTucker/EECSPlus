@@ -22,6 +22,29 @@ for (let i = 0; i < rows.length; i++) {
         }
         
     });
+
+
+    $(document).ready(function() {
+        $('table tr').on('click', function() {
+          // Get the ID of the clicked row
+          var id = $(this).data('id');
+          
+          // Make an AJAX request to get the data for the clicked row
+          $.ajax({
+            url: 'getECData.php',
+            method: 'POST',
+            data: { id: id },
+            success: function(data) {
+              // Display the data in a separate div
+              $('#ec-data').html(data);
+            }
+          });
+        });
+      });
+      
+
+
+    
 }
 //https://docs.djangoproject.com/en/4.1/intro/overview/
 //https://cakephp.org/

@@ -51,7 +51,7 @@ function reportIssue($description,$issueType){
     $USERID = $_SESSION['user_id'];
     $status = status::Pending;
 
-    $sql = "INSERT INTO issues (UserID,description,status,issueType) VALUES ('$USERID','$description','$status','$issueType')";
+    $sql = "INSERT INTO issues (UserID,'description','status',issueType) VALUES ('$USERID','$description','$status','$issueType')";
 
     if ($conn->query($sql) === TRUE) {
         echo "New record created successfully";
@@ -151,7 +151,7 @@ function reportIssue($description,$issueType){
             </div>
 
             <div class="text-center pt-1 mb-5 pb-1">
-                <button class="btn btn-primary btn-block fa-lg gradient-custom-2 mb-3" id="LoginButton" type="submit">Submit</button>
+                <button class="btn btn-primary btn-block fa-lg gradient-custom-2 mb-3" id="submitIssue" type="submit">Submit</button>
             </div>
 
         </form>

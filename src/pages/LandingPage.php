@@ -65,13 +65,13 @@ elseif ($_SESSION['user_type'] == 'Admin'){
                 </li>
                 <li class="nav-item dropdown ml-1">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Dropdown
+                    View
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                       <a class="dropdown-item" href="#">View your ECs</a>
-                      <a class="dropdown-item" href="#">View your issues</a>
+                      <a class="dropdown-item" href="ViewYourIssues.php">View your issues</a>
                       <div class="dropdown-divider"></div>
-                      <a class="dropdown-item" href="#">View all issues</a>
+                      <a class="dropdown-item" href="ViewAllIssues.php">View all issues</a>
                     </div>
                 </li>
                 <li class="nav-item ml-1 mt-2">
@@ -114,7 +114,7 @@ elseif ($_SESSION['user_type'] == 'Admin'){
             <p></p>
             <p><a class="btn btn-secondary" href="ApplyEC.php" role="button">click &raquo;</a></p>
           </div>
-          <div class="col-md-4">
+          <div class="col-md-4" >
             <h2>View ECs</h2>
             <p></p>
             <p><a class="btn btn-secondary" href="ViewEC.php" role="button">View details &raquo;</a></p>

@@ -29,22 +29,22 @@ elseif ($_SESSION['user_type'] == 'Admin'){
 }
 */
 
-if (isset($_POST['moduleName']) && isset($_POST['description']) && isset($_POST['datepicker']) && isset($_POST['type'])) {
+if (isset($_POST['moduleName']) && isset($_POST['description']) && isset($_POST['DeadLine'])&& isset($_POST['RequestedExtentionDeadline']) && isset($_POST['type'])) {
   $module = $_POST['moduleName'];
   $description = $_POST['description'];
-  $formattedDate = date('Y-m-d', strtotime($_POST['datepicker']));
-  $extentiondeadline = $formattedDate;
+  $deadline = date('Y-m-d', strtotime($_POST['DeadLine']));
+  $extentiondeadline = date('Y-m-d', strtotime($_POST['RequestedExtentionDeadline']));
   if ($_POST['type'] == "Self Certified") {
-    $isselfcertified = IsSelfCertified::true;
+    $isselfcertified = "true";
   } else {
-    $isselfcertified = IsSelfCertified::false;
+    $isselfcertified = "false";
   }
   
 
-  submitEC($module, $description, $extentiondeadline, $isselfcertified);
+  submitEC($module, $description,$deadline, $extentiondeadline, $isselfcertified);
 }
 
-function submitEC($module, $description, $extentiondeadline, $isselfcertified){
+function submitEC($module, $description,$deadline, $extentiondeadline, $isselfcertified){
   $conn = new mysqli("eecs-plus.cyvzc0wdkfgr.eu-north-1.rds.amazonaws.com:3306","admin","password123","eecs");
   if ($conn->connect_error) {
       die("Connection failed: " . $conn->connect_error);
@@ -52,12 +52,12 @@ function submitEC($module, $description, $extentiondeadline, $isselfcertified){
 
   //Vars needed to add EC to database
   $USERID = $_SESSION['user_id'];
-  $status = Status::Pending;
+  $status = "Pending";
 
   //Uncomment to see what was inserted for debugging
   //echo "Inserted values ",$USERID, " ",$module," ",$description, " ",$extentiondeadline," ",$isselfcertified," ", Status::Pending;
   //Insert EC into database
-  $sql = "INSERT INTO ECs (UserID,ModuleName,description,RequestedExtentionDeadline,isSelfCertified,Status) VALUES ('$USERID','$module', '$description','$extentiondeadline', '$isselfcertified', '$status')";
+  $sql = "INSERT INTO ECs (userID,ModuleName,description,DeadLine,RequestedExtentionDeadline,isSelfCertified,Status) VALUES ('$USERID','$module', '$description', '$deadline','$extentiondeadline', '$isselfcertified', '$status')";
 
   if ($conn->query($sql) === TRUE) {
     echo "New record created successfully";
@@ -164,15 +164,27 @@ function submitEC($module, $description, $extentiondeadline, $isselfcertified){
                             placeholder="description" name="description"></textarea>
                         </div>
 
+
+                        <div class="form-outline mb-4">
+
+                          <div class="input-group date" data-provide="datepicker">
+                              <input type="text" class="form-control" id="dealine" name="DeadLine" placeholder="Deadline - MM/DD/YYYY">
+                              <div class="input-group-addon">
+                                  <span class="glyphicon glyphicon-th"></span>
+                              </div>
+                          </div>
+                          </div>
+
                         <div class="form-outline mb-4">
 
                             <div class="input-group date" data-provide="datepicker">
-                                <input type="text" class="form-control" id="datepicker" name="datepicker" placeholder="Requested Extension Date - MM/DD/YYYY">
+                                <input type="text" class="form-control" id="RequestedExtentionDeadline" name="RequestedExtentionDeadline" placeholder="Requested Extension Date - MM/DD/YYYY">
                                 <div class="input-group-addon">
                                     <span class="glyphicon glyphicon-th"></span>
                                 </div>
                             </div>
                         </div>
+                        
 
                         <div  class="form-outline mb-4" >
                         <select name="type" id="type" class = "form-select form-select-sm mb-3">
@@ -182,7 +194,7 @@ function submitEC($module, $description, $extentiondeadline, $isselfcertified){
                         </div>
       
                         <div class="text-center pt-1 mb-5 pb-1">
-                          <button class="btn btn-primary btn-block fa-lg gradient-custom-2 mb-3" id="LoginButton" type="submit">Submit</button>
+                          <button class="btn btn-primary btn-block fa-lg gradient-custom-2 mb-3" id="submitEC" type="submit">Submit</button>
     
                         </div>
       

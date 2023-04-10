@@ -132,13 +132,17 @@ elseif ($_SESSION['user_type'] == 'Admin'){
       }else {
         //Display the data in a table
         echo "<table id='ecTable' class='table table-hover'>";
-        echo "<tr><th scope=",'col',">Module Name</th><th scope=",'col',">Extension Deadline</th><th scope=",'col',">Self Certified</th><th scope=",'col',">Status</th></tr>";
+        echo "<tr><th scope=",'col',">ID</th><th scope=",'col',">Module Name</th><th scope=",'col',">Description </th><th scope=",'col',">Deadline</th><th scope=",'col',">Extension Deadline</th><th scope=",'col',">Self Certified</th><th scope=",'col',">Status</th><th scope=",'col',">Date Created</th></tr></tr>";
         while ($row = mysqli_fetch_assoc($result)) {
           echo "<tr class='clickableRow'>";
+          echo "<td>" . $row["id"] . "</td>";
           echo "<td>" . $row["ModuleName"] . "</td>";
+          echo  "<td>" . $row["description"] . "</td>";
+          echo  "<td>" . $row["DeadLine"] . "</td>";
           echo "<td>" . $row["RequestedExtentionDeadline"] . "</td>";
-          echo "<td>" . ($row["isSelfCertified"] == 'true' ? 'Yes' : 'No') . "</td>";
+          echo "<td>" . $row["isSelfCertified"] . "</td>";
           echo "<td>" . $row["Status"] . "</td>";
+          echo  "<td>" . $row["DateCreated"] . "</td>";
           echo "</tr>";
         }
         echo "</table>";
