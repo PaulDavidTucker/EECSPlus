@@ -7,10 +7,6 @@ if (!isset($_SESSION['user_id']  ) ) {
   header('Location: ../index.php');
   exit();
 }
-elseif ($_SESSION['user_type'] == 'Admin'){
-  header('Location: ../pages/adminLanding.php');
-  exit();
-}
 
 ?>
 
@@ -114,18 +110,43 @@ elseif ($_SESSION['user_type'] == 'Admin'){
       $query = "SELECT * FROM EECS_Services";
       $result = mysqli_query($conn, $query);
 
+      if($_SESSION['user_type']!='Admin'){
         //Display the data in a table
         echo "<table id='ecTable' class='table table-hover'>";
-        echo "<tr><th scope=",'col',">Service</th><th scope=",'col',">Status</th><th scope=",'col',">Description</th></tr>";
+        echo "<tr><th scope=",'col',">Service</th><th scope=",'col',">Description</th><th scope=",'col',">Status</th></tr>";
         while ($row = mysqli_fetch_assoc($result)) {
           echo "<tr class='clickableRow'>";
           echo "<td>" . $row["Service"] . "</td>";
-          echo "<td>" . $row["Status"] . "</td>";
           echo "<td>" . $row["Description"] . "</td>";
+          echo "<td>" . $row["Status"] . "</td>";
           echo "</tr>";
         }
         echo "</table>";
-      
+      }
+
+      else{
+        echo "<table id='ecTable' class='table table-hover'>";
+        echo "<tr><th scope=",'col',">Service</th><th scope=",'col',">Description</th><th scope=",'col',">Status</th></tr>";
+        while ($row = mysqli_fetch_assoc($result)) {
+          echo "<tr class='clickableRow'>";
+          echo "<td>" . $row["Service"] . "</td>";
+          echo "<td>" . $row["Description"] . "</td>";
+          echo "<td>
+                <form action ='' method ='post' targer = '_self'>
+                    <select name='status' id ='status'  class = 'form-select form-select-sm mb-3'>
+                    <option value=''>" . $row["Status"] . "</option>";
+                    if($row["Status"]!=="Running"){ echo "<option value='Running'>Running</option>";}
+                    if($row["Status"]!=="Suspended"){echo "<option value='Suspended'>Suspended</option>";}
+                    if($row["Status"]!=="Unavailable"){echo "<option value='Unavailable'>Unavailable</option>";}          
+          echo "<input class='btn btn-primary btn-block fa-lg gradient-custom-2 mb-3' id='LoginButton' type='submit'>";          
+          echo "</td>";
+          echo "</tr>";
+        }
+        echo "</table>";
+
+
+
+      }
       mysqli_close($conn);
 
       ?>      
@@ -135,30 +156,14 @@ elseif ($_SESSION['user_type'] == 'Admin'){
         if($_SESSION['user_type']=='Admin'){
     ?>
     <div id="OptionsBar" class="container">
-      <div class="row">
-        <div class="col">
+      <div class = "row justify-content-center">
+        <div class="col-2 mx-auto">
           <form action="" method="" target="">
             <button type="submit" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-              Add
-            </button>
-          </form>
-          
-        </div>
-        <div class="col">
-          <form action="" method="">
-              <button type="submit" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-                Update
-              </button>
-            </form>
-        </div>
-        <div class="col">
-        <form action="" method="">
-            <button type="submit" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-              Remove
+              Update
             </button>
           </form>
         </div>
-        
       </div>
     </div>
 
