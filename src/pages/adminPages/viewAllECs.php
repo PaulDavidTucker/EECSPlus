@@ -119,6 +119,10 @@ $conn -> close();
                                         <a href="#" class="nav-link px-0 align-middle">
                                             <i class="fs-4 bi-people"></i> <span class="ms-1 d-none d-sm-inline">Edit User details</span> </a>
                                     </li>
+                                    <li>
+                                        <a href="addUser.php" class="nav-link px-0 align-middle">
+                                            <i class="fs-4 bi-people"></i> <span class="ms-1 d-none d-sm-inline">New User</span> </a>
+                                    </li>
                                 </ul>
                                 <hr>
                             </div>
@@ -143,12 +147,13 @@ $conn -> close();
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle second-text fw-bold" href="#" id="navbarDropdown"
                                 role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                <i class="fas fa-user me-2"></i>User
+                                <img src="../../assets/QMUL Logo.png" alt="hugenerd" width="30" height="30" class="rounded-circle">
+                                <i class="fas fa-user me-2"></i><?php echo $username ?>
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                                 <li><a class="dropdown-item" href="#">Profile</a></li>
                                 <li><a class="dropdown-item" href="#">Settings</a></li>
-                                <li><a class="dropdown-item" href="../logout.php">Logout</a></li>
+                                <li><a class="dropdown-item" href="../../logout.php">Logout</a></li>
                             </ul>
                         </li>
                     </ul>
