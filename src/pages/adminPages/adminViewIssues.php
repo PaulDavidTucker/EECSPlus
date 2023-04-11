@@ -126,7 +126,7 @@ $conn -> close();
             <nav class="navbar navbar-expand-lg navbar-light bg-transparent py-4 px-4">
                 <div class="d-flex align-items-center">
                     <i class="fas fa-align-left primary-text fs-4 me-3" id="menu-toggle"></i>
-                    <h2 class="fs-2 m-0">View ECs</h2>
+                    <h2 class="fs-2 m-0">View Issues</h2>
                 </div>
 
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
@@ -175,7 +175,19 @@ $conn -> close();
 
         $ID = $_SESSION['user_id'];
         //Retrieve data from the database
-        $query = "SELECT * FROM issues ";
+        $query = "
+        SELECT `issues`.`id`,
+        `issues`.`userID`,
+        `issues`.`description`,
+        `issues`.`status`,
+        `issues`.`timeCreated`,
+        `issues`.`issueType`,
+        `user`.`userName`,
+        `user`.`userType`
+        FROM `eecs`.`issues`
+        JOIN `eecs`.`user` ON `issues`.`userID` = `user`.`id`;
+        ";
+
         $result = mysqli_query($conn, $query);
 
         if ($result -> num_rows == 0) {
@@ -183,19 +195,22 @@ $conn -> close();
         } else {
             //Display the data in a table
             echo "<table id='issueTable' class='table table-hover'>";
-            echo "<thead><tr><th>ID</th><th>User ID</th><th>Description</th><th>Status</th><th>Status</th></tr></thead><tbody>";
+            echo "<thead><tr><th>ID</th><th>User ID</th><th>UserName</th><th>User Type</th></th><th>Status</th><th>Issue Type</th><th>Time Created</th></tr></thead><tbody>";
             while ($row = mysqli_fetch_assoc($result)) {
                 echo "<tr>";
                 echo "<td>" . $row["id"] . "</td>";
                 echo "<td>" . $row["userID"] . "</td>";
-                echo "<td>" . $row["description"] . "</td>";
+                echo "<td>" . $row["userName"] . "</td>";
+                echo "<td>" . $row["userType"] . "</td>";
+                echo "<td style='display:none'>" . $row["description"] . "</td>";
                 echo "<td  >" . $row["status"] . "</td>";;
                 echo "<td >" . $row["issueType"] . "</td>";
+                echo "<td>" . $row["timeCreated"] . "</td>";
             }
             echo "</tbody></table>";
         }
 
-        mysqli_close($conn);
+        mysqli_close($conn);    
 
         ?>
     </div>
@@ -213,6 +228,22 @@ $conn -> close();
 
 </body>
 <script >
+
+function deleteIssue(id) {
+    
+  if (confirm("Are you sure you want to delete this Issue?")) {
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+      if (this.readyState == 4 && this.status == 200) {
+        alert(this.responseText);
+        window.location.href = "adminViewIssues.php";
+      }
+    };
+    
+    xhttp.open("GET", "deleteIssue.php?id=" + id, true);
+    xhttp.send();
+  }
+}
 const table = document.getElementById("issueTable");
 
 const rows = table.getElementsByTagName("tr");
@@ -225,9 +256,12 @@ for (let i = 0; i < rows.length; i++) {
         // Get the values of the relevant columns
         const id = rowArray[0].innerHTML;
         const userID = rowArray[1].innerHTML;
-        const description = rowArray[2].innerHTML;
-        const status = rowArray[3].innerHTML;
-        const issueType = rowArray[4].innerHTML;
+        const username = rowArray[2].innerHTML;
+        const userType = rowArray[3].innerHTML;
+        const description = rowArray[4].innerHTML;
+        const status = rowArray[5].innerHTML;
+        const issueType = rowArray[6].innerHTML;
+        const timeCreated = rowArray[7].innerHTML;
 
 
         // Create the HTML for the details
@@ -236,24 +270,37 @@ for (let i = 0; i < rows.length; i++) {
         <form action="" method="post" >
   <table class="table table-bordered">
     <tbody>
-      <tr>
-        <th>ID:</th>
-        <td >${id}</td>
-        <input type="hidden" name="id" value="${id}">
-      </tr>
-      <tr>
-        <th>Description :</th>
-        <td>${description }</td>
-        
-      </tr>
-      <tr>
-        <th>Status:</th>
-        <td>${status}</td>
-      </tr>
-      <tr>
-        <th>Type:</th>
-        <td>${issueType}</td>
-      </tr>
+        <tr>
+            <th scope="row">ID</th>
+            <td>${id}</td>
+        </tr>
+        <tr>
+            <th scope="row">User ID</th>
+            <td>${userID}</td>
+        </tr>
+        <tr>
+            <th scope="row">Username</th>
+            <td>${username}</td>
+        </tr>
+        <tr>
+            <th scope="row">User Type</th>
+            <td>${userType}</td>
+        <tr>
+            <th scope="row">Description</th>
+            <td>${description}</td>
+        </tr>
+        <tr>
+            <th scope="row">Status</th>
+            <td>${status}</td>
+        </tr>
+        <tr>
+            <th scope="row">Issue Type</th>
+            <td>${issueType}</td>
+        </tr>
+        <tr>
+            <th scope="row">Time Created</th>
+            <td>${timeCreated}</td>
+        </tr>
 
     </tbody>
   </table>
@@ -264,6 +311,7 @@ for (let i = 0; i < rows.length; i++) {
         </select>
         <button class="btn btn-primary mb-2" type="submit">Save</button>
         <button class="btn btn-secondary mb-2"  type="button" onclick="location.reload()">Cancel</button>
+        <button class="btn btn-secondary mb-2" type="button" onclick=deleteIssue('${id}')>Delete</button>
     </form>
     
 </div>  `;

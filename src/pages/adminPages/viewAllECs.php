@@ -30,6 +30,12 @@ elseif ($_SESSION['user_type'] != 'Admin'){
   
     updateEC($id, $status);
   }
+
+
+
+  // delete EC
+
+
   
   function updateEC($id, $status){
     $conn = new mysqli("eecs-plus.cyvzc0wdkfgr.eu-north-1.rds.amazonaws.com:3306","admin","password123","eecs");
@@ -172,7 +178,24 @@ $conn -> close();
 
         $ID = $_SESSION['user_id'];
         //Retrieve data from the database
-        $query = "SELECT * FROM ECs ";
+        $query = "
+        SELECT `ECs`.`id`,
+        `ECs`.`userID`,
+        `ECs`.`ModuleName`,
+        `ECs`.`description`,
+        `ECs`.`DateCreated`,
+        `ECs`.`DeadLine`,
+        `ECs`.`RequestedExtentionDeadline`,
+        `ECs`.`isSelfCertified`,
+        `ECs`.`Status`,
+        `user`.`userName`,
+        `user`.`userType`
+        FROM `eecs`.`ECs`
+        JOIN `eecs`.`user` ON `ECs`.`userID` = `user`.`id`;
+
+        
+        
+        ";
         $result = mysqli_query($conn, $query);
 
         if ($result -> num_rows == 0) {
@@ -180,11 +203,13 @@ $conn -> close();
         } else {
             //Display the data in a table
             echo "<table id='ecTable' class='table table-hover'>";
-            echo "<thead><tr><th>ID</th><th>User ID</th><th>Module Name</th><th>Status</th><th>Date Created</th></tr></thead><tbody>";
+            echo "<thead><tr><th>ID</th><th>User ID</th><th>UserName</th><th>User Type</th><th>Module Name</th><th>Status</th><th>Date Created</th></tr></thead><tbody>";
             while ($row = mysqli_fetch_assoc($result)) {
                 echo "<tr>";
                 echo "<td>" . $row["id"] . "</td>";
                 echo "<td>" . $row["userID"] . "</td>";
+                echo "<td>" . $row["userName"] . "</td>";
+                echo "<td>" . $row["userType"] . "</td>";
                 echo "<td>" . $row["ModuleName"] . "</td>";
                 echo "<td style='display:none;' >" . $row["description"] . "</td>";
                 echo "<td style='display:none;'>" . $row["DeadLine"] . "</td>";
@@ -192,6 +217,8 @@ $conn -> close();
                 echo "<td style='display:none;'>" . $row["isSelfCertified"] . "</td>";
                 echo "<td>" . $row["Status"] . "</td>";
                 echo "<td>" . $row["DateCreated"] . "</td>";
+                
+                
                 echo "</tr>";
             }
             echo "</tbody></table>";
@@ -215,6 +242,24 @@ $conn -> close();
 
 </body>
 <script >
+
+function deleteEC(id) {
+    console.log(id);
+  if (confirm("Are you sure you want to delete this EC?")) {
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+      if (this.readyState == 4 && this.status == 200) {
+        alert(this.responseText);
+        window.location.href = "viewAllECs.php";
+      }
+    };
+    
+    xhttp.open("GET", "deleteEC.php?id=" + id, true);
+    xhttp.send();
+  }
+}
+
+
 const table = document.getElementById("ecTable");
 
 const rows = table.getElementsByTagName("tr");
@@ -227,13 +272,15 @@ for (let i = 0; i < rows.length; i++) {
         // Get the values of the relevant columns
         const id = rowArray[0].innerHTML;
         const userID = rowArray[1].innerHTML;
-        const moduleName = rowArray[2].innerHTML;
-        const Descirption = rowArray[3].innerHTML;
-        const deadline = rowArray[4].innerHTML;
-        const extensionDeadline = rowArray[5].innerHTML;
-        const selfCertified = rowArray[6].innerHTML;
-        const status = rowArray[7].innerHTML;
-        const dateCreated = rowArray[8].innerHTML;
+        const username = rowArray[2].innerHTML;
+        const userType = rowArray[3].innerHTML;
+        const moduleName = rowArray[4].innerHTML;
+        const Descirption = rowArray[5].innerHTML;
+        const deadline = rowArray[7].innerHTML;
+        const extensionDeadline = rowArray[7].innerHTML;
+        const selfCertified = rowArray[8].innerHTML;
+        const status = rowArray[9].innerHTML;
+        const dateCreated = rowArray[10].innerHTML;
 
         // Create the HTML for the details
         const html = `
@@ -249,6 +296,17 @@ for (let i = 0; i < rows.length; i++) {
       <tr>
         <th>User ID:</th>
         <td>${userID}</td>
+        
+      </tr>
+      <tr>
+        <th>username:</th>
+        <td>${username}</td>
+        
+      </tr>
+
+      <tr>
+        <th>User Type:</th>
+        <td>${userType}</td>
         
       </tr>
       <tr>
@@ -289,6 +347,7 @@ for (let i = 0; i < rows.length; i++) {
         </select>
         <button class="btn btn-primary mb-2" type="submit">Save</button>
         <button class="btn btn-secondary mb-2"  type="button" onclick="location.reload()">Cancel</button>
+        <button class="btn btn-secondary mb-2" type="button" onclick=deleteEC('${id}')>Delete</button>
     </form>
     
 </div>  `;
@@ -298,7 +357,13 @@ for (let i = 0; i < rows.length; i++) {
         ecDetails.innerHTML = html;
     });
 
+
+
+
 }
+
+
+
 
 
 </script>
