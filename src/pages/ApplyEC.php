@@ -17,10 +17,16 @@ enum Status {
 
 //check if user is logged in
 $username = $_SESSION['username'];
+$userType = $_SESSION['user_type'];
 
 if (!isset($_SESSION['user_id']  ) ) {
   header('Location: ../index.php');
   exit();
+}
+elseif($_SESSION['user_type'] == 'Facualty'){
+  header('Location: ../pages/LandingPage.php');
+  exit();
+
 }
 /*
 elseif ($_SESSION['user_type'] == 'Admin'){
@@ -61,9 +67,10 @@ function submitEC($module, $description,$deadline, $extentiondeadline, $isselfce
 
   if ($conn->query($sql) === TRUE) {
     echo "New record created successfully";
+    header("refresh:0.9;url=ApplyEC.php");
     if ($_SESSION['user_type'] == 'Admin'){
       header('Location: ../pages/adminLanding.php');
-      exit();
+      
     }
   } else {
     echo "Error: " . $sql . "<br>" . $conn->error;
@@ -116,25 +123,46 @@ function submitEC($module, $description,$deadline, $extentiondeadline, $isselfce
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav mr-auto">
                 <li class="nav-item active ml-1">
-                    <a class="nav-link" href="LandingPage.php">Home <span class="sr-only">(current)</span></a>
-                </li>
-                <li class="nav-item ml-1">
-                    <a class="nav-link" href="#">Link</a>
+                <a class="nav-link" href="LandingPage.php">Home <span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item dropdown ml-1">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Dropdown
+                    Submit
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                      <a class="dropdown-item" href="#">View your ECs</a>
-                      <a class="dropdown-item" href="#">View your issues</a>
-                      <div class="dropdown-divider"></div>
-                      <a class="dropdown-item" href="#">View all issues</a>
+                    <?php
+                      if ($userType !== 'Facualty') {
+                        echo '<a class="dropdown-item" href="ApplyEC.php">Submit ECs</a>';
+                      }
+                      ?>
+                      <a class="dropdown-item" href="ReportIssues.php">Submit Issue</a>
                     </div>
                 </li>
+                <?php
+                if ($userType != 'Admin' && $userType == 'Student') {
+
+                    echo '<li class="nav-item dropdown ml-1">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    View
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown"><a class="dropdown-item" href="ViewEC.php">View your ECs</a>
+
+                      <a class="dropdown-item" href="ViewYourIssues.php">View your issues</a>
+                      <div class="dropdown-divider"></div>
+                      <a class="dropdown-item" href="ViewAllIssues.php">View all issues</a>
+                    </div>
+                </li>';
+
+                  
+
+                }
+
+
+
+                ?>
                 <li class="nav-item ml-1 mt-2">
                   <div class="form-switch">
-                    <input class="form-check-input" type="checkbox" role="switch" id="darkModeCheckBox"   >
+                    <input class="form-check-input" type="checkbox" role="switch" id="darkModeCheckBox"  checked="true"  >
                     <label class="form-check-label" for="darkModeCheckBox">Dark Mode</label>
                   </div>
                 </li>
@@ -152,61 +180,61 @@ function submitEC($module, $description,$deadline, $extentiondeadline, $isselfce
     <div class="jumbotron" id="jumbotron">
       <h1 class="text-center mb-4">Apply for ECs</h1>
         <!-- aplication form fill out  module name , description ,  ExtentionDeadline , dropdown menu for if it self certfied or not-->
-        <form action="" method="post" target="_self">
+        <form action="" method="post" target="_self" onsubmit="return validateForm()">
 
-      
-                        <div class="form-outline mb-4">
-                          <input type="text" class="form-control"
-                            placeholder="module name" name="moduleName" />
-                        </div>
-                        <div class="form-outline mb-4">
-                            <textarea class="form-control" id="exampleFormControlTextarea1" rows="10"
-                            placeholder="description" name="description"></textarea>
-                        </div>
+<div class="form-outline mb-4">
+  <input type="text" class="form-control" placeholder="module name" name="moduleName" required maxlength="100" />
+</div>
+
+<div class="form-outline mb-4">
+  <textarea class="form-control" id="exampleFormControlTextarea1" rows="10" placeholder="description" name="description" required maxlength="500"></textarea>
+</div>
+
+<div class="form-outline mb-4">
+  <input type="date" class="form-control" id="dealine" name="DeadLine" placeholder="Deadline - MM/DD/YYYY">
+</div>
+
+<div class="form-outline mb-4">
+  <input type="date" class="form-control" id="RequestedExtentionDeadline" name="RequestedExtentionDeadline" placeholder="Requested Extension Date - MM/DD/YYYY">
+</div>
+
+<div class="form-outline mb-4">
+  <select name="type" id="type" class="form-select form-select-sm mb-3" required maxlength="20">
+    <option value="Self Certified">Self Certified</option>
+    <option value="Manual">Manual</option>
+  </select>
+</div>
+
+<div class="text-center pt-1 mb-5 pb-1">
+  <button class="btn btn-primary btn-block fa-lg gradient-custom-2 mb-3" id="submitEC" type="submit">Submit</button>
+</div>
+
+</form>   
 
 
-                        <div class="form-outline mb-4">
-
-                          <div class="input-group date" data-provide="datepicker">
-                              <input type="text" class="form-control" id="dealine" name="DeadLine" placeholder="Deadline - MM/DD/YYYY">
-                              <div class="input-group-addon">
-                                  <span class="glyphicon glyphicon-th"></span>
-                              </div>
-                          </div>
-                          </div>
-
-                        <div class="form-outline mb-4">
-
-                            <div class="input-group date" data-provide="datepicker">
-                                <input type="text" class="form-control" id="RequestedExtentionDeadline" name="RequestedExtentionDeadline" placeholder="Requested Extension Date - MM/DD/YYYY">
-                                <div class="input-group-addon">
-                                    <span class="glyphicon glyphicon-th"></span>
-                                </div>
-                            </div>
-                        </div>
-                        
-
-                        <div  class="form-outline mb-4" >
-                        <select name="type" id="type" class = "form-select form-select-sm mb-3">
-                            <option value="Self Certified">Self Certified</option>
-                            <option value="Manual">Manual</option>
-                        </select>
-                        </div>
-      
-                        <div class="text-center pt-1 mb-5 pb-1">
-                          <button class="btn btn-primary btn-block fa-lg gradient-custom-2 mb-3" id="submitEC" type="submit">Submit</button>
-    
-                        </div>
-      
-
-      
-                      </form>
         
 
 
 
 
     </div>
+
+    <script>
+  function validateForm() {
+    var moduleName = document.forms[0]["moduleName"].value;
+    var description = document.forms[0]["description"].value;
+    var deadline = document.forms[0]["DeadLine"].value;
+    var extension = document.forms[0]["RequestedExtentionDeadline"].value;
+    var type = document.forms[0]["type"].value;
+
+    if (moduleName == "" || description == "" || deadline == "" || extension == "" || type == "") {
+      alert("All fields are required!");
+      return false;
+    }
+
+    return true;
+  }
+</script>
 
 
 

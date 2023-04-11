@@ -2,6 +2,7 @@
 session_start();
 
 $username = $_SESSION['username'];
+$userType = $_SESSION['user_type'];
 
 if (!isset($_SESSION['user_id']  ) ) {
   header('Location: ../index.php');
@@ -38,7 +39,7 @@ elseif ($_SESSION['user_type'] == 'Admin'){
             EECSPlus 
         </a>
         <a class="ml-auto mr-1" href="../logout.php">
-          <button type="button" id="LogoutButton" class="btn btn-outline-light ">
+          <button type="button" id="LogoutButton" class="btn btn-outline-dark ">
             <img src="../assets/icons/person.svg" alt="Logout">
             Logout
         </button>
@@ -51,20 +52,34 @@ elseif ($_SESSION['user_type'] == 'Admin'){
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav mr-auto">
                 <li class="nav-item active ml-1">
-                    <a class="nav-link" href="LandingPage.php">Home <span class="sr-only">(current)</span></a>
-                </li>
-                <li class="nav-item ml-1">
-                    <a class="nav-link" href="#">Link</a>
+                <a class="nav-link" href="LandingPage.php">Home <span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item dropdown ml-1">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Dropdown
+                    Submit
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                      <a class="dropdown-item" href="#">View your ECs</a>
-                      <a class="dropdown-item" href="#">View your issues</a>
+                    <?php
+                      if ($userType !== 'Facualty') {
+                        echo '<a class="dropdown-item" href="ApplyEC.php">Submit ECs</a>';
+                      }
+                      ?>
+                      <a class="dropdown-item" href="ReportIssues.php">Submit Issue</a>
+                    </div>
+                </li>
+                <li class="nav-item dropdown ml-1">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    View
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <?php
+                      if ($userType !== 'Facualty') {
+                        echo '<a class="dropdown-item" href="ViewEC.php">View your ECs</a>';
+                      }
+                      ?>
+                      <a class="dropdown-item" href="ViewYourIssues.php">View your issues</a>
                       <div class="dropdown-divider"></div>
-                      <a class="dropdown-item" href="#">View all issues</a>
+                      <a class="dropdown-item" href="ViewAllIssues.php">View all issues</a>
                     </div>
                 </li>
                 <li class="nav-item ml-1 mt-2">
@@ -86,100 +101,76 @@ elseif ($_SESSION['user_type'] == 'Admin'){
     
 
     
-    <script src="../js/index.js" type="module"></script>
-    <script src="../js/LPutils.js" type="module"></script>
-    <!--Scripts for button functionality-->
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
+
 
 
     <div class="container-fluid text-center">
-      <h1>View your Issues</h1>
+      <h1>Your Issues   </h1>
     </div>
 
-    <div class="container mb-2">
-      <?php 
+    <div class="container-fluid text-center">
+        <div class="container mb-2" id="viewYourIssue">
+            <?php 
 
+            $username = $_SESSION['username'];
 
-      $username = $_SESSION['username'];
+            if (!isset($_SESSION['user_id']  ) ) {
+              header('Location: ../index.php');
+              exit();
+            }
+            elseif ($_SESSION['user_type'] == 'Admin'){
+              header('Location: ../pages/adminLanding.php');
+              exit();
+            }
 
-      if (!isset($_SESSION['user_id']  ) ) {
-        header('Location: ../index.php');
-        exit();
-      }
-      elseif ($_SESSION['user_type'] == 'Admin'){
-        header('Location: ../pages/adminLanding.php');
-        exit();
-      }
+            $conn = mysqli_connect("eecs-plus.cyvzc0wdkfgr.eu-north-1.rds.amazonaws.com:3306","admin","password123","eecs");
 
-      $conn = mysqli_connect("eecs-plus.cyvzc0wdkfgr.eu-north-1.rds.amazonaws.com:3306","admin","password123","eecs");
+            if (!$conn) {
+                die("Connection failed: " . mysqli_connect_error());
+            }
 
-      if (!$conn) {
-        die("Connection failed: " . mysqli_connect_error());
-      }
+            $ID = $_SESSION['user_id'];
+            //Retrieve data from the database
+            $query = "
+            SELECT `issues`.`id`,
+            `issues`.`userID`,
+            `issues`.`description`,
+            `issues`.`status`,
+            `issues`.`timeCreated`,
+            `issues`.`issueType`,
+            `user`.`userName`,
+            `user`.`userType`
+            FROM `eecs`.`issues`
+            JOIN `eecs`.`user` ON `issues`.`userID` = `user`.`id` WHERE `user`.`id` = $ID;
+            ";
 
-      $ID = $_SESSION['user_id'];
-      //Retrieve data from the database
-      $query = "SELECT * FROM issues WHERE userID = '$ID'";
-      $result = mysqli_query($conn, $query);
+            $result = mysqli_query($conn, $query);
 
-      if ($result -> num_rows == 0) {
-        echo "<h3>You have no issues!</h3>";
-      }else {
-        //Display the data in a table
-        echo "<table id='ecTable' class='table table-hover'>";
-        echo "<tr><th scope=",'col',">ID</th><th scope=",'col',">Descrition</th><th scope=",'col',">Status </th><th scope=",'col',">Time Created </th><th scope=",'col',">Issue Type</th></tr>";
-        while ($row = mysqli_fetch_assoc($result)) {
-          echo "<tr class='clickableRow'>";
-          echo "<td>" . $row["id"] . "</td>";
-          echo "<td>" . $row["description"] . "</td>";
-          echo  "<td>" . $row["status"] . "</td>";
-          echo  "<td>" . $row["timeCreated"] . "</td>";
-          echo "<td>" . $row["issueType"] . "</td>";
-          echo "</tr>";
-        }
-        echo "</table>";
-      }
+            if ($result -> num_rows == 0) {
+                echo "<h3>No issues!</h3>";
+            } else {
+                //Display the data in a table
+                echo "<table id='issueTable' class='table table-hover'>";
+                echo "<thead><tr><th>ID</th><th>User ID</th><th>UserName</th><th>User Type</th></th><th>Status</th><th>Issue Type</th><th>Time Created</th></tr></thead><tbody>";
+                while ($row = mysqli_fetch_assoc($result)) {
+                    echo "<tr>";
+                    echo "<td>" . $row["id"] . "</td>";
+                    echo "<td>" . $row["userID"] . "</td>";
+                    echo "<td>" . $row["userName"] . "</td>";
+                    echo "<td>" . $row["userType"] . "</td>";
+                    echo "<td style='display:none'>" . $row["description"] . "</td>";
+                    echo "<td  >" . $row["status"] . "</td>";;
+                    echo "<td >" . $row["issueType"] . "</td>";
+                    echo "<td>" . $row["timeCreated"] . "</td>";
+                }
+                echo "</tbody></table>";
+            }
 
-        
+            mysqli_close($conn);    
 
-      mysqli_close($conn);
-
-
-      ?>
-
-      
+            ?>
+        </div>
     </div>
-    
-    <div id="OptionsBar" class="container">
-      <div class="row">
-        <div class="col">
-          <form action="../pages/scripts/withdrawEC.php" method="post" target="_self">
-            <button type="submit" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-              Modify
-            </button>
-          </form>
-          
-        </div>
-        <div class="col">
-          <form action="" method="post">
-              <button type="submit" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-                Withdraw
-              </button>
-            </form>
-        </div>
-        <div class="col">
-        <form action="" method="post">
-            <button type="submit" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-              More Details
-            </button>
-          </form>
-        </div>
-      </div>
       
       
       
@@ -195,4 +186,114 @@ elseif ($_SESSION['user_type'] == 'Admin'){
     <p>&copy; Group 26 QMUL EECS</p>
 </footer>
 
+
+
+
+
+<script >
+
+function deleteIssue(id) {
+    
+  if (confirm("Are you sure you want to delete this Issue?")) {
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+      if (this.readyState == 4 && this.status == 200) {
+        alert(this.responseText);
+        window.location.href = "ViewYourIssues.php";
+      }
+    };
+    
+    xhttp.open("GET", "adminPages/deleteIssue.php?id=" + id, true);
+    xhttp.send();
+  }
+}
+const table = document.getElementById("issueTable");
+
+const rows = table.getElementsByTagName("tr");
+
+for (let i = 0; i < rows.length; i++) {
+    rows[i].addEventListener("click", function () {
+        const currentRow = table.rows[i];
+        const rowArray = currentRow.getElementsByTagName("td");
+
+        // Get the values of the relevant columns
+        const id = rowArray[0].innerHTML;
+        const userID = rowArray[1].innerHTML;
+        const username = rowArray[2].innerHTML;
+        const userType = rowArray[3].innerHTML;
+        const description = rowArray[4].innerHTML;
+        const status = rowArray[5].innerHTML;
+        const issueType = rowArray[6].innerHTML;
+        const timeCreated = rowArray[7].innerHTML;
+
+
+        // Create the HTML for the details
+        const html = `
+        <div class="container">
+        <form action="" method="post" >
+  <table class="table table-bordered">
+    <tbody>
+        <tr>
+            <th scope="row">ID</th>
+            <td>${id}</td>
+        </tr>
+        <tr>
+            <th scope="row">User ID</th>
+            <td>${userID}</td>
+        </tr>
+        <tr>
+            <th scope="row">Username</th>
+            <td>${username}</td>
+        </tr>
+        <tr>
+            <th scope="row">User Type</th>
+            <td>${userType}</td>
+        <tr>
+            <th scope="row">Description</th>
+            <td>${description}</td>
+        </tr>
+        <tr>
+            <th scope="row">Status</th>
+            <td>${status}</td>
+        </tr>
+        <tr>
+            <th scope="row">Issue Type</th>
+            <td>${issueType}</td>
+        </tr>
+        <tr>
+            <th scope="row">Time Created</th>
+            <td>${timeCreated}</td>
+        </tr>
+
+    </tbody>
+  </table>
+        <button class="btn btn-secondary mb-2" type="button" onclick=deleteIssue('${id}')>Delete</button>
+        <button class="btn btn-secondary mb-2"  type="button" onclick="location.reload()">Back</button>
+        
+    </form>
+    
+</div>  `;
+
+        // Render the HTML in the #ec-details div
+        const ecDetails = document.getElementById('viewYourIssue');
+        ecDetails.innerHTML = html;
+    });
+
+}
+
+
+</script>
+
+<script src="../js/index.js" type="module"></script>
+    <script src="../js/LPutils.js" type="module"></script>
+    <!--Scripts for button functionality-->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
+
+
 </html>
+

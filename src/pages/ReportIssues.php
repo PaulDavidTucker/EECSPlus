@@ -18,6 +18,7 @@ enum status {
 
 //check if user is logged in
 $username = $_SESSION['username'];
+$userType = $_SESSION['user_type'];
 
 if (!isset($_SESSION['user_id']  ) ) {
   header('Location: ../index.php');
@@ -27,15 +28,8 @@ if (!isset($_SESSION['user_id']  ) ) {
 
 if(isset($_POST['description'])&& isset($_POST['type'])){
     $description = $_POST['description'];
-    if($_POST['type'] == "EE"){
-        $issueType = issueType::EE;
-    }
-    elseif($_POST['type'] == "ITL"){
-        $issueType = issueType::ITL;
-    }
-    else{
-        $issueType = issueType::ITS;
-    }
+    $issueType = $_POST['type'];
+
 
     reportIssue($description,$issueType);
 
@@ -49,12 +43,13 @@ function reportIssue($description,$issueType){
 
     //Variables to add in issues database
     $USERID = $_SESSION['user_id'];
-    $status = status::Pending;
+    $status = "Pending";
 
-    $sql = "INSERT INTO issues (UserID,'description','status',issueType) VALUES ('$USERID','$description','$status','$issueType')";
+    $sql = "INSERT INTO issues (UserID, `description`, `status`, issueType) VALUES ('$USERID', '$description', '$status', '$issueType')";
 
     if ($conn->query($sql) === TRUE) {
         echo "New record created successfully";
+        header("refresh:0.9;url=ReportIssues.php");
         if ($_SESSION['user_type'] == 'Admin'){
             header('Location: ../pages/adminLanding.php');
             exit();
@@ -83,8 +78,8 @@ function reportIssue($description,$issueType){
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/js/bootstrap.bundle.min.js" integrity="sha384-qKXV1j0HvMUeCBQ+QVp7JcfGl760yU08IQ+GpUo5hlbpg51QRiuqHAJz8+BrxE/N" crossorigin="anonymous"></script>
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-light gradient-custom-navbar" id="nav">
-    <a class="navbar-brand ml-1" href="../index.php">
+<nav class="navbar navbar-expand-lg navbar-light gradient-custom-navbar" id="nav">
+        <a class="navbar-brand ml-1" href="../index.php">
             <img src="../assets/QMUL Logo.png" alt="Logo not found" width="30" height="30" class="d-inline-block align-text-top">
             EECSPlus 
         </a>
@@ -102,25 +97,60 @@ function reportIssue($description,$issueType){
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav mr-auto">
                 <li class="nav-item active ml-1">
-                    <a class="nav-link" href="LandingPage.php">Home <span class="sr-only">(current)</span></a>
-                </li>
-                <li class="nav-item ml-1">
-                    <a class="nav-link" href="#">Link</a>
+                <a class="nav-link" href="LandingPage.php">Home <span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item dropdown ml-1">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Dropdown
+                    Submit
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                      <a class="dropdown-item" href="#">View your ECs</a>
-                      <a class="dropdown-item" href="#">View your issues</a>
-                      <div class="dropdown-divider"></div>
-                      <a class="dropdown-item" href="#">View all issues</a>
+                    <?php
+                      if ($userType !== 'Facualty') {
+                        echo '<a class="dropdown-item" href="ApplyEC.php">Submit ECs</a>';
+                      }
+                      ?>
+                      <a class="dropdown-item" href="ReportIssues.php">Submit Issue</a>
                     </div>
                 </li>
+                <?php
+                if ($userType != 'Admin') {
+                  if ($userType == 'Student') {
+                    echo '<li class="nav-item dropdown ml-1">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    View
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown"><a class="dropdown-item" href="ViewEC.php">View your ECs</a>
+
+                      <a class="dropdown-item" href="ViewYourIssues.php">View your issues</a>
+                      <div class="dropdown-divider"></div>
+                      <a class="dropdown-item" href="ViewAllIssues.php">View all issues</a>
+                    </div>
+                </li>';
+
+                  }
+
+                  elseif ($userType == 'Facualty') {
+                    echo  '<li class="nav-item dropdown ml-1">
+                      <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      View
+                      </a>
+                      <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+    
+                        
+                        <a class="dropdown-item" href="ViewYourIssues.php">View your issues</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="ViewAllIssues.php">View all issues</a>
+                      </div>
+                  </li>';
+                    }
+                }
+
+
+
+                ?>
                 <li class="nav-item ml-1 mt-2">
                   <div class="form-switch">
-                    <input class="form-check-input" type="checkbox" role="switch" id="darkModeCheckBox"   >
+                    <input class="form-check-input" type="checkbox" role="switch" id="darkModeCheckBox"  checked="true"  >
                     <label class="form-check-label" for="darkModeCheckBox">Dark Mode</label>
                   </div>
                 </li>
@@ -129,7 +159,9 @@ function reportIssue($description,$issueType){
                 <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
                 <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
                 </form>
-            </div>  
+            </div>
+        
+        
     </nav>
 
     <div class="jumbotron" id="jumbotron">
@@ -137,17 +169,17 @@ function reportIssue($description,$issueType){
         <form action="" method = "post"  target = "_self">
 
             <div class="form-outline mb-4">
-                <textarea class="form-control" id="exampleFormControlTextarea1" rows="10"
-                  placeholder="description" name = "description"></textarea>
+            <textarea class="form-control" id="exampleFormControlTextarea1" rows="10" 
+            placeholder="description" name="description" required maxlength="500"></textarea>
             </div>
 
             <div class="form-outline mb-4">
-                <select name="type" id="type" class = "form-select form-select-sm mb-3">
-                    <option value="" disabled selected hidden>Department</option>
-                    <option value="EE">EE</option>
-                    <option value="ITL">ITL</option>
-                    <option value="ITS">ITS</option>
-                </select>
+            <select name="type" id="type" class="form-select form-select-sm mb-3" required>
+              <option value="" disabled selected hidden>Department</option>
+              <option value="EE">EE</option>
+              <option value="ITL">ITL</option>
+              <option value="ITS">ITS</option>
+            </select>
             </div>
 
             <div class="text-center pt-1 mb-5 pb-1">

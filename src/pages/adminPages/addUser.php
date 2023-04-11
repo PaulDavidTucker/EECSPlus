@@ -30,8 +30,8 @@ if(isset($_POST['username']) && isset($_POST['password']) && isset($_POST['userT
 
     if ($password != $confrimPassword){
         echo "Passwords do not match";
-        header("refresh:0.5;url=addUser.php");
-        exit();
+        header("refresh:0.9;url=addUser.php");
+        
     }
     else{
         addUser($username, $password, $userType);
@@ -179,25 +179,27 @@ if(isset($_POST['username']) && isset($_POST['password']) && isset($_POST['userT
 
       
                         <div class="form-outline mb-4">
-                          <input type="text" class="form-control"
-                            placeholder="username" name="username" />
+                        <input type="text" class="form-control" placeholder="username" 
+                        name="username" required maxlength="50" />
+
                         </div>
                         <div class="form-outline mb-4">
-                          <input type="password" class="form-control"
-                            placeholder="password" name="password" />
+                        <input type="password" class="form-control" placeholder="password" 
+                        name="password" required minlength="8" maxlength="20" />
+
                         </div>
 
                         <div class="form-outline mb-4">
-                          <input type="password" class="form-control"
-                            placeholder="Comfirm Password" name="ConfirmPassword" />
+                        <input type="password" class="form-control" placeholder="Confirm Password" 
+                        name="ConfirmPassword" required minlength="8" maxlength="20" />
                         </div>
 
 
-                        <div  class="form-outline mb-4" >
-                        <select name="userType" class = "form-select form-select-sm mb-3">
-                            <option value="Manual">Student</option>
-                            <option value="Manual">Facualty</option>
-                            <option value="Self Certified">Admin</option>
+                        <select name="userType" class="form-select form-select-sm mb-3" required>
+                            <option value="">Select User Type</option>
+                            <option value="Student">Student</option>
+                            <option value="Faculty">Faculty</option>
+                            <option value="Admin">Admin</option>
                         </select>
                         </div>
       

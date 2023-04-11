@@ -5,6 +5,7 @@ session_start();
 
 
 $username = $_SESSION['username'];
+$userType = $_SESSION['user_type'];
 
 if (!isset($_SESSION['user_id']  ) ) {
   header('Location: ../index.php');
@@ -58,17 +59,31 @@ elseif ($_SESSION['user_type'] == 'Admin'){
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav mr-auto">
                 <li class="nav-item active ml-1">
-                    <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+                    <a class="nav-link" href="LandingPage.php">Home <span class="sr-only">(current)</span></a>
                 </li>
-                <li class="nav-item ml-1">
-                    <a class="nav-link" href="#">Link</a>
+                <li class="nav-item dropdown ml-1">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Submit
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <?php
+                      if ($userType !== 'Facualty') {
+                        echo '<a class="dropdown-item" href="ApplyEC.php">Submit ECs</a>';
+                      }
+                      ?>
+                      <a class="dropdown-item" href="ReportIssues.php">Submit Issue</a>
+                    </div>
                 </li>
                 <li class="nav-item dropdown ml-1">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     View
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                      <a class="dropdown-item" href="#">View your ECs</a>
+                    <?php
+                      if ($userType !== 'Facualty') {
+                        echo '<a class="dropdown-item" href="ViewEC.php">View your ECs</a>';
+                      }
+                      ?>
                       <a class="dropdown-item" href="ViewYourIssues.php">View your issues</a>
                       <div class="dropdown-divider"></div>
                       <a class="dropdown-item" href="ViewAllIssues.php">View all issues</a>
@@ -89,10 +104,13 @@ elseif ($_SESSION['user_type'] == 'Admin'){
         
         
     </nav>
+        
+        
+    </nav>
 
 
     <div class="jumbotron" id="jumbotron">
-        <h1 class="display-4">Welcome, <?php echo $username; ?></h1>
+        <h1 class="display-4"><?php echo $userType ." :   ".  $username  ; ?></h1>
         <p class="lead">Welcome to EECS Plus! Here you can report issues with services, browse the status of products or simply view the site.</p>
             <!--Jumbotron for main page
     STYLE ATTRIBUTE LEFT EMPTY TO ALLOW JS TO DYNAMICALLY UPDATE COLOURS WHEN DARKMODE IS ENABLED
@@ -106,29 +124,60 @@ elseif ($_SESSION['user_type'] == 'Admin'){
     </div>
 
 
-    <div class="container">
+    
         <!-- Row of columns, can add more if needed. Use JS to make columns appear or disapear when logged in -->
+        <div class="container">
+
         <div class="row">
-          <div class="col-md-4">
-            <h2>Apply for ECs</h2>
-            <p></p>
-            <p><a class="btn btn-secondary" href="ApplyEC.php" role="button">click &raquo;</a></p>
-          </div>
-          <div class="col-md-4" >
-            <h2>View ECs</h2>
-            <p></p>
-            <p><a class="btn btn-secondary" href="ViewEC.php" role="button">View details &raquo;</a></p>
-          </div>
-          <div class="col-md-4">
-            <h2>Report Issue</h2>
-            <p> </p>
-            <p><a class="btn btn-secondary" href="ReportIssues.php" role="button">click &raquo;</a></p>
-          </div>
-        </div>
+          <?php
+          if ($userType !== 'Facualty') {
+            echo '
+            
+              <div class="col-md-4">
+                <h2>Apply for ECs</h2>
+                <p></p>
+                <p><a class="btn btn-secondary" href="ApplyEC.php" role="button">Click &raquo;</a></p>
+              </div>
+              <div class="col-md-4" >
+                <h2>My ECs</h2>
+                <p></p>
+                <h2><a class="btn btn-secondary" href="ViewEC.php" role="button">Click &raquo;</a></h2>
+                </div>';
+          }
 
-        <hr>
+          ?>
 
-      </div> <!-- container end -->
+            <div class="col-md-4">
+              <h2>Report Issue </h2>
+              <p> </p>
+              <p><a class="btn btn-secondary" href="ReportIssues.php" role="button">click &raquo;</a></p>
+            </div>
+
+
+
+          <?php
+          if ($userType == 'Facualty') {
+              echo '<div class="col-md-4">
+                <h2>View Your Issues</h2>
+                <p></p>
+                <p><a class="btn btn-secondary" href="ViewYourIssues.php" role="button">Click &raquo;</a></p>
+              </div>
+              <div class="col-md-4" >
+                <h2>View All Issues</h2>
+                <p></p>
+                <h2><a class="btn btn-secondary" href="ViewAllIssues.php" role="button">Click &raquo;</a></h2>
+              </div>';
+
+          }
+              ?>
+
+          </div>
+
+          <hr>
+
+          
+
+      </div><!-- container end -->
 
     
     <script src="../js/LPutils.js" type="module"></script>
