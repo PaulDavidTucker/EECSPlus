@@ -94,128 +94,46 @@ if(isset($_POST['username']) && isset($_POST['password']) && isset($_POST['userT
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
 </head>
 <body>
-        <div class="container-fluid">
-                    <div class="row flex-nowrap">
-                        <div class="col-auto col-md-3 col-xl-2 px-sm-2 px-0 bg-dark">
-                            <div class="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 text-white min-vh-100">
-                                <a href="/" class="d-flex align-items-center pb-3 mb-md-0 me-md-auto text-white text-decoration-none">
-                                    <span class="fs-5 d-none d-sm-inline">Menu</span>
-                                </a>
-                                <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start" id="menu">
-                                    <li class="nav-item">
-                                        <a href="adminLanding.php" class="nav-link align-middle px-0">
-                                            <i class="fs-4 bi-house"></i> <span class="ms-1 d-none d-sm-inline">Home</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                    <a href="editEECSServices.php" class="nav-link px-0 align-middle">
-                                        <i class="fs-4 bi-table"></i> <span class="ms-1 d-none d-sm-inline">Edit EECS Service Status</span></a>
-                                    </li>
-                                    <li>
-                                        <a href="viewAllECs.php" class="nav-link px-0 align-middle">
-                                            <i class="fs-4 bi-table"></i> <span class="ms-1 d-none d-sm-inline">View EC's</span></a>
-                                    </li>
-                                    <li>
-                                        <a href="adminViewIssues.php" class="nav-link px-0 align-middle">
-                                            <i class="fs-4 bi-table"></i> <span class="ms-1 d-none d-sm-inline">View Issues</span></a>
-                                    </li>
-                                    <li>
-                                        <a href="#submenu3" data-bs-toggle="collapse" class="nav-link px-0 align-middle">
-                                            <i class="fs-4 bi-grid"></i> <span class="ms-1 d-none d-sm-inline">User Functions</span></a>
-                                            <ul class="collapse nav flex-column ms-1" id="submenu3" data-bs-parent="#menu">
-                                            <li>
-                                            <a href="../../pages/ApplyEC.php" class="nav-link px-0"> <span class="d-none d-sm-inline">Submit EC</span></a>
-                                            </li>
-                                            <li>
-                                                <a href="../../pages/ReportIssues.php" class="nav-link px-0"> <span class="d-none d-sm-inline">Submit Issue</span></a>
-                                            </li>
-                                        </ul>
-                                    </li>
-                                    <li>
-                                        <a href="editUser.php" class="nav-link px-0 align-middle">
-                                            <i class="fs-4 bi-people"></i> <span class="ms-1 d-none d-sm-inline">Edit User details</span> </a>
-                                    </li>
-                                    <li>
-                                        <a href="addUser.php" class="nav-link px-0 align-middle">
-                                            <i class="fs-4 bi-people"></i> <span class="ms-1 d-none d-sm-inline">New User</span> </a>
-                                    </li>
-                                </ul>
-                                <hr>
-                            </div>
-                        </div
-    ><div class="col py-3">
-                            <!-- Page Content -->
-        <div id="page-content-wrapper">
-            <nav class="navbar navbar-expand-lg navbar-light bg-transparent py-4 px-4">
-                <div class="d-flex align-items-center">
-                    <i class="fas fa-align-left primary-text fs-4 me-3" id="menu-toggle"></i>
-                    <h2 class="fs-2 m-0">Add New User</h2>
-                </div>
 
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-                    aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle second-text fw-bold" href="#" id="navbarDropdown"
-                                role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                <img src="../../assets/QMUL Logo.png" alt="hugenerd" width="30" height="30" class="rounded-circle">
-                                <i class="fas fa-user me-2"></i><?php echo $username ?>
-                            </a>
-                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <li><a class="dropdown-item" href="#">Profile</a></li>
-                                <li><a class="dropdown-item" href="#">Settings</a></li>
-                                <li><a class="dropdown-item" href="../../logout.php">Logout</a></li>
-                            </ul>
-                        </li>
-                    </ul>
-                </div>
-            </nav>
-            
-        <form action="" method="post" target="_self">
-
-      
-                        <div class="form-outline mb-4">
-                        <input type="text" class="form-control" placeholder="username" 
-                        name="username" required maxlength="50" />
-
-                        </div>
-                        <div class="form-outline mb-4">
-                        <input type="password" class="form-control" placeholder="password" 
-                        name="password" required minlength="4" maxlength="20" />
-
-                        </div>
-
-                        <div class="form-outline mb-4">
-                        <input type="password" class="form-control" placeholder="Confirm Password" 
-                        name="ConfirmPassword" required minlength="4" maxlength="20" />
-                        </div>
-
-
-                        <select name="userType" class="form-select form-select-sm mb-3" required>
-                            <option value="">Select User Type</option>
-                            <option value="Student">Student</option>
-                            <option value="Faculty">Faculty</option>
-                            <option value="Admin">Admin</option>
-                        </select>
-                        </div>
-      
-                        <div class="text-center pt-1 mb-5 pb-1">
-                          <button class="btn btn-primary btn-block fa-lg gradient-custom-2 mb-3" id="addUserSumbmits" type="submit">Submit</button>
+    <?php include 'sideNav.html';?>
     
-                        </div>
-      
+    <div class="col py-3">
+        <!-- Page Content -->
+        <div id="page-content-wrapper">
 
-      
-                      </form>
-        
+            <?php include 'topNav.html';?>
+
+            <form action="" method="post" target="_self">      
+                <div class="form-outline mb-4">
+                <input type="text" class="form-control" placeholder="username" 
+                name="username" required maxlength="50" />
+
+                </div>
+                <div class="form-outline mb-4">
+                <input type="password" class="form-control" placeholder="password" 
+                name="password" required minlength="4" maxlength="20" />
+
+                </div>
+
+                <div class="form-outline mb-4">
+                <input type="password" class="form-control" placeholder="Confirm Password" 
+                name="ConfirmPassword" required minlength="4" maxlength="20" />
+                </div>
+
+
+                <select name="userType" class="form-select form-select-sm mb-3" required>
+                    <option value="">Select User Type</option>
+                    <option value="Student">Student</option>
+                    <option value="Faculty">Faculty</option>
+                    <option value="Admin">Admin</option>
+                </select>
+                </div>
+
+                <div class="text-center pt-1 mb-5 pb-1">
+                    <button class="btn btn-primary btn-block fa-lg gradient-custom-2 mb-3" id="addUserSumbmits" type="submit">Submit</button>
+                </div>
+            </form>
         </div>
-
-      
     </div>
 
 

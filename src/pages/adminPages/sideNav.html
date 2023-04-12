@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image" href="../assets/QMUL Logo.png">
+    <link rel="stylesheet" href="../css/styles.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-aFq/bzH65dt+w6FI2ooMVUpc+21e0SRygnTpmBvdBgSdnuTN7QbdgL+OapgHtvPp" crossorigin="anonymous">
+    <link href="../assets/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/js/bootstrap.bundle.min.js" integrity="sha384-qKXV1j0HvMUeCBQ+QVp7JcfGl760yU08IQ+GpUo5hlbpg51QRiuqHAJz8+BrxE/N" crossorigin="anonymous"></script>
+    <!--Icons stylesheet-->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
+</head>
+
+<div class="container-fluid">
+  <div class="row flex-nowrap">
+      <div class="col-auto col-md-3 col-xl-2 px-sm-2 px-0 bg-dark">
+        <div class="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 text-white min-vh-100">
+            <a href="/" class="d-flex align-items-center pb-3 mb-md-0 me-md-auto text-white text-decoration-none">
+                <span class="fs-5 d-none d-sm-inline">Menu</span>
+            </a>
+            <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start" id="menu">
+                <li class="nav-item">
+                    <a href="adminLanding.php" class="nav-link align-middle px-0">
+                        <i class="fs-4 bi-house"></i> <span class="ms-1 d-none d-sm-inline">Home</span>
+                    </a>
+                </li>
+                <li>
+                <a href="editEECSServices.php" class="nav-link px-0 align-middle">
+                    <i class="fs-4 bi-table"></i> <span class="ms-1 d-none d-sm-inline">Edit EECS Service Status</span></a>
+                </li>
+                <li>
+                    <a href="viewAllECs.php" class="nav-link px-0 align-middle">
+                        <i class="fs-4 bi-table"></i> <span class="ms-1 d-none d-sm-inline">View EC's</span></a>
+                </li>
+                <li>
+                    <a href="adminViewIssues.php" class="nav-link px-0 align-middle">
+                        <i class="fs-4 bi-table"></i> <span class="ms-1 d-none d-sm-inline">View Issues</span></a>
+                </li>
+                <li>
+                    <a href="#submenu3" data-bs-toggle="collapse" class="nav-link px-0 align-middle">
+                        <i class="fs-4 bi-grid"></i> <span class="ms-1 d-none d-sm-inline">User Functions</span></a>
+                        <ul class="collapse nav flex-column ms-1" id="submenu3" data-bs-parent="#menu">
+                        <li>
+                        <a href="../../pages/ApplyEC.php" class="nav-link px-0"> <span class="d-none d-sm-inline">Submit EC</span></a>
+                        </li>
+                        <li>
+                            <a href="../../pages/ReportIssues.php" class="nav-link px-0"> <span class="d-none d-sm-inline">Submit Issue</span></a>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="editUser.php" class="nav-link px-0 align-middle">
+                        <i class="fs-4 bi-people"></i> <span class="ms-1 d-none d-sm-inline">Edit User details</span> </a>
+                </li>
+                <li>
+                    <a href="addUser.php" class="nav-link px-0 align-middle">
+                        <i class="fs-4 bi-people"></i> <span class="ms-1 d-none d-sm-inline">New User</span> </a>
+                </li>
+            </ul>
+          <hr>
+      </div>
+  </div>
+
+  </html>

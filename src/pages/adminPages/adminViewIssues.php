@@ -76,163 +76,81 @@ $conn -> close();
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
 </head>
 <body>
-        <div class="container-fluid">
-                    <div class="row flex-nowrap">
-                        <div class="col-auto col-md-3 col-xl-2 px-sm-2 px-0 bg-dark">
-                            <div class="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 text-white min-vh-100">
-                                <a href="/" class="d-flex align-items-center pb-3 mb-md-0 me-md-auto text-white text-decoration-none">
-                                    <span class="fs-5 d-none d-sm-inline">Menu</span>
-                                </a>
-                                <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start" id="menu">
-                                    <li class="nav-item">
-                                        <a href="adminLanding.php" class="nav-link align-middle px-0">
-                                            <i class="fs-4 bi-house"></i> <span class="ms-1 d-none d-sm-inline">Home</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                    <a href="editEECSServices.php" class="nav-link px-0 align-middle">
-                                        <i class="fs-4 bi-table"></i> <span class="ms-1 d-none d-sm-inline">Edit EECS Service Status</span></a>
-                                    </li>
-                                    <li>
-                                        <a href="viewAllECs.php" class="nav-link px-0 align-middle">
-                                            <i class="fs-4 bi-table"></i> <span class="ms-1 d-none d-sm-inline">View EC's</span></a>
-                                    </li>
-                                    <li>
-                                        <a href="adminViewIssues.php" class="nav-link px-0 align-middle">
-                                            <i class="fs-4 bi-table"></i> <span class="ms-1 d-none d-sm-inline">View Issues</span></a>
-                                    </li>
-                                    <li>
-                                        <a href="#submenu3" data-bs-toggle="collapse" class="nav-link px-0 align-middle">
-                                            <i class="fs-4 bi-grid"></i> <span class="ms-1 d-none d-sm-inline">User Functions</span></a>
-                                            <ul class="collapse nav flex-column ms-1" id="submenu3" data-bs-parent="#menu">
-                                            <li>
-                                            <a href="../../pages/ApplyEC.php" class="nav-link px-0"> <span class="d-none d-sm-inline">Submit EC</span></a>
-                                            </li>
-                                            <li>
-                                                <a href="../../pages/ReportIssues.php" class="nav-link px-0"> <span class="d-none d-sm-inline">Submit Issue</span></a>
-                                            </li>
-                                        </ul>
-                                    </li>
-                                    <li>
-                                        <a href="editUser.php" class="nav-link px-0 align-middle">
-                                            <i class="fs-4 bi-people"></i> <span class="ms-1 d-none d-sm-inline">Edit User details</span> </a>
-                                    </li>
-                                    <li>
-                                        <a href="addUser.php" class="nav-link px-0 align-middle">
-                                            <i class="fs-4 bi-people"></i> <span class="ms-1 d-none d-sm-inline">New User</span> </a>
-                                    </li>
-                                </ul>
-                                <hr>
-                            </div>
-                        </div
-    ><div class="col py-3">
-                            <!-- Page Content -->
+
+    <?php include 'sideNav.html';?>
+
+    <div class="col py-3">
+        <!-- Page Content -->
         <div id="page-content-wrapper">
-            <nav class="navbar navbar-expand-lg navbar-light bg-transparent py-4 px-4">
-                <div class="d-flex align-items-center">
-                    <i class="fas fa-align-left primary-text fs-4 me-3" id="menu-toggle"></i>
-                    <h2 class="fs-2 m-0">View Issues</h2>
-                </div>
 
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-                    aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle second-text fw-bold" href="#" id="navbarDropdown"
-                                role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                <img src="../../assets/QMUL Logo.png" alt="hugenerd" width="30" height="30" class="rounded-circle">
-                                <i class="fas fa-user me-2"></i><?php echo $username ?>
-                            </a>
-                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <li><a class="dropdown-item" href="#">Profile</a></li>
-                                <li><a class="dropdown-item" href="#">Settings</a></li>
-                                <li><a class="dropdown-item" href="../../logout.php">Logout</a></li>
-                            </ul>
-                        </li>
-                    </ul>
-                </div>
-            </nav>
-            
+            <?php include 'topNav.html';?>          
 
             <div class="container-fluid text-center">
-    <div class="container mb-2" id="ec-details">
-        <?php 
+                <div class="container mb-2" id="ec-details">
+                    <?php 
 
-        $username = $_SESSION['username'];
+                    $username = $_SESSION['username'];
 
-        if (!isset($_SESSION['user_id']  ) ) {
-            header('Location: ../index.php');
-            exit();
-        } elseif ($_SESSION['user_type'] != 'Admin') {
-            header('Location: ../../index.php');
-            exit();
-        }
+                    if (!isset($_SESSION['user_id']  ) ) {
+                        header('Location: ../index.php');
+                        exit();
+                    } elseif ($_SESSION['user_type'] != 'Admin') {
+                        header('Location: ../../index.php');
+                        exit();
+                    }
 
-        $conn = mysqli_connect("eecs-plus.cyvzc0wdkfgr.eu-north-1.rds.amazonaws.com:3306","admin","password123","eecs");
+                    $conn = mysqli_connect("eecs-plus.cyvzc0wdkfgr.eu-north-1.rds.amazonaws.com:3306","admin","password123","eecs");
 
-        if (!$conn) {
-            die("Connection failed: " . mysqli_connect_error());
-        }
+                    if (!$conn) {
+                        die("Connection failed: " . mysqli_connect_error());
+                    }
 
-        $ID = $_SESSION['user_id'];
-        //Retrieve data from the database
-        $query = "
-        SELECT `issues`.`id`,
-        `issues`.`userID`,
-        `issues`.`description`,
-        `issues`.`status`,
-        `issues`.`timeCreated`,
-        `issues`.`issueType`,
-        `user`.`userName`,
-        `user`.`userType`
-        FROM `eecs`.`issues`
-        JOIN `eecs`.`user` ON `issues`.`userID` = `user`.`id`;
-        ";
+                    $ID = $_SESSION['user_id'];
+                    //Retrieve data from the database
+                    $query = "
+                    SELECT `issues`.`id`,
+                    `issues`.`userID`,
+                    `issues`.`description`,
+                    `issues`.`status`,
+                    `issues`.`timeCreated`,
+                    `issues`.`issueType`,
+                    `user`.`userName`,
+                    `user`.`userType`
+                    FROM `eecs`.`issues`
+                    JOIN `eecs`.`user` ON `issues`.`userID` = `user`.`id`;
+                    ";
 
-        $result = mysqli_query($conn, $query);
+                    $result = mysqli_query($conn, $query);
 
-        if ($result -> num_rows == 0) {
-            echo "<h3>No issues!</h3>";
-        } else {
-            //Display the data in a table
-            echo "<table id='issueTable' class='table table-hover'>";
-            echo "<thead><tr><th>ID</th><th>User ID</th><th>UserName</th><th>User Type</th></th><th>Status</th><th>Issue Type</th><th>Time Created</th></tr></thead><tbody>";
-            while ($row = mysqli_fetch_assoc($result)) {
-                echo "<tr>";
-                echo "<td>" . $row["id"] . "</td>";
-                echo "<td>" . $row["userID"] . "</td>";
-                echo "<td>" . $row["userName"] . "</td>";
-                echo "<td>" . $row["userType"] . "</td>";
-                echo "<td style='display:none'>" . $row["description"] . "</td>";
-                echo "<td  >" . $row["status"] . "</td>";;
-                echo "<td >" . $row["issueType"] . "</td>";
-                echo "<td>" . $row["timeCreated"] . "</td>";
-            }
-            echo "</tbody></table>";
-        }
+                    if ($result -> num_rows == 0) {
+                        echo "<h3>No issues!</h3>";
+                    } else {
+                        //Display the data in a table
+                        echo "<table id='issueTable' class='table table-hover'>";
+                        echo "<thead><tr><th>ID</th><th>User ID</th><th>UserName</th><th>User Type</th></th><th>Status</th><th>Issue Type</th><th>Time Created</th></tr></thead><tbody>";
+                        while ($row = mysqli_fetch_assoc($result)) {
+                            echo "<tr>";
+                            echo "<td>" . $row["id"] . "</td>";
+                            echo "<td>" . $row["userID"] . "</td>";
+                            echo "<td>" . $row["userName"] . "</td>";
+                            echo "<td>" . $row["userType"] . "</td>";
+                            echo "<td style='display:none'>" . $row["description"] . "</td>";
+                            echo "<td  >" . $row["status"] . "</td>";;
+                            echo "<td >" . $row["issueType"] . "</td>";
+                            echo "<td>" . $row["timeCreated"] . "</td>";
+                        }
+                        echo "</tbody></table>";
+                    }
 
-        mysqli_close($conn);    
+                    mysqli_close($conn);    
 
-        ?>
-    </div>
-</div>
+                    ?>
                 </div>
             </div>
-        </div>
-
-      
-    </div>
-
-
-  
-    
-
+        </div>     
+    </div> 
 </body>
+
 <script >
 
 function deleteIssue(id) {
