@@ -48,6 +48,10 @@ elseif ($_SESSION['user_type'] != 'Admin'){
                                         </a>
                                     </li>
                                     <li>
+                                    <a href="editEECSServices.php" class="nav-link px-0 align-middle">
+                                        <i class="fs-4 bi-table"></i> <span class="ms-1 d-none d-sm-inline">Edit EECS Service Status</span></a>
+                                    </li>
+                                    <li>
                                         <a href="viewAllECs.php" class="nav-link px-0 align-middle">
                                             <i class="fs-4 bi-table"></i> <span class="ms-1 d-none d-sm-inline">View EC's</span></a>
                                     </li>
@@ -59,9 +63,6 @@ elseif ($_SESSION['user_type'] != 'Admin'){
                                         <a href="#submenu3" data-bs-toggle="collapse" class="nav-link px-0 align-middle">
                                             <i class="fs-4 bi-grid"></i> <span class="ms-1 d-none d-sm-inline">User Functions</span></a>
                                             <ul class="collapse nav flex-column ms-1" id="submenu3" data-bs-parent="#menu">
-                                            <li class="w-100">
-                                                <a href="../../pages/ApplyEC.php" class="nav-link px-0"> <span class="d-none d-sm-inline">Submit EC</span></a>
-                                            </li>
                                             <li>
                                                 <a href="../../pages/ReportIssues.php" class="nav-link px-0"> <span class="d-none d-sm-inline">Submit Issue</span></a>
                                             </li>
@@ -71,7 +72,7 @@ elseif ($_SESSION['user_type'] != 'Admin'){
                                         </ul>
                                     </li>
                                     <li>
-                                        <a href="#" class="nav-link px-0 align-middle">
+                                        <a href="editUser.php" class="nav-link px-0 align-middle">
                                             <i class="fs-4 bi-people"></i> <span class="ms-1 d-none d-sm-inline">Edit User details</span> </a>
                                     </li>
                                     <li>
@@ -81,8 +82,8 @@ elseif ($_SESSION['user_type'] != 'Admin'){
                                 </ul>
                                 <hr>
                             </div>
-                        </div>
-                <div class="col py-3">
+                        </div
+    ><div class="col py-3">
                             <!-- Page Content -->
         <div id="page-content-wrapper">
             <nav class="navbar navbar-expand-lg navbar-light bg-transparent py-4 px-4">

@@ -20,7 +20,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     if ($result) {
         mysqli_close($conn);
-        header("Location: EECSServices.php");
+        header("Location: editEECSServices.php");
         exit;
     } else {
         echo "Error updating Status: ".mysqli_error($conn);

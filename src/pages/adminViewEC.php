@@ -50,7 +50,7 @@ if (!isset($_SESSION['user_id']  ) ) {
                     <a class="nav-link" href="LandingPage.php">Home <span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item ml-1">
-                    <a class="nav-link" href="EECSServices.php">EECS Services</a>
+                    <a class="nav-link" href="editEECSServices.php">EECS Services</a>
                 </li>
                 <li class="nav-item dropdown ml-1">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
