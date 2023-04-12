@@ -131,26 +131,6 @@ elseif ($_SESSION['user_type'] != 'Admin'){
         $query = "SELECT * FROM EECS_Services";
         $result = mysqli_query($conn, $query);
   
-        // //Display the data in a table
-        // echo "<table id='ecTable' class='table table-hover'>";
-        // echo "<tr><th scope=",'col',">Service</th><th scope=",'col',">Description</th><th scope=",'col',">Status</th></tr>";
-        // while ($row = mysqli_fetch_assoc($result)) {
-        //   echo "<tr class='clickableRow'>";
-        //   echo "<td>" . $row["Service"] . "</td>";
-        //   echo "<td>" . $row["Description"] . "</td>";
-        //   echo "<td>
-        //         <form action ='updateStatus.php' method ='post' targer = '_self'>
-        //             <select name='status' id ='status'  class = 'form-select form-select-sm mb-3'>
-        //             <option value=''>" . $row["Status"] . "</option>";
-        //             if($row["Status"]!=="Running"){ echo "<option value='Running'>Running</option>";}
-        //             if($row["Status"]!=="Suspended"){echo "<option value='Suspended'>Suspended</option>";}
-        //             if($row["Status"]!=="Unavailable"){echo "<option value='Unavailable'>Unavailable</option>";}          
-        //   echo "<input class='btn btn-primary btn-block fa-lg gradient-custom-2 mb-3' id='LoginButton' type='submit'>";          
-        //   echo "</td>";
-        //   echo "</tr>";
-        // }
-        // echo "</table>";
-
         // Display the data in a table
         echo "<table id='ecTable' class='table table-hover'>";
         echo "<tr><th scope='col'>Service</th><th scope='col'>Description</th><th scope='col'>Current Status</th><th scope='col'>New Status</th></tr>";
@@ -159,10 +139,11 @@ elseif ($_SESSION['user_type'] != 'Admin'){
             echo "<td>" . $row["Service"] . "</td>";
             echo "<td>" . $row["Description"] . "</td>";
             echo "<td>" . $row["Status"] . "</td>";
+
             echo "<td>
                 <form action='updateEECSService.php' method='post' target='_self'>
-                    <input type='hidden' name='service_id' value='" . $row["Service"] . "'>";
-            echo "<select name='status' id='status' class='form-select form-select-sm mb-3' required>
+                    <input type='hidden' name='id' value='" . $row["id"] . "'>";
+            echo "<select name='Status' id='Status' class='form-select form-select-sm mb-3' required>
                             <option value='' selected disabled hidden>Select Status</option>";
             if ($row["Status"] !== "Running") {
                 echo "<option value='Running'>Running</option>";
@@ -180,8 +161,6 @@ elseif ($_SESSION['user_type'] != 'Admin'){
             echo "</tr>";
         }
         echo "</table>";
-
-
 
         mysqli_close($conn);
 

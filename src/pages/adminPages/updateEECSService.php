@@ -1,8 +1,8 @@
 <?php
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $status = $_POST["status"];
-    $service_id = $_POST["service_id"];
+    $Status = $_POST["Status"];
+    $id = $_POST["id"];
 
     $conn = mysqli_connect("eecs-plus.cyvzc0wdkfgr.eu-north-1.rds.amazonaws.com:3306","admin","password123","eecs");
 
@@ -10,20 +10,23 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       die("Connection failed: " . mysqli_connect_error());
     }
 
-    // Update the database with the new status
-    $query = "UPDATE 'EECS_Services' 
-    SET Status = '$status'
-    WHERE service_id = '$service_id' ";
+    $query = sprintf("UPDATE `EECS_Services`
+    SET `Status`='%s'
+    WHERE `id`='%s'",
+    mysqli_real_escape_string($conn, $Status),
+    intval($id));
+     
     $result = mysqli_query($conn, $query);
 
-    mysqli_close($conn);
-
     if ($result) {
-        header("Location: EECSService.php");
+        mysqli_close($conn);
+        header("Location: EECSServices.php");
         exit;
     } else {
-        echo "Error updating status: " . mysqli_error($conn);
+        echo "Error updating Status: ".mysqli_error($conn);
+        mysqli_close($conn);
     }
+
 }
 
 ?>
