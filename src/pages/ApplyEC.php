@@ -3,17 +3,7 @@
 
 session_start();
 
-//enumerations
-enum IsSelfCertified { 
-  const true = "true";
-  const false = "false";
- };
 
-enum Status { 
-  const Pending = "Pending";
-  const Approved = "Approved";
-  const Rejected = "Rejected";
- };
 
 //check if user is logged in
 $username = $_SESSION['username'];
@@ -28,12 +18,12 @@ elseif($_SESSION['user_type'] == 'Faculty'){
   exit();
 
 }
-/*
+
 elseif ($_SESSION['user_type'] == 'Admin'){
   header('Location: ../pages/adminLanding.php');
   exit();
 }
-*/
+
 
 if (isset($_POST['moduleName']) && isset($_POST['description']) && isset($_POST['DeadLine'])&& isset($_POST['RequestedExtentionDeadline']) && isset($_POST['type'])) {
   $module = $_POST['moduleName'];
@@ -45,9 +35,29 @@ if (isset($_POST['moduleName']) && isset($_POST['description']) && isset($_POST[
   } else {
     $isselfcertified = "false";
   }
+
+  // if deadline is before today's date echo "deadline is before today's date"
+  // elisf deadline is before extention deadline echo "deadline is before extention deadline"
+  // elif extention deadline is greater than 2 weeks of the deadline echo "extention deadline is greater than 2 weeks"
+  // else submitEC($module, $description,$deadline, $extentiondeadline, $isselfcertified);
+
+  if($deadline < date('Y-m-d')){
+    echo "deadline is before today's date";
+    header("refresh:1.5;url=ApplyEC.php");
+  }
+  elseif($deadline > $extentiondeadline){
+    echo "deadline is before extention deadline";
+    header("refresh:1.5;url=ApplyEC.php");
+  }
+  elseif($extentiondeadline > date('Y-m-d', strtotime($deadline. ' + 14 days'))){
+    echo "extention deadline is greater than 2 weeks";
+    header("refresh:1.5;url=ApplyEC.php");
+  }
+  else{
+    submitEC($module, $description,$deadline, $extentiondeadline, $isselfcertified);
+  }
   
 
-  submitEC($module, $description,$deadline, $extentiondeadline, $isselfcertified);
 }
 
 function submitEC($module, $description,$deadline, $extentiondeadline, $isselfcertified){
@@ -173,34 +183,36 @@ function submitEC($module, $description,$deadline, $extentiondeadline, $isselfce
         <!-- aplication form fill out  module name , description ,  ExtentionDeadline , dropdown menu for if it self certfied or not-->
         <form action="" method="post" target="_self" onsubmit="return validateForm()">
 
-<div class="form-outline mb-4">
-  <input type="text" class="form-control" placeholder="module name" name="moduleName" required maxlength="100" />
-</div>
+        <div class="form-outline mb-4">
+          <input type="text" class="form-control" placeholder="module name" name="moduleName" required maxlength="100" />
+        </div>
 
-<div class="form-outline mb-4">
-  <textarea class="form-control" id="exampleFormControlTextarea1" rows="10" placeholder="description" name="description" required maxlength="500"></textarea>
-</div>
+        <div class="form-outline mb-4">
+          <textarea class="form-control" id="exampleFormControlTextarea1" rows="10" placeholder="description" name="description" required maxlength="500"></textarea>
+        </div>
 
-<div class="form-outline mb-4">
-  <input type="date" class="form-control" id="dealine" name="DeadLine" placeholder="Deadline - MM/DD/YYYY">
-</div>
+        <div class="form-outline mb-4">
+          <label for="DeadLine"> Deadline </label>
+          <input type="date" class="form-control" id="dealine" name="DeadLine" placeholder="Deadline - MM/DD/YYYY">
+        </div>
 
-<div class="form-outline mb-4">
-  <input type="date" class="form-control" id="RequestedExtentionDeadline" name="RequestedExtentionDeadline" placeholder="Requested Extension Date - MM/DD/YYYY">
-</div>
+        <div class="form-outline mb-4">
+        <label for="RequestedExtentionDeadline"> Requested Extention </label>
+          <input type="date" class="form-control" id="RequestedExtentionDeadline" name="RequestedExtentionDeadline" placeholder="Requested Extension Date - MM/DD/YYYY">
+        </div>
 
-<div class="form-outline mb-4">
-  <select name="type" id="type" class="form-select form-select-sm mb-3" required maxlength="20">
-    <option value="Self Certified">Self Certified</option>
-    <option value="Manual">Manual</option>
-  </select>
-</div>
+        <div class="form-outline mb-4">
+          <select name="type" id="type" class="form-select form-select-sm mb-3" required maxlength="20" minlength="3">
+            <option value="Self Certified">Self Certified</option>
+            <option value="Manual">Manual</option>
+          </select>
+        </div>
 
-<div class="text-center pt-1 mb-5 pb-1">
-  <button class="btn btn-primary btn-block fa-lg gradient-custom-2 mb-3" id="submitEC" type="submit">Submit</button>
-</div>
+        <div class="text-center pt-1 mb-5 pb-1">
+          <button class="btn btn-primary btn-block fa-lg gradient-custom-2 mb-3" id="submitEC" type="submit">Submit</button>
+        </div>
 
-</form>   
+      </form>   
 
 
         

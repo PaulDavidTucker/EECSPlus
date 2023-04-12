@@ -54,6 +54,7 @@ function login($username, $password) {
       exit();
   } else {
       echo "Invalid username or password.";
+      header("refresh:0.9;url=index.php");
   }
 
   $conn->close();
@@ -110,13 +111,10 @@ function login($username, $password) {
                         <div class="text-center pt-1 mb-5 pb-1">
                           <button class="btn btn-primary btn-block fa-lg gradient-custom-2 mb-3" id="LoginButton" type="submit">Log
                             in</button>
-                          <a class="text-muted" href="#!">Forgot password?</a>
+
                         </div>
       
-                        <div class="d-flex align-items-center justify-content-center pb-4">
-                          <p class="mb-0 me-2 pr-4">Don't have an account?</p>
-                          <button type="button" id="AdminLogin" class="btn btn-outline-danger">Create new</button>
-                        </div>
+
       
                       </form>
       

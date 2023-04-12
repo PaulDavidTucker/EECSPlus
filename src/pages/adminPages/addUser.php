@@ -119,9 +119,6 @@ if(isset($_POST['username']) && isset($_POST['password']) && isset($_POST['userT
                                         <a href="#submenu3" data-bs-toggle="collapse" class="nav-link px-0 align-middle">
                                             <i class="fs-4 bi-grid"></i> <span class="ms-1 d-none d-sm-inline">User Functions</span></a>
                                             <ul class="collapse nav flex-column ms-1" id="submenu3" data-bs-parent="#menu">
-                                            <li class="w-100">
-                                                <a href="../../pages/ApplyEC.php" class="nav-link px-0"> <span class="d-none d-sm-inline">Submit EC</span></a>
-                                            </li>
                                             <li>
                                                 <a href="../../pages/ReportIssues.php" class="nav-link px-0"> <span class="d-none d-sm-inline">Submit Issue</span></a>
                                             </li>
@@ -131,7 +128,7 @@ if(isset($_POST['username']) && isset($_POST['password']) && isset($_POST['userT
                                         </ul>
                                     </li>
                                     <li>
-                                        <a href="#" class="nav-link px-0 align-middle">
+                                        <a href="editUser.php" class="nav-link px-0 align-middle">
                                             <i class="fs-4 bi-people"></i> <span class="ms-1 d-none d-sm-inline">Edit User details</span> </a>
                                     </li>
                                     <li>
@@ -185,13 +182,13 @@ if(isset($_POST['username']) && isset($_POST['password']) && isset($_POST['userT
                         </div>
                         <div class="form-outline mb-4">
                         <input type="password" class="form-control" placeholder="password" 
-                        name="password" required minlength="8" maxlength="20" />
+                        name="password" required minlength="4" maxlength="20" />
 
                         </div>
 
                         <div class="form-outline mb-4">
                         <input type="password" class="form-control" placeholder="Confirm Password" 
-                        name="ConfirmPassword" required minlength="8" maxlength="20" />
+                        name="ConfirmPassword" required minlength="4" maxlength="20" />
                         </div>
 
 
