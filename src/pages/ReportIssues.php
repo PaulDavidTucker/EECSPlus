@@ -80,78 +80,7 @@ function reportIssue($description,$issueType){
 <body>
   
     <!--NavBar for top of page-->
-    <nav class="navbar navbar-expand-lg navbar-light gradient-custom-navbar" id="nav">
-        <a class="navbar-brand ml-1" href="../index.php">
-            <img src="../assets/QMUL Logo.png" alt="Logo not found" width="30" height="30" class="d-inline-block align-text-top">
-            EECSPlus 
-        </a>
-        <a class="ml-auto mr-1" href="../logout.php">
-          <button type="button" id="LogoutButton" class="btn btn-outline-dark ">
-            <img src="../assets/icons/person.svg" alt="Logout">
-            Logout
-        </button>
-        </a>
-        
-            <button class="navbar-toggler mr-1" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav mr-auto">
-                <li class="nav-item active ml-1">
-                <a class="nav-link" href="LandingPage.php">Home <span class="sr-only">(current)</span></a>
-                </li>
-                <li class="nav-item dropdown ml-1">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Submit
-                    </a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <?php
-                      if ($userType !== 'Faculty ' and $userType !== 'Admin') {
-                        echo '<a class="dropdown-item" href="ApplyEC.php">Submit ECs</a>';
-                      }
-                      ?>
-                      <a class="dropdown-item" href="ReportIssues.php">Submit Issue</a>
-                    </div>
-                </li>
-                <?php
-                if ($userType != 'Admin'){
-                 echo  '<li class="nav-item dropdown ml-1">
-                  <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  View
-                  </a>
-                  <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="EECSServices.php">View EECS Services</a>
-                    <div class="dropdown-divider"></div>' ;
-
-                }
-
-                      if ($userType !== 'Faculty' and $userType !== 'Admin')  {
-                        echo '<a class="dropdown-item" href="ViewEC.php">View your ECs</a>';
-                      }
-                      if ($userType != 'Admin'){
-                      echo '<a class="dropdown-item" href="ViewYourIssues.php">View your issues</a>
-                      <div class="dropdown-divider"></div>
-                      <a class="dropdown-item" href="ViewAllIssues.php">View all issues</a>
-                    </div>
-                </li>' ;
-                      }
-                ?>
-                <li class="nav-item ml-1 mt-2">
-                  <div class="form-switch">
-                    <input class="form-check-input" type="checkbox" role="switch" id="darkModeCheckBox"  checked="true"  >
-                    <label class="form-check-label" for="darkModeCheckBox">Dark Mode</label>
-                  </div>
-                </li>
-                </ul>
-                <form class="form-inline my-2 my-lg-0 ml-1 mr-1">
-                <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-                </form>
-            </div>
-        
-        
-    </nav>
+    <?php include 'topNav.php';?>
 
     <div class="jumbotron" id="jumbotron">
         <h1 class="text-center mb-4">Report Issues</h1>
@@ -176,10 +105,11 @@ function reportIssue($description,$issueType){
             </div>
 
         </form>
+    </div>
 
 
 
-        <script src="../js/LPutils.js" type="module"></script>
+    <script src="../js/LPutils.js" type="module"></script>
     <!--Scripts for button functionality-->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
@@ -190,8 +120,7 @@ function reportIssue($description,$issueType){
 
 </body>
 
-    <footer class="container">
-        <p>&copy; Group 26 QMUL EECS</p>
-  </footer>
+<!-- Footer -->
+<?php include 'footer.php';?>
 
 </html>
