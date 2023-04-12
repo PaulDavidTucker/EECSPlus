@@ -77,11 +77,9 @@ elseif ($_SESSION['user_type'] == 'Admin'  ){
                     View
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <?php
-                      if ($userType !== 'Facualty') {
-                        echo '<a class="dropdown-item" href="ViewEC.php">View your ECs</a>';
-                      }
-                      ?>
+                      <a class="dropdown-item" href="EECSServices.php">View EECS Services</a>
+                      <div class="dropdown-divider"></div>
+                      <a class="dropdown-item" href="ViewEC.php">View your ECs</a>
                       <a class="dropdown-item" href="ViewYourIssues.php">View your issues</a>
                       <div class="dropdown-divider"></div>
                       <a class="dropdown-item" href="ViewAllIssues.php">View all issues</a>

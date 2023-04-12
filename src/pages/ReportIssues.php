@@ -78,7 +78,9 @@ function reportIssue($description,$issueType){
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/js/bootstrap.bundle.min.js" integrity="sha384-qKXV1j0HvMUeCBQ+QVp7JcfGl760yU08IQ+GpUo5hlbpg51QRiuqHAJz8+BrxE/N" crossorigin="anonymous"></script>
 </head>
 <body>
-<nav class="navbar navbar-expand-lg navbar-light gradient-custom-navbar" id="nav">
+  
+    <!--NavBar for top of page-->
+    <nav class="navbar navbar-expand-lg navbar-light gradient-custom-navbar" id="nav">
         <a class="navbar-brand ml-1" href="../index.php">
             <img src="../assets/QMUL Logo.png" alt="Logo not found" width="30" height="30" class="d-inline-block align-text-top">
             EECSPlus 
@@ -112,42 +114,23 @@ function reportIssue($description,$issueType){
                       <a class="dropdown-item" href="ReportIssues.php">Submit Issue</a>
                     </div>
                 </li>
-                <?php
-                if ($userType != 'Admin') {
-                  if ($userType == 'Student') {
-                    echo '<li class="nav-item dropdown ml-1">
+                <li class="nav-item dropdown ml-1">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     View
                     </a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdown"><a class="dropdown-item" href="ViewEC.php">View your ECs</a>
-
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                      <a class="dropdown-item" href="EECSServices.php">View EECS Services</a>
+                      <div class="dropdown-divider"></div>
+                    <?php
+                      if ($userType !== 'Facualty') {
+                        echo '<a class="dropdown-item" href="ViewEC.php">View your ECs</a>';
+                      }
+                      ?>
                       <a class="dropdown-item" href="ViewYourIssues.php">View your issues</a>
                       <div class="dropdown-divider"></div>
                       <a class="dropdown-item" href="ViewAllIssues.php">View all issues</a>
                     </div>
-                </li>';
-
-                  }
-
-                  elseif ($userType == 'Facualty') {
-                    echo  '<li class="nav-item dropdown ml-1">
-                      <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                      View
-                      </a>
-                      <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-    
-                        
-                        <a class="dropdown-item" href="ViewYourIssues.php">View your issues</a>
-                        <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="ViewAllIssues.php">View all issues</a>
-                      </div>
-                  </li>';
-                    }
-                }
-
-
-
-                ?>
+                </li>
                 <li class="nav-item ml-1 mt-2">
                   <div class="form-switch">
                     <input class="form-check-input" type="checkbox" role="switch" id="darkModeCheckBox"  checked="true"  >

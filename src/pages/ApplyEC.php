@@ -138,28 +138,19 @@ function submitEC($module, $description,$deadline, $extentiondeadline, $isselfce
                       <a class="dropdown-item" href="ReportIssues.php">Submit Issue</a>
                     </div>
                 </li>
-                <?php
-                if ($userType != 'Admin' && $userType == 'Student') {
-
-                    echo '<li class="nav-item dropdown ml-1">
+                <li class="nav-item dropdown ml-1">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     View
                     </a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdown"><a class="dropdown-item" href="ViewEC.php">View your ECs</a>
-
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                      <a class="dropdown-item" href="EECSServices.php">View EECS Services</a>
+                      <div class="dropdown-divider"></div>
+                      <a class="dropdown-item" href="ViewEC.php">View your ECs</a>
                       <a class="dropdown-item" href="ViewYourIssues.php">View your issues</a>
                       <div class="dropdown-divider"></div>
                       <a class="dropdown-item" href="ViewAllIssues.php">View all issues</a>
                     </div>
-                </li>';
-
-                  
-
-                }
-
-
-
-                ?>
+                </li>
                 <li class="nav-item ml-1 mt-2">
                   <div class="form-switch">
                     <input class="form-check-input" type="checkbox" role="switch" id="darkModeCheckBox"  checked="true"  >

@@ -67,12 +67,13 @@ elseif ($_SESSION['user_type'] == 'Admin'){
                       <a class="dropdown-item" href="ReportIssues.php">Submit Issue</a>
                     </div>
                 </li>
-                
                 <li class="nav-item dropdown ml-1">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     View
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                      <a class="dropdown-item" href="EECSServices.php">View EECS Services</a>
+                      <div class="dropdown-divider"></div>
                     <?php
                       if ($userType !== 'Facualty') {
                         echo '<a class="dropdown-item" href="ViewEC.php">View your ECs</a>';

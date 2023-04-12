@@ -59,7 +59,7 @@ elseif ($_SESSION['user_type'] == 'Admin'){
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav mr-auto">
                 <li class="nav-item active ml-1">
-                    <a class="nav-link" href="LandingPage.php">Home <span class="sr-only">(current)</span></a>
+                <a class="nav-link" href="LandingPage.php">Home <span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item dropdown ml-1">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -79,6 +79,8 @@ elseif ($_SESSION['user_type'] == 'Admin'){
                     View
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                      <a class="dropdown-item" href="EECSServices.php">View EECS Services</a>
+                      <div class="dropdown-divider"></div>
                     <?php
                       if ($userType !== 'Facualty') {
                         echo '<a class="dropdown-item" href="ViewEC.php">View your ECs</a>';

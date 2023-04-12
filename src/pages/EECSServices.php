@@ -2,6 +2,7 @@
 session_start();
 
 $username = $_SESSION['username'];
+$userType = $_SESSION['user_type'];
 
 if (!isset($_SESSION['user_id']  ) ) {
   header('Location: ../index.php');
@@ -34,7 +35,7 @@ if (!isset($_SESSION['user_id']  ) ) {
             EECSPlus 
         </a>
         <a class="ml-auto mr-1" href="../logout.php">
-          <button type="button" id="LogoutButton" class="btn btn-outline-light ">
+          <button type="button" id="LogoutButton" class="btn btn-outline-dark ">
             <img src="../assets/icons/person.svg" alt="Logout">
             Logout
         </button>
@@ -47,20 +48,36 @@ if (!isset($_SESSION['user_id']  ) ) {
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav mr-auto">
                 <li class="nav-item active ml-1">
-                    <a class="nav-link" href="LandingPage.php">Home <span class="sr-only">(current)</span></a>
-                </li>
-                <li class="nav-item ml-1">
-                    <a class="nav-link" href="EECSServices.php">EECS Services</a>
+                <a class="nav-link" href="LandingPage.php">Home <span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item dropdown ml-1">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Dropdown
+                    Submit
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                      <a class="dropdown-item" href="#">View your ECs</a>
-                      <a class="dropdown-item" href="#">View your issues</a>
+                    <?php
+                      if ($userType !== 'Facualty') {
+                        echo '<a class="dropdown-item" href="ApplyEC.php">Submit ECs</a>';
+                      }
+                      ?>
+                      <a class="dropdown-item" href="ReportIssues.php">Submit Issue</a>
+                    </div>
+                </li>
+                <li class="nav-item dropdown ml-1">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    View
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                      <a class="dropdown-item" href="EECSServices.php">View EECS Services</a>
                       <div class="dropdown-divider"></div>
-                      <a class="dropdown-item" href="#">View all issues</a>
+                    <?php
+                      if ($userType !== 'Facualty') {
+                        echo '<a class="dropdown-item" href="ViewEC.php">View your ECs</a>';
+                      }
+                      ?>
+                      <a class="dropdown-item" href="ViewYourIssues.php">View your issues</a>
+                      <div class="dropdown-divider"></div>
+                      <a class="dropdown-item" href="ViewAllIssues.php">View all issues</a>
                     </div>
                 </li>
                 <li class="nav-item ml-1 mt-2">
