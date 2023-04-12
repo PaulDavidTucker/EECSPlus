@@ -60,7 +60,7 @@ elseif ($_SESSION['user_type'] == 'Admin'){
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                     <?php
-                      if ($userType !== 'Facualty') {
+                      if ($userType !== 'Faculty') {
                         echo '<a class="dropdown-item" href="ApplyEC.php">Submit ECs</a>';
                       }
                       ?>
@@ -75,7 +75,7 @@ elseif ($_SESSION['user_type'] == 'Admin'){
                       <a class="dropdown-item" href="EECSServices.php">View EECS Services</a>
                       <div class="dropdown-divider"></div>
                     <?php
-                      if ($userType !== 'Facualty') {
+                      if ($userType !== 'Faculty') {
                         echo '<a class="dropdown-item" href="ViewEC.php">View your ECs</a>';
                       }
                       ?>

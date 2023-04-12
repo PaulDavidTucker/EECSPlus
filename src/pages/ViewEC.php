@@ -8,7 +8,7 @@ if (!isset($_SESSION['user_id']  ) ) {
   header('Location: ../index.php');
   exit();
 }
-elseif($_SESSION['user_type'] == 'Facualty'){
+elseif($_SESSION['user_type'] == 'Faculty'){
   header('Location: ../pages/LandingPage.php');
   exit();
 
@@ -65,7 +65,7 @@ elseif ($_SESSION['user_type'] == 'Admin'  ){
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                     <?php
-                      if ($userType !== 'Facualty') {
+                      if ($userType !== 'Faculty') {
                         echo '<a class="dropdown-item" href="ApplyEC.php">Submit ECs</a>';
                       }
                       ?>
