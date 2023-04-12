@@ -192,7 +192,7 @@ $conn -> close();
                             <tbody>
                                 <tr>
                                     <th scope="row">1</th>
-                                    <td>Abishana Ravindran</td>
+                                    <td>John Doe</td>
                                     <td>21038475</td>
                                     <td>Pending</td>
                                 </tr>
@@ -212,6 +212,13 @@ $conn -> close();
                                     <th scope="row">4</th>
                                     <td>Person 4</td>
                                     <td>234345</td>
+                                    <td>Pending</td>
+                                </tr>
+                                </tr>
+                                <tr>
+                                    <th scope="row">4</th>
+                                    <td>Person 5</td>
+                                    <td>234845</td>
                                     <td>Pending</td>
                                 </tr>
                                 </tr>
