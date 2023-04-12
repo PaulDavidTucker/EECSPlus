@@ -53,9 +53,9 @@ Here are the logins:
 
 * admin_user :123456
 
-* student_user : password123
+* student_user : 123456
 
-* faculty_user: secret_password
+* faculty_user: 123456
  
 
 **6. Viewing database tables:**
