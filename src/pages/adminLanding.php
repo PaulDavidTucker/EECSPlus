@@ -76,7 +76,7 @@ $conn -> close();
                             </li>
                             <li>
                                 <a href="adminPages/EECSServices.php" class="nav-link px-0 align-middle">
-                                    <i class="fs-4 bi-table"></i> <span class="ms-1 d-none d-sm-inline">View EECS Service Status</span></a>
+                                    <i class="fs-4 bi-table"></i> <span class="ms-1 d-none d-sm-inline">Edit EECS Service Status</span></a>
                             </li>
                             <li>
                                 <a href="adminPages/viewAllECs.php" class="nav-link px-0 align-middle">
