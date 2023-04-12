@@ -2,6 +2,7 @@
 session_start();
 
 $username = $_SESSION['username'];
+$_SESSION['pagename'] = "Dashboard";
 
 if (!isset($_SESSION['user_id']  )) {
   header('Location: ../index.php');
@@ -67,7 +68,7 @@ $conn -> close();
         <!-- Page Content -->
         <div id="page-content-wrapper">
 
-            <?php include 'topNav.html';?>
+            <?php include 'topNav.php';?>
 
             <div class="container-fluid px-4">
                 <div class="row g-3 my-2">

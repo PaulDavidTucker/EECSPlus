@@ -2,6 +2,7 @@
 session_start();
 
 $username = $_SESSION['username'];
+$_SESSION['pagename'] = "Edit User";
 
 if (!isset($_SESSION['user_id']  )) {
   header('Location: ../index.php');
@@ -159,7 +160,7 @@ elseif ($_SESSION['user_type'] != 'Admin'){
         <!-- Page Content -->
         <div id="page-content-wrapper">
 
-            <?php include 'topNav.html';?>
+            <?php include 'topNav.php';?>
 
             <div class="container-fluid text-left">
                 <div class="container mb-2" id="user-details">

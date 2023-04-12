@@ -3,6 +3,7 @@
 session_start();
 
 $username = $_SESSION['username'];
+$_SESSION['pagename'] = "Add New User";
 
 if (!isset($_SESSION['user_id']  )) {
   header('Location: ../index.php');
@@ -96,12 +97,12 @@ if(isset($_POST['username']) && isset($_POST['password']) && isset($_POST['userT
 <body>
 
     <?php include 'sideNav.html';?>
-    
+
     <div class="col py-3">
         <!-- Page Content -->
         <div id="page-content-wrapper">
 
-            <?php include 'topNav.html';?>
+            <?php include 'topNav.php';?>
 
             <form action="" method="post" target="_self">      
                 <div class="form-outline mb-4">

@@ -3,6 +3,7 @@
 session_start();
 
 $username = $_SESSION['username'];
+$_SESSION['pagename'] = "View ECs";
 
 if (!isset($_SESSION['user_id']  )) {
   header('Location: ../index.php');
@@ -86,7 +87,7 @@ $conn -> close();
       <!-- Page Content -->
       <div id="page-content-wrapper">
 
-        <?php include 'topNav.html';?>           
+        <?php include 'topNav.php';?>           
 
         <div class="container-fluid text-left">
           <div class="container mb-2" id="ec-details">
