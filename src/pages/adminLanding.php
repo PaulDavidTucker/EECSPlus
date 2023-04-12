@@ -22,15 +22,15 @@ elseif ($_SESSION['user_type'] != 'Admin'){
 $query = "SELECT COUNT(*) FROM ECs where Status ='Pending'";
 $result = $conn -> query($query);
 $row = $result -> fetch_assoc();
+$numPendingEC =  $row['COUNT(*)'];
 
-$numECs =  $row['COUNT(*)'];
 
-$query = "SELECT COUNT(*) FROM ECs where Status ='Approved' || Status ='Not Approved'";
+$query = "SELECT COUNT(*) FROM ECs ";
 $result = $conn -> query($query);
 $sec = $result -> fetch_assoc();
 
+$numECs =  $sec['COUNT(*)'];
 
-$numPendingEC =  $sec['COUNT(*)'];
 
 $query = "SELECT COUNT(*) FROM issues";
 $result = $conn -> query($query);
