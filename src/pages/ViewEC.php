@@ -132,10 +132,9 @@ elseif ($_SESSION['user_type'] == 'Admin'){
       }
       else{
         echo "<table id='ecTable' class='table table-hover'>";
-        echo "<tr><th scope=",'col',">Checkbox</th><th scope=",'col',">Module Name</th><th scope=",'col',">Extension Deadline</th><th scope=",'col',">Self Certified</th><th scope=",'col',">Status</th></tr>";
+        echo "<tr><th scope=",'col',">Module Name</th><th scope=",'col',">Extension Deadline</th><th scope=",'col',">Self Certified</th><th scope=",'col',">Status</th></tr>";
         while ($row = mysqli_fetch_assoc($result)) {
           echo "<tr class='clickableRow'>";
-          echo "<td><input type = 'checkbox' name = 'checked' value =" . $row["id"] . "</td>";
           echo "<td>" . $row["ModuleName"] . "</td>";
           echo "<td>" . $row["RequestedExtentionDeadline"] . "</td>";
           echo "<td>" . ($row["isSelfCertified"] == 'true' ? 'Yes' : 'No') . "</td>";
@@ -144,13 +143,22 @@ elseif ($_SESSION['user_type'] == 'Admin'){
         }
         echo "</table>";
       }
-     
 
+      
+      echo $_POST["ModuleName"];
+      echo $_POST["ExtentionDeadline"];
+     
       if(isset($_POST["checked"])){
+        echo "checked";
         if(isset($_POST["withdraw"])){
           $id = $_POST["withdraw"];
           $sql = "DELETE FROM ECs WHERE id = '$id'";
-          mysql_query($conn,$sql);
+          if ($conn -> query($sql)){
+            echo "EC withdrawn";
+          }else {
+            echo "Error: " . $sql . "<br>" . $conn->error;
+          }
+          
         }
       }
 
@@ -176,7 +184,7 @@ elseif ($_SESSION['user_type'] == 'Admin'){
         </div>
         <div class="col">
           <form action="" method="post">
-              <button name="withdraw" type="submit" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+              <button id="withDrawButton" name="withdraw" type="submit" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
                 Withdraw
               </button>
             </form>
