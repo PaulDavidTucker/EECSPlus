@@ -28,6 +28,16 @@ $cfg['Servers'][$i]['password'] = 'password123';
 $cfg['Servers'][$i]['auth_type'] = 'config';      
 ```
 
+'''sh
+/* Authentication type and info */
+$cfg['Servers'][$i]['auth_type'] = 'config';
+$cfg['Servers'][$i]['user'] = 'root';
+$cfg['Servers'][$i]['password'] = '';
+$cfg['Servers'][$i]['extension'] = 'mysqli';
+$cfg['Servers'][$i]['AllowNoPassword'] = true;
+$cfg['Lang'] = '';
+'''
+
 This will allow you to switch between the hosted DB in PHPMyAdmin.
 
 **3. Clone into repository using URL**
