@@ -109,6 +109,9 @@ $conn -> close();
                                             <i class="fs-4 bi-grid"></i> <span class="ms-1 d-none d-sm-inline">User Functions</span></a>
                                             <ul class="collapse nav flex-column ms-1" id="submenu3" data-bs-parent="#menu">
                                             <li>
+                                            <a href="../../pages/ApplyEC.php" class="nav-link px-0"> <span class="d-none d-sm-inline">Submit EC</span></a>
+                                            </li>
+                                            <li>
                                                 <a href="../../pages/ReportIssues.php" class="nav-link px-0"> <span class="d-none d-sm-inline">Submit Issue</span></a>
                                             </li>
                                             <li>
