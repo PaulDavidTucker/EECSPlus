@@ -21,7 +21,7 @@ elseif($_SESSION['user_type'] == 'Faculty'){
 
 /*
 elseif ($_SESSION['user_type'] == 'Admin'){
-  header('Location: ../pages/adminLanding.php');
+  header('Location: ../pages/adminPages/adminLanding.php');
   exit();
 }
 */
@@ -81,7 +81,7 @@ function submitEC($module, $description,$deadline, $extentiondeadline, $isselfce
     echo "New record created successfully";
     header("refresh:0.9;url=ApplyEC.php");
     if ($_SESSION['user_type'] == 'Admin'){
-      header('Location: ../pages/adminLanding.php');
+      header('Location: ../pages/adminPages/adminLanding.php');
       
     }
   } else {

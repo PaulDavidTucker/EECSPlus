@@ -51,7 +51,7 @@ function reportIssue($description,$issueType){
         echo "New record created successfully";
         header("refresh:0.9;url=ReportIssues.php");
         if ($_SESSION['user_type'] == 'Admin'){
-            header('Location: ../pages/adminLanding.php');
+            header('Location: ../pages/adminPages/adminLanding.php');
             exit();
           }
       } else {

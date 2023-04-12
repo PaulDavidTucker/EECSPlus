@@ -88,7 +88,7 @@ $conn -> close();
                                 </a>
                                 <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start" id="menu">
                                     <li class="nav-item">
-                                        <a href="../adminLanding.php" class="nav-link align-middle px-0">
+                                        <a href="adminLanding.php" class="nav-link align-middle px-0">
                                             <i class="fs-4 bi-house"></i> <span class="ms-1 d-none d-sm-inline">Home</span>
                                         </a>
                                     </li>
@@ -113,9 +113,6 @@ $conn -> close();
                                             </li>
                                             <li>
                                                 <a href="../../pages/ReportIssues.php" class="nav-link px-0"> <span class="d-none d-sm-inline">Submit Issue</span></a>
-                                            </li>
-                                            <li>
-                                                <a href="../../pages/ViewYourIssues.php" class="nav-link px-0"> <span class="d-none d-sm-inline">View Submitted Issues</span></a>
                                             </li>
                                         </ul>
                                     </li>

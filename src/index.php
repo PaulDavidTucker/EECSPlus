@@ -5,7 +5,7 @@ session_start();
 
 if (isset($_SESSION['user_id'])) {
   if ($row['userType'] == 'Admin') {
-    header('Location: pages/adminLanding.php');
+    header('Location: pages/adminPages/adminLanding.php');
   } else {
     header('Location: pages/LandingPage.php');
 }
@@ -47,7 +47,7 @@ function login($username, $password) {
       $_SESSION['user_type'] = $row['userType'];
       $_SESSION['username'] = $username;
       if ($row['userType'] == 'Admin') {
-          header('Location: pages/adminLanding.php');
+          header('Location: pages/adminPages/adminLanding.php');
       } else {
           header('Location: pages/LandingPage.php');
       }

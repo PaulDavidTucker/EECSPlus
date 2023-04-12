@@ -129,7 +129,7 @@ elseif ($_SESSION['user_type'] == 'Admin'){
           exit();
         }
         elseif ($_SESSION['user_type'] == 'Admin'){
-          header('Location: ../pages/adminLanding.php');
+          header('Location: ../pages/adminPages/adminLanding.php');
           exit();
         }
 

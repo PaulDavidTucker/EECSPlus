@@ -1,4 +1,3 @@
-
 <?php 
 session_start();
 
@@ -13,6 +12,33 @@ elseif ($_SESSION['user_type'] != 'Admin'){
     header('Location: ../pages/LandingPage.php');
     exit();
   }
+   
+  $conn = mysqli_connect("eecs-plus.cyvzc0wdkfgr.eu-north-1.rds.amazonaws.com:3306","admin","password123","eecs");
+
+  if (!$conn) {
+    die("Connection failed: " . mysqli_connect_error());
+  }
+
+$query = "SELECT COUNT(*) FROM ECs where Status ='Pending'";
+$result = $conn -> query($query);
+$row = $result -> fetch_assoc();
+$numPendingEC =  $row['COUNT(*)'];
+
+
+$query = "SELECT COUNT(*) FROM ECs ";
+$result = $conn -> query($query);
+$sec = $result -> fetch_assoc();
+
+$numECs =  $sec['COUNT(*)'];
+
+
+$query = "SELECT COUNT(*) FROM issues";
+$result = $conn -> query($query);
+$thrd = $result -> fetch_assoc();
+
+$numissuesSubmitted = $thrd['COUNT(*)'];
+
+$conn -> close();
 
 ?>
 
@@ -89,7 +115,7 @@ elseif ($_SESSION['user_type'] != 'Admin'){
             <nav class="navbar navbar-expand-lg navbar-light bg-transparent py-4 px-4">
                 <div class="d-flex align-items-center">
                     <i class="fas fa-align-left primary-text fs-4 me-3" id="menu-toggle"></i>
-                    <h2 class="fs-2 m-0">EECS Service Status</h2>
+                    <h2 class="fs-2 m-0">Dashboard</h2>
                 </div>
 
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
@@ -103,78 +129,132 @@ elseif ($_SESSION['user_type'] != 'Admin'){
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle second-text fw-bold" href="#" id="navbarDropdown"
                                 role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                <img src="../../assets/QMUL Logo.png" alt="hugenerd" width="30" height="30" class="rounded-circle">
+                                <img src="../assets/QMUL Logo.png" alt="hugenerd" width="30" height="30" class="rounded-circle">
                                 <i class="fas fa-user me-2"></i><?php echo $username ?>
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                                 <li><a class="dropdown-item" href="#">Profile</a></li>
                                 <li><a class="dropdown-item" href="#">Settings</a></li>
-                                <li><a class="dropdown-item" href="../../logout.php">Logout</a></li>
+                                <li><a class="dropdown-item" href="../logout.php">Logout</a></li>
                             </ul>
                         </li>
                     </ul>
                 </div>
             </nav>
-            
 
-            <div class="container-fluid text-center">
+            <div class="container-fluid px-4">
+                <div class="row g-3 my-2">
+                    <div class="col-md-3">
+                        <div class="p-3 bg-white border shadow-sm d-flex justify-content-around align-items-center rounded">
+                            <div>
+                                <h3 class="fs-2"><?php echo $numECs?></h3>
+                                <p class="fs-5">Total ECs</p>
+                            </div>
+                            <i class="bi bi-hand-thumbs-up p-1"></i>
+                        </div>
+                    </div>
 
-    <div class="container mb-2">
-        <?php 
-        
-        $conn = mysqli_connect("eecs-plus.cyvzc0wdkfgr.eu-north-1.rds.amazonaws.com:3306","admin","password123","eecs");
+                    <div class="col-md-3">
+                        <div class="p-3 bg-white border shadow-sm d-flex justify-content-around align-items-center rounded">
+                            <div>
+                                <h3 class="fs-2"><?php echo $numPendingEC?></h3>
+                                <p class="fs-5">Pending EC</p>
+                            </div>
+                            <i
+                                class="bi bi-alarm p-1"></i>
+                        </div>
+                    </div>
+
+                    <div class="col-md-3">
+                        <div class="p-3 bg-white border shadow-sm d-flex justify-content-around align-items-center rounded">
+                            <div>
+                                <h3 class="fs-2"><?php echo $numissuesSubmitted?> </h3>
+                                <p class="fs-5">Issues Submitted</p>
+                            </div>
+                            <i class="bi bi-ticket-detailed p-1"></i>
+                        </div>
+                    </div>
+
+
+                <div class="row my-5">
+                    <h3 class="fs-4 mb-3">Recently Viewed EC</h3>
+                    <div class="col">
+                        <?php
+
+                        $conn = mysqli_connect("eecs-plus.cyvzc0wdkfgr.eu-north-1.rds.amazonaws.com:3306","admin","password123","eecs");
+
+                        if (!$conn) {
+                            die("Connection failed: " . mysqli_connect_error());
+                        }
+
+                        
+                        
+                        
+
+                        //Retrieve data from the database
+                        $query = "
+                        SELECT `ECs`.`id`,
+                        `ECs`.`userID`,
+                        `ECs`.`ModuleName`,
+                        `ECs`.`description`,
+                        `ECs`.`DateCreated`,
+                        `ECs`.`DeadLine`,
+                        `ECs`.`RequestedExtentionDeadline`,
+                        `ECs`.`isSelfCertified`,
+                        `ECs`.`Status`,
+                        `user`.`userName`,
+                        `user`.`userType`
+                        FROM `eecs`.`ECs` 
+                        JOIN `eecs`.`user` ON `ECs`.`userID` = `user`.`id` 
+                        ORDER BY `ECs`.`id` DESC LIMIT 5
+                        ;";
+                        $result = mysqli_query($conn, $query);
+
+                        if ($result -> num_rows == 0) {
+                            echo "<h3>There are no ECs!</h3>";
+                        } else {
+                            //Display the data in a table
+                            echo "<table id='ecTable' class='table table-hover'>";
+                            echo "<thead><tr><th>ID</th><th>User ID</th><th>UserName</th><th>User Type</th><th>Module Name</th><th>Status</th><th>Date Created</th></tr></thead><tbody>";
+                            while ($row = mysqli_fetch_assoc($result)) {
+                                echo "<tr>";
+                                echo "<td>" . $row["id"] . "</td>";
+                                echo "<td>" . $row["userID"] . "</td>";
+                                echo "<td>" . $row["userName"] . "</td>";
+                                echo "<td>" . $row["userType"] . "</td>";
+                                echo "<td>" . $row["ModuleName"] . "</td>";
+                                echo "<td style='display:none;' >" . $row["description"] . "</td>";
+                                echo "<td style='display:none;'>" . $row["DeadLine"] . "</td>";
+                                echo "<td style='display:none;'>" . $row["RequestedExtentionDeadline"] . "</td>";
+                                echo "<td style='display:none;'>" . $row["isSelfCertified"] . "</td>";
+                                echo "<td>" . $row["Status"] . "</td>";
+                                echo "<td>" . $row["DateCreated"] . "</td>";
+                                
+                                
+                                echo "</tr>";
+                            }
+                            echo "</tbody></table>";
+                        }
+                
+                        mysqli_close($conn);
+
+                        ?>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+                </div>
+            </div>
+        </div>
+
   
-        if (!$conn) {
-          die("Connection failed: " . mysqli_connect_error());
-        }
-  
-        //Retrieve data from the database
-        $query = "SELECT * FROM EECS_Services";
-        $result = mysqli_query($conn, $query);
-  
-        // Display the data in a table
-        echo "<table id='ecTable' class='table table-hover'>";
-        echo "<tr><th scope='col'>Service</th><th scope='col'>Description</th><th scope='col'>Current Status</th><th scope='col'>New Status</th></tr>";
-        while ($row = mysqli_fetch_assoc($result)) {
-            echo "<tr class='clickableRow'>";
-            echo "<td>" . $row["Service"] . "</td>";
-            echo "<td>" . $row["Description"] . "</td>";
-            echo "<td>" . $row["Status"] . "</td>";
+    
 
-            echo "<td>
-                <form action='updateEECSService.php' method='post' target='_self'>
-                    <input type='hidden' name='id' value='" . $row["id"] . "'>";
-            echo "<select name='Status' id='Status' class='form-select form-select-sm mb-3' required>
-                            <option value='' selected disabled hidden>Select Status</option>";
-            if ($row["Status"] !== "Running") {
-                echo "<option value='Running'>Running</option>";
-            }
-            if ($row["Status"] !== "Suspended") {
-                echo "<option value='Suspended'>Suspended</option>";
-            }
-            if ($row["Status"] !== "Unavailable") {
-                echo "<option value='Unavailable'>Unavailable</option>";
-            }
-            echo "</select>";
-            echo "<input class='btn btn-primary btn-block fa-lg gradient-custom-2 mb-3' id='LoginButton' type='submit'>";
-            echo "</form>";
-            echo "</td>";
-            echo "</tr>";
-        }
-        echo "</table>";
-
-        mysqli_close($conn);
-
-        
-  
-        ?>      
-      </div>
-
-
-</script>
+</body>
 
     <!--Scripts for button functionality-->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-</html>
