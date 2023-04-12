@@ -90,6 +90,9 @@ $conn -> close();
                                     <i class="fs-4 bi-grid"></i> <span class="ms-1 d-none d-sm-inline">User Functions</span></a>
                                     <ul class="collapse nav flex-column ms-1" id="submenu3" data-bs-parent="#menu">
                                     <li>
+                                    <a href="../pages/ApplyEC.php" class="nav-link px-0"> <span class="d-none d-sm-inline">Submit EC</span></a>
+                                    </li>
+                                    <li>
                                         <a href="../pages/ReportIssues.php" class="nav-link px-0"> <span class="d-none d-sm-inline">Submit Issue</span></a>
                                     </li>
                                     <li>
@@ -179,51 +182,67 @@ $conn -> close();
                 <div class="row my-5">
                     <h3 class="fs-4 mb-3">Recently Viewed EC</h3>
                     <div class="col">
-                        <table class="table bg-white rounded shadow-sm  table-hover">
-                            <thead>
-                                <tr>
-                                    <th scope="col" width="50">#</th>
-                                    <th scope="col">Name</th>
-                                    <th scope="col">Student Id</th>
-                                    <th scope="col">Complete</th>
+                        <?php
 
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <th scope="row">1</th>
-                                    <td>John Doe</td>
-                                    <td>21038475</td>
-                                    <td>Pending</td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">2</th>
-                                    <td>Person 2</td>
-                                    <td>34124</td>
-                                    <td>Complete</td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">3</th>
-                                    <td>Person 3</td>
-                                    <td>65756</td>
-                                    <td>Complete</td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">4</th>
-                                    <td>Person 4</td>
-                                    <td>234345</td>
-                                    <td>Pending</td>
-                                </tr>
-                                </tr>
-                                <tr>
-                                    <th scope="row">4</th>
-                                    <td>Person 5</td>
-                                    <td>234845</td>
-                                    <td>Pending</td>
-                                </tr>
-                                </tr>
-                            </tbody>
-                        </table>
+                        $conn = mysqli_connect("eecs-plus.cyvzc0wdkfgr.eu-north-1.rds.amazonaws.com:3306","admin","password123","eecs");
+
+                        if (!$conn) {
+                            die("Connection failed: " . mysqli_connect_error());
+                        }
+
+                        
+                        
+                        
+
+                        //Retrieve data from the database
+                        $query = "
+                        SELECT `ECs`.`id`,
+                        `ECs`.`userID`,
+                        `ECs`.`ModuleName`,
+                        `ECs`.`description`,
+                        `ECs`.`DateCreated`,
+                        `ECs`.`DeadLine`,
+                        `ECs`.`RequestedExtentionDeadline`,
+                        `ECs`.`isSelfCertified`,
+                        `ECs`.`Status`,
+                        `user`.`userName`,
+                        `user`.`userType`
+                        FROM `eecs`.`ECs` 
+                        JOIN `eecs`.`user` ON `ECs`.`userID` = `user`.`id` 
+                        ORDER BY `ECs`.`id` DESC LIMIT 5
+                        ;";
+                        $result = mysqli_query($conn, $query);
+
+                        if ($result -> num_rows == 0) {
+                            echo "<h3>There are no ECs!</h3>";
+                        } else {
+                            //Display the data in a table
+                            echo "<table id='ecTable' class='table table-hover'>";
+                            echo "<thead><tr><th>ID</th><th>User ID</th><th>UserName</th><th>User Type</th><th>Module Name</th><th>Status</th><th>Date Created</th></tr></thead><tbody>";
+                            while ($row = mysqli_fetch_assoc($result)) {
+                                echo "<tr>";
+                                echo "<td>" . $row["id"] . "</td>";
+                                echo "<td>" . $row["userID"] . "</td>";
+                                echo "<td>" . $row["userName"] . "</td>";
+                                echo "<td>" . $row["userType"] . "</td>";
+                                echo "<td>" . $row["ModuleName"] . "</td>";
+                                echo "<td style='display:none;' >" . $row["description"] . "</td>";
+                                echo "<td style='display:none;'>" . $row["DeadLine"] . "</td>";
+                                echo "<td style='display:none;'>" . $row["RequestedExtentionDeadline"] . "</td>";
+                                echo "<td style='display:none;'>" . $row["isSelfCertified"] . "</td>";
+                                echo "<td>" . $row["Status"] . "</td>";
+                                echo "<td>" . $row["DateCreated"] . "</td>";
+                                
+                                
+                                echo "</tr>";
+                            }
+                            echo "</tbody></table>";
+                        }
+                
+                        mysqli_close($conn);
+
+                        ?>
+
                     </div>
                 </div>
             </div>

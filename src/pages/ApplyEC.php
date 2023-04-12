@@ -19,10 +19,12 @@ elseif($_SESSION['user_type'] == 'Faculty'){
 
 }
 
+/*
 elseif ($_SESSION['user_type'] == 'Admin'){
   header('Location: ../pages/adminLanding.php');
   exit();
 }
+*/
 
 
 if (isset($_POST['moduleName']) && isset($_POST['description']) && isset($_POST['DeadLine'])&& isset($_POST['RequestedExtentionDeadline']) && isset($_POST['type'])) {
