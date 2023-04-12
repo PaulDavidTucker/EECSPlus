@@ -1,7 +1,3 @@
-
-
-
-
 <?php 
 session_start();
 
@@ -26,35 +22,115 @@ elseif ($_SESSION['user_type'] != 'Admin'){
 
 
 
-  if (isset($_POST['status']) && isset($_POST['id'])) {
-    $status = $_POST['status'];
+  if (isset($_POST['username']) && isset($_POST['id']) ) {
+    $username = $_POST['username'];
     $id = $_POST['id'];
+
+    if($username != ""){
+        updateUserName($id, $username);;
+    }
+
+
+  }
+
+
+  
+  if ( isset($_POST['id']) && isset($_POST['password']) && isset($_POST['ConfirmPassword'])) {
+
+    $password = $_POST['password'];
+    $id = $_POST['id'];
+    $ConfirmPassword = $_POST['ConfirmPassword'];
+    
+    
+    if($password == ""){
+        exit();
+      }
+
+    if ($password != $ConfirmPassword) {
+      echo " Passwords do not match  ";
+      header("refresh:2;url=editUser.php");
+      
+    }
+    if($password.ob_get_length()<5){
+        echo " Password must be at least 5 characters long  ";
+        header("refresh:2;url=editUser.php");
+    }
+    if($password.ob_get_length()>20){
+        echo " Password must be no more than 20 characters long  ";
+        header("refresh:2;url=editUser.php");
+    }
+    else{
+        updatePassword($id,$password );
+
+    }
     
   
-    updateIssue($id, $status);
+    
   }
+
+
+
+
+
+
+
   
-  function updateIssue($id, $status){
+  function updatePassword($id ,$password){
+    $conn = new mysqli("eecs-plus.cyvzc0wdkfgr.eu-north-1.rds.amazonaws.com:3306","admin","password123","eecs");
+    if ($conn->connect_error) {
+        die("Connection failed: " . $conn->connect_error);
+    }
+   
+    $sql = "UPDATE `eecs`.`user`
+    SET `password` = '$password'
+    WHERE `id` = '$id';";
+  
+    if ($conn->query($sql) === TRUE) {
+      echo "Password Updated successfully  ";
+      header("refresh:2;url=editUser.php");
+    } else {
+      echo "Error: " . $sql . "<br>" . $conn->error;
+    }
+
+    $conn -> close();
+}
+  
+  function updateUserName($id , $username){
     $conn = new mysqli("eecs-plus.cyvzc0wdkfgr.eu-north-1.rds.amazonaws.com:3306","admin","password123","eecs");
     if ($conn->connect_error) {
         die("Connection failed: " . $conn->connect_error);
     }
 
 
-    $sql = "UPDATE `eecs`.`issues`
-    SET `status` = '$status'
+
+
+    $sql = "UPDATE `eecs`.`user`
+    SET `userName` = '$username'
     WHERE `id` = '$id';";
   
+  try {
     if ($conn->query($sql) === TRUE) {
-      echo "Updated successfully";
-      header("refresh:0.3;url=adminViewIssues.php");
+      echo "Username Updated successfully   ";
+      header("refresh:2;url=editUser.php");
     } else {
       echo "Error: " . $sql . "<br>" . $conn->error;
     }
+    } catch (Exception $e) {
+        if ($e->getCode() == 1062) {
+            echo "Username already exists";
+            header("refresh:2;url=editUser.php");
+        } else {
+            echo "Error: " . $e->getMessage();
+            header("refresh:2;url=editUser.php");
+        }
+    }
+
+    $conn -> close();
   }
+  
 
 
-$conn -> close();
+  
 
 ?>
 
@@ -128,7 +204,7 @@ $conn -> close();
             <nav class="navbar navbar-expand-lg navbar-light bg-transparent py-4 px-4">
                 <div class="d-flex align-items-center">
                     <i class="fas fa-align-left primary-text fs-4 me-3" id="menu-toggle"></i>
-                    <h2 class="fs-2 m-0">View Issues</h2>
+                    <h2 class="fs-2 m-0">User Details</h2>
                 </div>
 
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
@@ -156,70 +232,59 @@ $conn -> close();
             </nav>
             
 
-            <div class="container-fluid text-center">
-    <div class="container mb-2" id="ec-details">
-        <?php 
+            <div class="container-fluid text-left">
+                <div class="container mb-2" id="user-details">
+                    <?php 
 
-        $username = $_SESSION['username'];
+                    $username = $_SESSION['username'];
 
-        if (!isset($_SESSION['user_id']  ) ) {
-            header('Location: ../index.php');
-            exit();
-        } elseif ($_SESSION['user_type'] != 'Admin') {
-            header('Location: ../../index.php');
-            exit();
-        }
+                    if (!isset($_SESSION['user_id']  ) ) {
+                        header('Location: ../index.php');
+                        exit();
+                    } elseif ($_SESSION['user_type'] != 'Admin') {
+                        header('Location: ../../index.php');
+                        exit();
+                    }
 
-        $conn = mysqli_connect("eecs-plus.cyvzc0wdkfgr.eu-north-1.rds.amazonaws.com:3306","admin","password123","eecs");
+                    $conn = mysqli_connect("eecs-plus.cyvzc0wdkfgr.eu-north-1.rds.amazonaws.com:3306","admin","password123","eecs");
 
-        if (!$conn) {
-            die("Connection failed: " . mysqli_connect_error());
-        }
+                    if (!$conn) {
+                        die("Connection failed: " . mysqli_connect_error());
+                    }
 
-        $ID = $_SESSION['user_id'];
-        //Retrieve data from the database
-        $query = "
-        SELECT `issues`.`id`,
-        `issues`.`userID`,
-        `issues`.`description`,
-        `issues`.`status`,
-        `issues`.`timeCreated`,
-        `issues`.`issueType`,
-        `user`.`userName`,
-        `user`.`userType`
-        FROM `eecs`.`issues`
-        JOIN `eecs`.`user` ON `issues`.`userID` = `user`.`id`;
-        ";
+                    $ID = $_SESSION['user_id'];
+                    //Retrieve data from the database
+                    $query = "
+                    SELECT id, userName, userType
+                    FROM `eecs`.`user`
+                    WHERE userType IN ('Student', 'Faculty');
+                    
 
-        $result = mysqli_query($conn, $query);
+                    ";
+                    $result = mysqli_query($conn, $query);
 
-        if ($result -> num_rows == 0) {
-            echo "<h3>No issues!</h3>";
-        } else {
-            //Display the data in a table
-            echo "<table id='issueTable' class='table table-hover'>";
-            echo "<thead><tr><th>ID</th><th>User ID</th><th>UserName</th><th>User Type</th></th><th>Status</th><th>Issue Type</th><th>Time Created</th></tr></thead><tbody>";
-            while ($row = mysqli_fetch_assoc($result)) {
-                echo "<tr>";
-                echo "<td>" . $row["id"] . "</td>";
-                echo "<td>" . $row["userID"] . "</td>";
-                echo "<td>" . $row["userName"] . "</td>";
-                echo "<td>" . $row["userType"] . "</td>";
-                echo "<td style='display:none'>" . $row["description"] . "</td>";
-                echo "<td  >" . $row["status"] . "</td>";;
-                echo "<td >" . $row["issueType"] . "</td>";
-                echo "<td>" . $row["timeCreated"] . "</td>";
-            }
-            echo "</tbody></table>";
-        }
+                    if ($result -> num_rows == 0) {
+                        echo "<h3>You have no ECs!</h3>";
+                    } else {
+                        //Display the data in a table
+                        echo "<table id='userTable' class='table table-hover'>";
+                        echo "<thead><tr><th>ID</th><th>UserName</th><th>User Type</th></tr></thead><tbody>";
+                        while ($row = mysqli_fetch_assoc($result)) {
+                            echo "<tr>";
+                            echo "<td>" . $row["id"] . "</td>";
+                            echo "<td>" . $row["userName"] . "</td>";
+                            echo "<td>" . $row["userType"] . "</td>";
+                            echo "</tr>";
+                        }
+                        echo "</tbody></table>";
+                    }
 
-        mysqli_close($conn);    
+                    mysqli_close($conn);
 
-        ?>
-    </div>
-</div>
+                    ?>
                 </div>
             </div>
+
         </div>
 
       
@@ -232,22 +297,24 @@ $conn -> close();
 </body>
 <script >
 
-function deleteIssue(id) {
-    
-  if (confirm("Are you sure you want to delete this Issue?")) {
+function deleteUser(id) {
+    console.log(id);
+  if (confirm("Are you sure you want to delete this User?")) {
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function() {
       if (this.readyState == 4 && this.status == 200) {
         alert(this.responseText);
-        window.location.href = "adminViewIssues.php";
+        window.location.href = "editUser.php";
       }
     };
     
-    xhttp.open("GET", "deleteIssue.php?id=" + id, true);
+    xhttp.open("GET", "deleteUser.php?id=" + id, true);
     xhttp.send();
   }
 }
-const table = document.getElementById("issueTable");
+
+
+const table = document.getElementById("userTable");
 
 const rows = table.getElementsByTagName("tr");
 
@@ -258,73 +325,73 @@ for (let i = 0; i < rows.length; i++) {
 
         // Get the values of the relevant columns
         const id = rowArray[0].innerHTML;
-        const userID = rowArray[1].innerHTML;
-        const username = rowArray[2].innerHTML;
-        const userType = rowArray[3].innerHTML;
-        const description = rowArray[4].innerHTML;
-        const status = rowArray[5].innerHTML;
-        const issueType = rowArray[6].innerHTML;
-        const timeCreated = rowArray[7].innerHTML;
+        const username = rowArray[1].innerHTML;
+        const userType = rowArray[2].innerHTML;
 
 
         // Create the HTML for the details
         const html = `
         <div class="container">
-        <form action="" method="post" >
-  <table class="table table-bordered">
-    <tbody>
-        <tr>
-            <th scope="row">ID</th>
-            <td>${id}</td>
-        </tr>
-        <tr>
-            <th scope="row">User ID</th>
-            <td>${userID}</td>
-        </tr>
-        <tr>
-            <th scope="row">Username</th>
-            <td>${username}</td>
-        </tr>
-        <tr>
-            <th scope="row">User Type</th>
-            <td>${userType}</td>
-        <tr>
-            <th scope="row">Description</th>
-            <td>${description}</td>
-        </tr>
-        <tr>
-            <th scope="row">Status</th>
-            <td>${status}</td>
-        </tr>
-        <tr>
-            <th scope="row">Issue Type</th>
-            <td>${issueType}</td>
-        </tr>
-        <tr>
-            <th scope="row">Time Created</th>
-            <td>${timeCreated}</td>
-        </tr>
+        <form action="" method="post" target="_self" >
+            <table class="table table-bordered">
+                <tbody>
+                <tr>
+                    <th class="text-left">ID</th>
+                    <td >${id}</td>
+                    <input type="hidden" name="id" value="${id}">
+                </tr>
+                <tr>
+                    <th>username</th>
+                    <td><input type="text" class="form-control" placeholder="${username} " 
+                    name="username"  maxlength="50" /></td>
+                </tr>
+                <tr>
+                    <th>Change Password</th>
+                        <td><input type="password" class="form-control" placeholder="password" 
+                            name="password"  minlength="3" maxlength="20" />
+                        </td>
+                    
+                </tr>
+                <tr>
+                    <th>Confirm Changed password:</th>
+                    <td>
+                        <input type="password" class="form-control" placeholder="Confirm Password" 
+                        name="ConfirmPassword"  minlength="3" maxlength="20" />
+                    
+                    </td>
 
-    </tbody>
-  </table>
+                </tr>
+
+                <tr>
+                    <th class="text-left" >User Type</th>
+                    <td>${userType}</td>
+                    
+                </tr>
+                </tbody>
+            </table>
+
+            <div class="container-fluid text-center">
     
-        <select class="form-select mb-2" name="status">
-            <option value="Pending">Pending</option>
-            <option value="Resolved">Resolved</option>
-        </select>
-        <button class="btn btn-primary mb-2" type="submit">Save</button>
-        <button class="btn btn-secondary mb-2"  type="button" onclick="location.reload()">Cancel</button>
-        <button class="btn btn-secondary mb-2" type="button" onclick=deleteIssue('${id}')>Delete</button>
+                <button class="btn btn-primary mb-2" type="submit">Save</button>
+                <button class="btn btn-secondary mb-2"  type="button" onclick="location.reload()">Cancel</button>
+                <button class="btn btn-secondary mb-2" type="button" onclick=deleteUser('${id}')>Delete</button>
+            </div>
     </form>
     
 </div>  `;
 
-        // Render the HTML in the #ec-details div
-        const ecDetails = document.getElementById('ec-details');
+        // Render the HTML in the #user-details div
+        const ecDetails = document.getElementById('user-details');
         ecDetails.innerHTML = html;
     });
 
+
+
+
 }
+
+
+
 
 
 </script>
