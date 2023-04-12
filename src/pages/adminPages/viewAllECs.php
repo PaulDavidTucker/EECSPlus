@@ -104,9 +104,6 @@ $conn -> close();
                                         <a href="#submenu3" data-bs-toggle="collapse" class="nav-link px-0 align-middle">
                                             <i class="fs-4 bi-grid"></i> <span class="ms-1 d-none d-sm-inline">User Functions</span></a>
                                             <ul class="collapse nav flex-column ms-1" id="submenu3" data-bs-parent="#menu">
-                                            <li class="w-100">
-                                                <a href="../../pages/ApplyEC.php" class="nav-link px-0"> <span class="d-none d-sm-inline">Submit EC</span></a>
-                                            </li>
                                             <li>
                                                 <a href="../../pages/ReportIssues.php" class="nav-link px-0"> <span class="d-none d-sm-inline">Submit Issue</span></a>
                                             </li>
@@ -116,7 +113,7 @@ $conn -> close();
                                         </ul>
                                     </li>
                                     <li>
-                                        <a href="#" class="nav-link px-0 align-middle">
+                                        <a href="editUser.php" class="nav-link px-0 align-middle">
                                             <i class="fs-4 bi-people"></i> <span class="ms-1 d-none d-sm-inline">Edit User details</span> </a>
                                     </li>
                                     <li>
@@ -161,7 +158,7 @@ $conn -> close();
             </nav>
             
 
-            <div class="container-fluid text-center">
+            <div class="container-fluid text-left">
     <div class="container mb-2" id="ec-details">
         <?php 
 
@@ -204,7 +201,7 @@ $conn -> close();
         $result = mysqli_query($conn, $query);
 
         if ($result -> num_rows == 0) {
-            echo "<h3>You have no ECs!</h3>";
+            echo "<h3>There are no ECs!</h3>";
         } else {
             //Display the data in a table
             echo "<table id='ecTable' class='table table-hover'>";

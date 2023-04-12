@@ -24,14 +24,18 @@ $query = "SELECT COUNT(*) FROM ECs where Status ='Pending'";
 $result = $conn -> query($query);
 $row = $result -> fetch_assoc();
 
-$numECs =  $row['COUNT(*)'];
+$numPendingEC =  $row['COUNT(*)'];
 
-$query = "SELECT COUNT(*) FROM ECs where Status ='Approved' || Status ='Not Approved'";
+
+
+$query = "SELECT COUNT(*) FROM ECs ";
 $result = $conn -> query($query);
 $sec = $result -> fetch_assoc();
 
+$numECs =  $sec['COUNT(*)'];
 
-$numPendingEC =  $sec['COUNT(*)'];
+
+
 
 $query = "SELECT COUNT(*) FROM issues";
 $result = $conn -> query($query);
@@ -75,10 +79,6 @@ $conn -> close();
                                 </a>
                             </li>
                             <li>
-                                <a href="adminPages/EECSServices.php" class="nav-link px-0 align-middle">
-                                    <i class="fs-4 bi-table"></i> <span class="ms-1 d-none d-sm-inline">View EECS Service Status</span></a>
-                            </li>
-                            <li>
                                 <a href="adminPages/viewAllECs.php" class="nav-link px-0 align-middle">
                                     <i class="fs-4 bi-table"></i> <span class="ms-1 d-none d-sm-inline">View EC's</span></a>
                             </li>
@@ -90,9 +90,6 @@ $conn -> close();
                                 <a href="#submenu3" data-bs-toggle="collapse" class="nav-link px-0 align-middle">
                                     <i class="fs-4 bi-grid"></i> <span class="ms-1 d-none d-sm-inline">User Functions</span></a>
                                     <ul class="collapse nav flex-column ms-1" id="submenu3" data-bs-parent="#menu">
-                                    <li class="w-100">
-                                        <a href="../pages/ApplyEC.php" class="nav-link px-0"> <span class="d-none d-sm-inline">Submit EC</span></a>
-                                    </li>
                                     <li>
                                         <a href="../pages/ReportIssues.php" class="nav-link px-0"> <span class="d-none d-sm-inline">Submit Issue</span></a>
                                     </li>
@@ -102,8 +99,8 @@ $conn -> close();
                                 </ul>
                             </li>
                             <li>
-                                <a href="#" class="nav-link px-0 align-middle">
-                                    <i class="fs-4 bi-people"></i> <span class="ms-1 d-none d-sm-inline">Edit User details</span> </a>
+                                <a href="adminPages/editUser.php" class="nav-link px-0 align-middle">
+                                <i class="fs-4 bi-people"></i> <span class="ms-1 d-none d-sm-inline">Edit User details</span> </a>
                             </li>
                             <li>
                                     <a href="adminPages/addUser.php" class="nav-link px-0 align-middle">
@@ -180,56 +177,6 @@ $conn -> close();
                     </div>
 
 
-                <div class="row my-5">
-                    <h3 class="fs-4 mb-3">Recently Viewed EC</h3>
-                    <div class="col">
-                        <table class="table bg-white rounded shadow-sm  table-hover">
-                            <thead>
-                                <tr>
-                                    <th scope="col" width="50">#</th>
-                                    <th scope="col">Name</th>
-                                    <th scope="col">Student Id</th>
-                                    <th scope="col">Complete</th>
-
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <th scope="row">1</th>
-                                    <td>John Doe</td>
-                                    <td>21038475</td>
-                                    <td>Pending</td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">2</th>
-                                    <td>Person 2</td>
-                                    <td>34124</td>
-                                    <td>Complete</td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">3</th>
-                                    <td>Person 3</td>
-                                    <td>65756</td>
-                                    <td>Complete</td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">4</th>
-                                    <td>Person 4</td>
-                                    <td>234345</td>
-                                    <td>Pending</td>
-                                </tr>
-                                </tr>
-                                <tr>
-                                    <th scope="row">4</th>
-                                    <td>Person 5</td>
-                                    <td>234845</td>
-                                    <td>Pending</td>
-                                </tr>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
             </div>
         </div>
     </div>
