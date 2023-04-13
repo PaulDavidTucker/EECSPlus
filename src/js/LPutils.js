@@ -34,7 +34,7 @@ function EnableDarkMode() {
   }
   
   LogoutButton.setAttribute("class", "btn btn-outline-light");
-  checkbox.setAttribute("checked", "true");
+  checkbox.checked = true;
 }
 
 /**
@@ -55,7 +55,7 @@ function EnableLightMode(theme) {
   }
   
   LogoutButton.setAttribute("class", "btn btn-outline-dark");
-  checkbox.setAttribute("checked", "false");
+  checkbox.checked = false;
 }
 
 const getPreferredTheme = () => {

@@ -66,7 +66,7 @@
         </li>
         <li class="nav-item ml-1 mt-2">
             <div class="form-switch">
-            <input class="form-check-input" type="checkbox" role="switch" id="darkModeCheckBox"  checked="true"  >
+            <input class="form-check-input" type="checkbox" role="switch" id="darkModeCheckBox">
             <label class="form-check-label" for="darkModeCheckBox">Dark Mode</label>
             </div>
         </li>
