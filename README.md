@@ -77,5 +77,5 @@ To Edit the Sql Tables press Admin next to MySQL and select the sever to be  eec
 Current AWS instance hosting the site:
 
 ```sh
-http://eecsplus-env.eba-dbw5f2mr.eu-north-1.elasticbeanstalk.com/src/index.php
+http://eecsplus-env.eba-dbw5f2mr.eu-north-1.elasticbeanstalk.com/
 ```
